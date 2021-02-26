@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import com.vdurmont.emoji.EmojiParser; // to parse emojis
+// check emojis at: 
+//   https://emojipedia.org/beaming-face-with-smiling-eyes/
+//   https://www.webfx.com/tools/emoji-cheat-sheet/
+
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -71,7 +76,7 @@ public class YouShareBot extends TelegramLongPollingBot {
 	    	if( userMessageText.equals("/start") ) { // define /start command
 	    		
 	    		// set message mandatory fields
-		        botAnswer = "Welcome to the YouShare community!"; 
+		        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:"); 
 		        message.setChatId(chatId);
 		        message.setText(botAnswer);
 		        
