@@ -19,6 +19,7 @@ public class YouShareBot extends TelegramLongPollingBot {
 	
 	private String TOKEN;
 	private String USERNAME;
+	private YouShareServices ysServices;
 
 	
 	/* Default constructor */	
@@ -38,6 +39,10 @@ public class YouShareBot extends TelegramLongPollingBot {
 		
 		// set bot user name
 		USERNAME="YouShareBot";
+		
+		// instantiate Services
+		ysServices = new YouShareServices();
+		
 	}
 	
 
@@ -47,17 +52,28 @@ public class YouShareBot extends TelegramLongPollingBot {
 		
 		// Check if the update has a message and the message has text
 	    if ( update.hasMessage() && update.getMessage().hasText() ) {
-	    	// set variables
-	    	String message_text = update.getMessage().getText();
-	    	String chat_id = update.getMessage().getChatId().toString();
+	    	// set message variables
+	    	String userMessageText = update.getMessage().getText();
+	    	String chatId = update.getMessage().getChatId().toString();
 	    	
-	    	// define /start command
-	    	if( message_text.equals("/start") ) {
-	    		// Create a SendMessage object with mandatory fields
-		        SendMessage message = new SendMessage(); 
-		        
-		        message.setChatId(chat_id);
-		        message.setText("Welcome to the YouShare community!");
+	    	// set user variables
+	    	String userFirstName =  update.getMessage().getChat().getFirstName();
+	    	String userLastName = update.getMessage().getChat().getLastName();
+	    	String userUserName = update.getMessage().getChat().getUserName();
+	    	long userId = update.getMessage().getChat().getId();
+	    	
+	    	// set Bot reply variables
+	        SendMessage message = new SendMessage(); 
+	    	String botAnswer = "";
+	    		    	
+	    	
+	    	/// process message
+	    	if( userMessageText.equals("/start") ) { // define /start command
+	    		
+	    		// set message mandatory fields
+		        botAnswer = "Welcome to the YouShare community!"; 
+		        message.setChatId(chatId);
+		        message.setText(botAnswer);
 		        
 		        /// send repply
 		        try {
@@ -67,11 +83,11 @@ public class YouShareBot extends TelegramLongPollingBot {
 		        }
 		        
 	    	} else { // unknow command
-	    		// Create a SendMessage object with mandatory fields
-		        SendMessage message = new SendMessage(); 
-		        
-		        message.setChatId(chat_id);
-		        message.setText("Unknow command...Check what I can do typing /help.");
+	    		
+	    		// set message mandatory fields
+		        botAnswer = "Unknow command...Check what I can do typing /help.";
+		        message.setChatId(chatId);
+		        message.setText(botAnswer);
 		        
 		        /// send repply
 		        try {
@@ -81,6 +97,9 @@ public class YouShareBot extends TelegramLongPollingBot {
 		        }
 		        
 	    	}
+	    	
+	    	/// criate message log
+	    	ysServices.log(userFirstName, userLastName, Long.toString(userId), userMessageText, botAnswer);
 	
 	
 	    } 
