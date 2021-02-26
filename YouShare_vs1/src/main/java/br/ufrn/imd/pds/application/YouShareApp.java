@@ -13,11 +13,18 @@ public class YouShareApp {
 		System.out.println("Starting Bot");
 		
 		try {
+			
+			// Instantiate Telegram Bots API
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            
+            // Register YouShareBot
             botsApi.registerBot(new YouShareBot());
+            
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+		
+		System.out.println("YouShareBot successfully started!\n");
 	}
 
 }

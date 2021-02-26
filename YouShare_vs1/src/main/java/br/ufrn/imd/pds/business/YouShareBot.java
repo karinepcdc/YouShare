@@ -1,62 +1,99 @@
 package br.ufrn.imd.pds.business;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-
+/// Class that create the YoushareBot as a Long Polling Bot.
+/**
+ * Class that create YouShareBot and defines default action when a 
+ * update is received. 
+ *
+ */
 public class YouShareBot extends TelegramLongPollingBot {
+	
+	private String TOKEN;
+	private String USERNAME;
 
-	BotCommand start;
-	List<BotCommand> ysCommands;
 	
-	
-	public YouShareBot () {
-		start = new BotCommand("start", "start YouShareBot");
+	/* Default constructor */	
+	public YouShareBot () {		
+		// set bot token
+		try {
+			File botConfiguration = new File("src/main/conf/confBot");
+			Scanner myReader = new Scanner(botConfiguration);
+			
+			TOKEN= myReader.nextLine();
+			myReader.close();
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Error reading file. Bot could not be configured.");
+			e.printStackTrace();
+		}
 		
-		
+		// set bot user name
+		USERNAME="YouShareBot";
 	}
 	
-	
-	public BotCommand getStart() {
-		return start;
-	}
 
-	public void setStart(BotCommand start) {
-		this.start = start;
-	}
-
+	/// Class that check for updates from the user
 	@Override
 	public void onUpdateReceived(Update update) {
 		
-		// We check if the update has a message and the message has text
-	    if (update.hasMessage() && update.getMessage().hasText()) {
-	    	// Create a SendMessage object with mandatory fields
-	        SendMessage message = new SendMessage(); 
-	        
-	        message.setChatId(update.getMessage().getChatId().toString());
-	        message.setText(update.getMessage().getText());
-	        
-	        try {
-	            execute(message); // Call method to send the message
-	        } catch (TelegramApiException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		// Check if the update has a message and the message has text
+	    if ( update.hasMessage() && update.getMessage().hasText() ) {
+	    	// set variables
+	    	String message_text = update.getMessage().getText();
+	    	String chat_id = update.getMessage().getChatId().toString();
+	    	
+	    	// define /start command
+	    	if( message_text.equals("/start") ) {
+	    		// Create a SendMessage object with mandatory fields
+		        SendMessage message = new SendMessage(); 
+		        
+		        message.setChatId(chat_id);
+		        message.setText("Welcome to the YouShare community!");
+		        
+		        /// send repply
+		        try {
+		            execute(message); // Call method to send the message
+		        } catch (TelegramApiException e) {
+		            e.printStackTrace();
+		        }
+		        
+	    	} else { // unknow command
+	    		// Create a SendMessage object with mandatory fields
+		        SendMessage message = new SendMessage(); 
+		        
+		        message.setChatId(chat_id);
+		        message.setText("Unknow command...Check what I can do typing /help.");
+		        
+		        /// send repply
+		        try {
+		            execute(message); // Call method to send the message
+		        } catch (TelegramApiException e) {
+		            e.printStackTrace();
+		        }
+		        
+	    	}
+	
+	
+	    } 
 	}
 
 	@Override
 	public String getBotUsername() {
-		return "YouShareBot";
+		return USERNAME;
 	}
 
 	@Override
 	public String getBotToken() {
-		return "1659104965:AAH35gseMyELMa3PkHY_uWt_PzJy4Wv63Vo";
+		return TOKEN;
 	}
 	
 	
