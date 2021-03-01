@@ -2,7 +2,7 @@ package br.ufrn.imd.pds.business;
 
 import java.util.List;
 
-public abstract class item {
+public abstract class Item {
 
 	protected String name;
 	protected String description; // mudar para json???

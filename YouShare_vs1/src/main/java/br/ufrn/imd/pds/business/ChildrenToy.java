@@ -1,6 +1,6 @@
 package br.ufrn.imd.pds.business;
 
-public class ChildrenToy extends item {
+public class ChildrenToy extends Item {
 
 	private String condition;
 
