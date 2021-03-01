@@ -1,6 +1,6 @@
 package br.ufrn.imd.pds.business;
 
-public class PartyClothe extends item {
+public class PartyCloth extends Item {
 
 	private String termsOfUse;
 	private String color;

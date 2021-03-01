@@ -2,10 +2,9 @@ package br.ufrn.imd.pds.business;
 
 import java.util.ArrayList;
 
-public class UserServices {
+public class UserServices implements FacadeUser {
 	
-	ArrayList<User> users;
-	
+	ArrayList<User> users;	
 	
 	public UserServices() {
 		users = new ArrayList<User>();
@@ -20,9 +19,9 @@ public class UserServices {
 		String userStats = "";
 		
 		userStats = "All" + user.getFirstName() + " " + user.getLastName() + " stats:"
-    			+ "Do you have a login?\n\n"
-    			+ "/login - login in YouShare.\n"
-    			+ "/register - create a login.";
+    			+ "\n"
+    			+ "\n"
+    			+ "";
 		
 		return userStats;
 	}
@@ -36,7 +35,8 @@ public class UserServices {
 	}
 	
 	public void reviewUser( String review, Float rating, User user ) {
-		user.setRatings(ratings);
+		user.getUserReviews().add( review );
+		user.getRatings().add( rating );
 	}
 	
 	public void calculateUserGrade ( User user ) {
@@ -51,6 +51,5 @@ public class UserServices {
 		average = average/counter;
 		
 		user.setUserGrade( average );
-		
 	}
 }

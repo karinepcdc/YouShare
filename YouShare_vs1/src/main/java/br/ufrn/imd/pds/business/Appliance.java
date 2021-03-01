@@ -1,6 +1,6 @@
 package br.ufrn.imd.pds.business;
 
-public class Appliance extends item {
+public class Appliance extends Item {
 
 	private String termsOfUSe;
 	private int voltage;

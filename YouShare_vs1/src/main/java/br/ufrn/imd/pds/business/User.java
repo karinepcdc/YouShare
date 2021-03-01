@@ -9,7 +9,7 @@ public class User {
 	private String telegramUserName;
 	private float userGrade;
 	private ArrayList<Float> ratings;
-	private ArrayList<String> userReviews; // Mudar apra Json??
+	private ArrayList<String> userReviews;
 	
 	public User ( String fName, String lName, String tUserName ) {
 		this.firstName = fName;
@@ -24,7 +24,7 @@ public class User {
 		return ratings;
 	}
 
-	public void setRatings(ArrayList<Float> ratings) {
+	public void setRatings( ArrayList<Float> ratings ) {
 		this.ratings = ratings;
 	}
 

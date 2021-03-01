@@ -1,6 +1,6 @@
 package br.ufrn.imd.pds.business;
 
-public class Tool extends item {
+public class Tool extends Item {
 
 	private String termsOfUSe;
 	private int voltage;
