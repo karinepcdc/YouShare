@@ -63,7 +63,7 @@ public class YouShareGUI extends TelegramLongPollingBot {
 	    		// set message mandatory fields
 		        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
 		        			+ "I can help you to share/rent utilities that are just taking dust at your home. "
-		        			+ "It's an opportunity to earn some money or just to help a neibour!\n\n"
+		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
 		        			+ "Do you have a login?\n\n"
 		        			+ "/login - login in YouShare.\n"
 		        			+ "/register - create a login.";
@@ -114,7 +114,7 @@ public class YouShareGUI extends TelegramLongPollingBot {
 	    	} else if( userMessageText.equals("/login") ){
 	    		
 	    		// set message mandatory fields
-		        botAnswer = "Wealcome back " + userFirstName + " " + userLastName + "!\n"
+		        botAnswer = "Welcome back " + userFirstName + " " + userLastName + "!\n"
 		        			+ "Please, enter your password.";
 		        // Como faz para pegar a resposta da pessoa??????
 		        message.setChatId(chatId);

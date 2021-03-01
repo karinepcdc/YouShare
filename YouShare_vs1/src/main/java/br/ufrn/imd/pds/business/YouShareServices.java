@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class YouShareServices implements FacedeBot {
+public class YouShareServices implements FacadeBot {
 
 	
 	/// Print YouShareBot loggings
