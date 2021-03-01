@@ -109,16 +109,15 @@ public class YouShareGUI extends TelegramLongPollingBot {
 	    		switch (expectedRepplyRegister) {
 	    		
 		    		case 0:
-			    		// set message mandatory fields of the bot repply
+		    			// define bot answer
 				        botAnswer = "Hello " + userFirstName + " " + userLastName + "!\n"
 				        			+ "Create a password to login into our system.";
-				        message.setChatId(chatId);
-				        message.setText(botAnswer);
 				        
 				        // update: require one answer from user
 				        expectedRepplyRegister = 1;
 				        
 				        break;
+				        
 		    		case 1:		    			
 		    			
 		    			// validate password?
@@ -126,20 +125,25 @@ public class YouShareGUI extends TelegramLongPollingBot {
 		    			// register user
 		    			userServices.createUser(userFirstName, userLastName, userUserName, userMessageText);
 		    			
-		    			// set message mandatory fields of the bot repply
+		    			// define bot answer
 				        botAnswer = "Registration complete.";
-				        message.setChatId(chatId);
-				        message.setText(botAnswer);
 				        
 				        // update: no more answers are required
 				        expectedRepplyRegister = 0;
-				        default:
-				        	botAnswer = "Something went wrong with the registration process.\n Contact support.";
-				        	break;
+				        break;
+				        
+				    default:
+		    			// define bot answer
+				        botAnswer = "Something went wrong with the registration process.\n Contact support.";
+				        break;
 		    			
 	    		}
 
-	    		/// send repply
+    			// set bot repply mandatory fields
+	    		message.setChatId(chatId);
+		        message.setText(botAnswer);
+		        
+	    		// send repply
 		        try {
 		            execute(message); // Call method to send the message
 		        } catch (TelegramApiException e) {
