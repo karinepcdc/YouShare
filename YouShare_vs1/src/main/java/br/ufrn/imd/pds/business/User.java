@@ -7,14 +7,16 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String telegramUserName;
+	private String password;
 	private float userGrade;
 	private ArrayList<Float> ratings;
 	private ArrayList<String> userReviews; // Mudar apra Json??
 	
-	public User ( String fName, String lName, String tUserName ) {
+	public User ( String fName, String lName, String tUserName, String passwd ) {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.telegramUserName = tUserName;
+		this.password = passwd;
 		this.userGrade = 0;
 		this.ratings = new ArrayList<Float>();
 		this.userReviews = new ArrayList<String>();		
@@ -62,6 +64,14 @@ public class User {
 	
 	public void setTelegramUserName( String telegramUserName ) {
 		this.telegramUserName = telegramUserName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public ArrayList<String> getUserReviews() {

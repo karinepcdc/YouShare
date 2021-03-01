@@ -11,8 +11,8 @@ public class UserServices {
 		users = new ArrayList<User>();
 	}
 	
-	public void createUser( String firstName, String lastName , String password ) {
-		User user = new User( firstName, lastName, password );
+	public void createUser( String firstName, String lastName , String userName, String password ) {
+		User user = new User( firstName, lastName, userName, password );
 		users.add( user );
 	}
 	
@@ -36,7 +36,7 @@ public class UserServices {
 	}
 	
 	public void reviewUser( String review, Float rating, User user ) {
-		user.setRatings(ratings);
+		//user.setRatings(ratings);
 	}
 	
 	public void calculateUserGrade ( User user ) {
