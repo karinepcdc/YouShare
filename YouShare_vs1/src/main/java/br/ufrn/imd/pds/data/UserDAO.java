@@ -55,8 +55,8 @@ public class UserDAO {
  
             while ( ( line = bufferedReader.readLine()) != "---" ) {
                 if ( lineCounter == 1 ) {
-                	User user = new User();
-                	user.setFirstName( line );
+                	//User user = new User();
+                	//user.setFirstName( line );
                 } else if ( lineCounter == 2 ) {
                 	
                 }

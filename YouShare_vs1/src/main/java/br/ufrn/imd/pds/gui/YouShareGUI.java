@@ -23,6 +23,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class YouShareGUI extends TelegramLongPollingBot {
 	
 	private int expectedRepplyRegister; // number of answers the bots requires from the user when he uses the command /register
+	private int expectedRepplyLogin; // number of answers the bots requires from the user when he uses the command /login
 	private YouShareBot ysBot;
 	private YouShareServices ysServices;
 	private UserServices userServices;
@@ -32,7 +33,7 @@ public class YouShareGUI extends TelegramLongPollingBot {
 	public YouShareGUI () {		
 		// initialize variables
 		expectedRepplyRegister = 0;
-		
+		expectedRepplyLogin = 0;
 		
 		// instantiate Bot
 		ysBot = new YouShareBot();
@@ -87,13 +88,26 @@ public class YouShareGUI extends TelegramLongPollingBot {
 		        
 	    	} else if( userMessageText.equals("/help") ){
 	    		
-	    		// set message mandatory fields  of the bot repply
-		        botAnswer = "Select the desired action:\n\n"
-		        		+ "/search - Search an item of interest.\n"
-		        		+ "/myShare - check your ads.\n"
-		        		+ "/myReservations - check your reservations history and reviews.\n\n"
-		        		+ "/edit - edit your user profile.\n";
-		        message.setChatId(chatId);
+	    		
+	    		if(false) {	// se usuário estiver logado
+
+	    			// define bot answer
+	    			botAnswer = "Select the desired action:\n\n"
+			        		+ "/search - Search an item of interest.\n"
+			        		+ "/myShare - check your ads.\n"
+			        		+ "/myReservations - check your reservations history and reviews.\n\n"
+			        		+ "/edit - edit your user profile.\n";
+		        
+	    		} else { // se usuário não está logado
+	    			
+	    			// define bot answer
+	    			botAnswer = "Select the desired action:\n\n"
+	    					+ "/login - login in YouShare.\n"
+		        			+ "/register - create a login.";
+	    		}
+	    		
+    			// set bot's repply mandatory fields
+	    		message.setChatId(chatId);
 		        message.setText(botAnswer);
 		        
 		        /// send repply
@@ -128,6 +142,22 @@ public class YouShareGUI extends TelegramLongPollingBot {
 		    			// define bot answer
 				        botAnswer = "Registration complete.";
 				        
+				        // set bot's repply mandatory fields
+	    		        message.setChatId(chatId);
+	    		        message.setText(botAnswer);
+	    		        
+	    		        /// send repply
+	    		        try {
+	    		            execute(message); // Call method to send the message
+	    		        } catch (TelegramApiException e) {
+	    		            e.printStackTrace();
+	    		        }
+	    		       
+		    			// fazer o login - mudar tela? o que o bot faz aqui???
+	    		        
+	    				// define bot answer
+	    		        botAnswer = "Type /help to access the main menu.";
+				        
 				        // update: no more answers are required
 				        expectedRepplyRegister = 0;
 				        break;
@@ -135,11 +165,14 @@ public class YouShareGUI extends TelegramLongPollingBot {
 				    default:
 		    			// define bot answer
 				        botAnswer = "Something went wrong with the registration process.\n Contact support.";
+				        
+				        // update: no more answers are required
+				        expectedRepplyRegister = 0;
 				        break;
 		    			
 	    		}
 
-    			// set bot repply mandatory fields
+    			// set bot's repply mandatory fields
 	    		message.setChatId(chatId);
 		        message.setText(botAnswer);
 		        
@@ -150,12 +183,62 @@ public class YouShareGUI extends TelegramLongPollingBot {
 		            e.printStackTrace();
 		        }
 		        
-	    	} else if( userMessageText.equals("/login") ){
+	    	} else if( userMessageText.equals("/login") || (expectedRepplyLogin > 0) ){
 	    		
-	    		// set message mandatory fields
-		        botAnswer = "Welcome back " + userFirstName + " " + userLastName + "!\n"
-		        			+ "Please, enter your password.";
-		        // Como faz para pegar a resposta da pessoa??????
+	    		switch (expectedRepplyLogin) {
+	    		
+	    		case 0:
+	    			// define bot answer
+	    			botAnswer = "Hello, " + userFirstName + " " + userLastName + "!\n" 
+	    			+ "Please, enter your password to login.";
+	    			
+	    			expectedRepplyLogin = 1;
+	    			break;
+		        
+	    		case 1:		    			
+	    			// checar password
+	    			if( userServices.verifyPassword( userUserName, userMessageText ) ) {
+
+	    				// define bot answer
+	    				botAnswer = "Welcome back " + userFirstName + EmojiParser.parseToUnicode("! :smile:");
+	    				
+	    				// set bot's repply mandatory fields
+	    		        message.setChatId(chatId);
+	    		        message.setText(botAnswer);
+	    		        
+	    		        /// send repply
+	    		        try {
+	    		            execute(message); // Call method to send the message
+	    		        } catch (TelegramApiException e) {
+	    		            e.printStackTrace();
+	    		        }
+	    		       
+	    		        
+		    			// fazer o login - mudar tela? o que o bot faz aqui???
+	    		        
+	    				// define bot answer
+	    		        botAnswer = "Type /help to access the main menu.";
+	    				
+	    			} else {
+	    				// define bot answer
+	    				botAnswer = "Invalid password. Try again.";
+	    			}
+	    			
+			        // update: no more answers are required
+	    			expectedRepplyLogin = 0;
+	    			break;
+	    			
+	    		default:
+	    			// define bot answer
+			        botAnswer = "Something went wrong with the login process.\n Contact support.";
+			        
+			        // update: no more answers are required
+			        expectedRepplyLogin = 0;
+			        break;
+	    			
+	    		}
+		        
+    			// set bot's repply mandatory fields
 		        message.setChatId(chatId);
 		        message.setText(botAnswer);
 		        
