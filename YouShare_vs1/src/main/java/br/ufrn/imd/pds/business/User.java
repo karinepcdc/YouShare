@@ -6,15 +6,13 @@ public class User {
 	private String lastName;
 	private String telegramUserName;
 	private float userGrade;
-	private Float lastRating;
 	private String lastReview;
 	
-	public User ( String fName, String lName, String tUserName, float uG, Float lRating, String lRev ) {
+	public User ( String fName, String lName, String tUserName, float uG, String lRev ) {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.telegramUserName = tUserName;
 		this.userGrade = uG;
-		this.lastRating = lRating;
 		this.lastReview = lRev;		
 	}			
 
@@ -29,7 +27,6 @@ public class User {
 	public String getFirstName() {
 		return firstName;
 	}
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -52,14 +49,6 @@ public class User {
 	
 	public void setTelegramUserName( String telegramUserName ) {
 		this.telegramUserName = telegramUserName;
-	}
-
-	public Float getLastRating() {
-		return lastRating;
-	}
-
-	public void setLastRating(Float lastRating) {
-		this.lastRating = lastRating;
 	}
 
 	public String getLastReview() {
