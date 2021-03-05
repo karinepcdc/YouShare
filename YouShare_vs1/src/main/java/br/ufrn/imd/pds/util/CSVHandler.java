@@ -17,7 +17,7 @@ public class CSVHandler {
 
 		CSVReader csvReader = null; 
 		try { 
-			csvReader = new CSVReader( new FileReader( "././csv/userDatabase.csv" ) ); 
+			csvReader = new CSVReader( new FileReader( "src/main/csv/userDatabase.csv" ) ); 
 		} 
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
@@ -34,7 +34,7 @@ public class CSVHandler {
 
 		CSVReader csvReader = null; 
 		try { 
-			csvReader = new CSVReader( new FileReader( "././csv/itemDatabase.csv" ) ); 
+			csvReader = new CSVReader( new FileReader( "src/main/csv/itemDatabase.csv" ) ); 
 		} 
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 

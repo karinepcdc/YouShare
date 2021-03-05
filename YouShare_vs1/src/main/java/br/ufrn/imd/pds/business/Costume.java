@@ -1,7 +1,5 @@
 package br.ufrn.imd.pds.business;
 
-import java.util.ArrayList;
-
 public class Costume extends Item {
 
 	private String termsOfUse;
@@ -10,9 +8,9 @@ public class Costume extends Item {
 	private String clotheStyle;
 	private String partyStyle;
 	
-	public Costume ( String n, String desc, int cd, float iG, ArrayList<Float> iRat, ArrayList<String> iRev, boolean isAv, double p,
+	public Costume ( String n, String desc, int cd, float iG, String lRev, boolean isAv, double p,
 			String tOU, String c, char s, String cStyle, String pStyle ) {
-		super(n, desc, cd, iG, iRat, iRev, isAv, p);
+		super( n, desc, cd, iG, lRev, isAv, p );
 		this.termsOfUse = tOU;
 		this.color = c;
 		this.size = s;

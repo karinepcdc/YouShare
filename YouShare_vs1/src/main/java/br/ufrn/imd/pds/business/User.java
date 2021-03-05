@@ -9,6 +9,7 @@ public class User {
 	private int userGradeCount;
 	private String lastReview;
 	
+
 	public User ( String fName, String lName, String tUserName, float uG, int qt, String lRev ) {
 		this.firstName = fName;
 		this.lastName = lName;
@@ -29,7 +30,6 @@ public class User {
 	public String getFirstName() {
 		return firstName;
 	}
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

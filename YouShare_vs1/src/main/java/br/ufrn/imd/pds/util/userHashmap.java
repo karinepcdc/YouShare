@@ -10,11 +10,12 @@ public class userHashmap {
 		usersMap = new HashMap<String, User>();
 	}
 
-	public HashMap<String, User> getMapaNoticias() {
+	public HashMap<String, User> getUsersMap() {
 		return usersMap;
 	}
 
-	public void setMapaNoticias(HashMap<String, User> uMap) {
-		this.usersMap = uMap;
+	public void setUsersMap(HashMap<String, User> usersMap) {
+		this.usersMap = usersMap;
 	}
+
 }

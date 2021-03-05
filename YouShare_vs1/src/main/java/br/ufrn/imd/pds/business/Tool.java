@@ -1,15 +1,13 @@
 package br.ufrn.imd.pds.business;
 
-import java.util.ArrayList;
-
 public class Tool extends Item {
 
 	private String termsOfUse;
 	private int voltage;
 	
-	public Tool ( String n, String desc, int cd, float iG, ArrayList<Float> iRat, ArrayList<String> iRev, boolean isAv, double p,
+	public Tool ( String n, String desc, int cd, float iG, String lRev, boolean isAv, double p,
 			String tOU, int v) {
-		super(n, desc, cd, iG, iRat, iRev, isAv, p);
+		super( n, desc, cd, iG, lRev, isAv, p );
 		this.termsOfUse = tOU;
 		this.voltage = v;
 	}
