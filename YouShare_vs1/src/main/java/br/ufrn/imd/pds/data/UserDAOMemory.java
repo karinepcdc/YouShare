@@ -73,8 +73,10 @@ public class UserDAOMemory implements UserDAO {
         }
 	}
 	
-	public void createUser( String firstName, String lastName , String password ) {
-		User user = new User( firstName, lastName, password );
+	public void createUser( String firstName, String lastName, String telegramUserName, float userGrade, 
+			ArrayList<Float> userRatings, ArrayList<String> userReviews ) {
+		
+		User user = new User( firstName, lastName, telegramUserName, userGrade, userRatings, userReviews );
 		users.add( user );
 	}
 	
