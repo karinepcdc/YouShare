@@ -1,4 +1,4 @@
-package br.ufrn.imd.pds.business;
+package br.ufrn.imd.pds.YouShareInterface;
 
 import java.io.File;
 import java.io.FileNotFoundException;
