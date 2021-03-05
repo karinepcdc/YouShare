@@ -1,32 +1,22 @@
 package br.ufrn.imd.pds.business;
 
-import java.util.ArrayList;
-
 public class User {
 
 	private String firstName;
 	private String lastName;
 	private String telegramUserName;
 	private float userGrade;
-	private ArrayList<Float> userRatings;
-	private ArrayList<String> userReviews;
+	private Float lastRating;
+	private String lastReview;
 	
-	public User ( String fName, String lName, String tUserName, float uG, ArrayList<Float> uRtgs, ArrayList<String> uR ) {
+	public User ( String fName, String lName, String tUserName, float uG, Float lRating, String lRev ) {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.telegramUserName = tUserName;
 		this.userGrade = uG;
-		this.userRatings = uRtgs;
-		this.userReviews = uR;		
-	}
-			
-	public ArrayList<Float> getUserRatings() {
-		return userRatings;
-	}
-
-	public void setRatings( ArrayList<Float> ratings ) {
-		this.userRatings = ratings;
-	}
+		this.lastRating = lRating;
+		this.lastReview = lRev;		
+	}			
 
 	public float getUserGrade() {
 		return userGrade;
@@ -64,15 +54,20 @@ public class User {
 		this.telegramUserName = telegramUserName;
 	}
 
-
-	public ArrayList<String> getUserReviews() {
-		return userReviews;
+	public Float getLastRating() {
+		return lastRating;
 	}
 
-
-	public void setUserReviews(ArrayList<String> userReviews) {
-		this.userReviews = userReviews;
+	public void setLastRating(Float lastRating) {
+		this.lastRating = lastRating;
 	}
-	
+
+	public String getLastReview() {
+		return lastReview;
+	}
+
+	public void setLastReview(String lastReview) {
+		this.lastReview = lastReview;
+	}
 	
 }
