@@ -21,13 +21,14 @@ public class YouShareBotServices implements YouShareBotFacade {
 	public String processReceivedTextMsg( String userFirstName, String userLastName, long userId, String userTxtMsg, String chatId ) {
 
 		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
+		UserServices userServices = new UserServices();
 		
     	String botAnswer = ""; // Bot repply
 
     	// check if text message has bot commands
 		if( userTxtMsg.equals( "/start" ) ) {
     		
-    		//if(false) {	// usuário já cadastrado
+    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
 
 			// set bot repply
 	        botAnswer = "Welcome back " + userFirstName + EmojiParser.parseToUnicode("! :grin:\n\n")
@@ -37,7 +38,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        			+ "Or, if you want to leave our community, type /unregister.";
 	        
 			
-    		//} else { // novo usuário
+    		//} else { // new user
 			
     		// set bot repply
 	        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
@@ -54,7 +55,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		} else if( userTxtMsg.equals("/help") ){
     		
     		
-    		//if(false) {	// usuário já cadastrado
+    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
 
     			// define bot answer
     			botAnswer = "Select the desired action:\n\n"
@@ -63,7 +64,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		        		+ "/myReservations - check your reservations history and reviews.\n\n"
 		        		+ "/edit - edit your user profile.\n";
 	        
-    		//} else { // novo usuário
+    		//} else { // new user
     			
     			// define bot answer
     			botAnswer = "Select the desired action:\n\n"
@@ -74,6 +75,31 @@ public class YouShareBotServices implements YouShareBotFacade {
     		// request APIInterface to send text message to user
     	    apiServices.sendTextMsg( chatId, botAnswer );
 	        
+    	} else if( userTxtMsg.equals("/register") ){ // tratamento de excessão ???
+      		
+    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
+    		
+    			// define bot answer
+				botAnswer = userFirstName + ", you are already registered in our system!"
+						+ "Type /help to see the main menu.\n"
+						+ "Or, if you want to leave our community, type /unregister.";
+    		
+	    	//} else { // new user
+
+				// cadastrar novo usuário
+				userServices.createUser(userFirstName, userLastName, Long.toString(userId), "passwd");
+				
+    			// define bot answer
+    			botAnswer = userFirstName + " " + userLastName + ", "
+	    				+ "you've been successfully registered into our system!\n\n"
+	    				+ "Type /help to see the main menu.\n"
+	    				+ "If you changed your mind, type /unregister. ";
+	    			    
+        	//}
+
+    		// request APIInterface to send text message to user
+    	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
     	} else { // unknow command
 			
 			// set message mandatory fields
@@ -84,7 +110,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        
     	}
 		
-    	/*
+    /* old... erase latter
+  	  
   	  else if( userMessageText.equals("/register") || (expectedRepplyRegister > 0) ){
   		
 
