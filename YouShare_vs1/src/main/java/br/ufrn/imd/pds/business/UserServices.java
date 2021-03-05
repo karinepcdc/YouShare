@@ -27,6 +27,7 @@ public class UserServices implements FacadeUser {
 			
 		} else {
 			// TODO throw exception
+			// User not registered
 		}
 		
 	}
@@ -58,12 +59,12 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void addUserReview( String review, Float rating, User user ) {
+	public void addUserReview( User user, float rating, String review ) {
 		// TODO Auto-generated method stub
 	}
 	
 	@Override
-	public void calculateUserGrade ( User user ) {
+	public void updateUserGrade ( String userName, int grade ) {
 		// TODO Auto-generated method stub
 	}
 

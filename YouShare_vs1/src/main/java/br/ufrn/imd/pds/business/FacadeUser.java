@@ -19,10 +19,10 @@ public interface FacadeUser {
 	public void deleteUser( String userName );
 	
 	
-	public void addUserReview( String review, Float rating, User user );
+	public void addUserReview( User user, float rating, String review );
 	
-	/// Calculate user Grade as a progressive average - TODO check if description is correct
-	public void calculateUserGrade ( User user );
+	/// Calculate user Grade doing a progressive average
+	public void updateUserGrade ( String userName, int grade );
 	
 	
 	/// Return true if user is already registered in the database
