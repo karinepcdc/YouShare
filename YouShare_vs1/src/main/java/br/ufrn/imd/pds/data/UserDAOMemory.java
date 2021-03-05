@@ -6,16 +6,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.business.User;
 
 public class UserDAOMemory implements UserDAO {
 	ArrayList<User> users;
 	String fileName;
 	
-	public UserDAOMemory() {
+	private static UserDAOMemory uniqueInstance;
+	
+	private UserDAOMemory() {
 		this.fileName = "userDatabase.txt";
 		users = new ArrayList<User>();
 		startDatabase();
+	}
+	
+	/* Singleton constructor */
+	public static synchronized UserDAOMemory getInstance() {
+		if( uniqueInstance == null ) {
+			uniqueInstance = new UserDAOMemory();
+		}
+		
+		return uniqueInstance;
 	}
 	
 	public void startDatabase (){

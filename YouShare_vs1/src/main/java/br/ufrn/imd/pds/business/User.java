@@ -6,13 +6,16 @@ public class User {
 	private String lastName;
 	private String telegramUserName;
 	private float userGrade;
+	private int userGradeCount;
 	private String lastReview;
 	
-	public User ( String fName, String lName, String tUserName, float uG, String lRev ) {
+
+	public User ( String fName, String lName, String tUserName, float uG, int qt, String lRev ) {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.telegramUserName = tUserName;
 		this.userGrade = uG;
+		this.userGradeCount = qt;
 		this.lastReview = lRev;		
 	}			
 
@@ -51,12 +54,12 @@ public class User {
 		this.telegramUserName = telegramUserName;
 	}
 
-	public String getLastReview() {
-		return lastReview;
+	public int getUserGradeCount() {
+		return userGradeCount;
 	}
 
-	public void setLastReview(String lastReview) {
-		this.lastReview = lastReview;
+	public void setUserGradeCount(int userGradeCount) {
+		this.userGradeCount = userGradeCount;
 	}
 	
 }

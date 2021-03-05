@@ -22,13 +22,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
  */
 public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
 	
-	private YouShareBot ysBot;
-
-	private static TelegramBotAPIServices uniqueInstance;
-	
-	// deletar depois .... 		
-	private int expectedRepplyRegister; // number of answers the bots requires from the user when he uses the command /register
-	
+	private YouShareBot ysBot;	
 	
 	/* Default constructor */	
 	public TelegramBotAPIServices() {		
@@ -39,18 +33,6 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		System.out.println("TelegramBotAPIServices criado!");
 		
 	}
-	
-	/// precisa do padrão singleton ???
-	/* Singleton constructor */
-	/*
-	public static synchronized TelegramBotAPIServices getInstance() {
-		if( uniqueInstance == null ) {
-			uniqueInstance = new TelegramBotAPIServices();
-		}
-		
-		return uniqueInstance;
-	}
-	*/
 
 	/// Class that check for updates from the user (coming from Telegram servers), like user text messages, callback queries, images, etc
 	@Override
@@ -67,8 +49,8 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	// set user variables
 	    	String userFirstName =  update.getMessage().getChat().getFirstName();
 	    	String userLastName = update.getMessage().getChat().getLastName();
-	    	String userUserName = update.getMessage().getChat().getUserName(); // eh util ???
-	    	// long userId = update.getMessage().getChat().getId();
+	    	String userUserName = update.getMessage().getChat().getUserName(); // used as key in our systems
+	    	// long userId = update.getMessage().getChat().getId(); // eh util ???
 	    	
 	    	
 	    	// register Bot reply, for log purposes
