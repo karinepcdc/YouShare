@@ -60,9 +60,10 @@ public class YouShareBotServices implements YouShareBotFacade {
     			// define bot answer
     			botAnswer = "Select the desired action:\n\n"
 		        		+ "/search - Search an item of interest.\n"
-		        		+ "/myShare - check your ads.\n"
-		        		+ "/myReservations - check your reservations history and reviews.\n\n"
-		        		+ "/edit - edit your user profile.\n";
+		        		+ "/myshare - check your ads.\n"
+		        		+ "/myreservations - check your reservations history and reviews.\n\n"
+		        		+ "/profile - view and edit your user profile.\n"
+		        		+ "/unregister - unsubscribe YouShare system.";
 	        
     		//} else { // new user
     			
@@ -99,6 +100,61 @@ public class YouShareBotServices implements YouShareBotFacade {
 
     		// request APIInterface to send text message to user
     	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
+    	} else if( userTxtMsg.equals("/unregister") ){
+    		
+    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
+
+    		// define bot answer
+			botAnswer = userFirstName + ", are you sure you want to unregister?\n"
+					+ "All your itens and hystory will be erased from our system!\n\n"
+					+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
+			
+			// send msg with inline keyboard and define callback query parameters... do ???
+			
+			// callback query process in another place.... do ???
+			
+			
+	    	//} else { // new user
+    		
+    		// define bot answer
+			botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+    				+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+			// request APIInterface to send text message to user
+    	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
+    		//}
+
+    		
+    	} else if( userTxtMsg.equals("/profile") ){
+    		
+    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
+
+    		// define bot answer
+    		botAnswer = "This is how YouShare users see you: \n\n";
+    				// + userServices.readUser( userId );
+    		
+    		// a message with picture could be send here... do ???
+    		
+    		botAnswer = "Do you want to change your profile?\n\n"
+    				+ "/name - change name.\n";
+    				//+ "/picture - change picute."; // ... do ???
+    		
+    		// fazer mecanismo de continuar navegando num submenu.... do ???
+    		
+	    	//} else { // new user
+    		
+    		// define bot answer
+			botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+    				+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+			// request APIInterface to send text message to user
+    	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
+    		//}
     	    
     	} else { // unknow command
 			
