@@ -1,13 +1,10 @@
 package br.ufrn.imd.pds.data;
 
-import java.util.ArrayList;
-
 import br.ufrn.imd.pds.business.User;
 
 public interface UserDAO {
 		
-	public void createUser( User newUser );
-	
+	public void createUser( User newUser );	
 	
 	public String readUser( User user );
 	

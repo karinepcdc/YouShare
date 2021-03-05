@@ -1,13 +1,13 @@
 package br.ufrn.imd.pds.APIinterface;
 
-import com.vdurmont.emoji.EmojiParser; // to parse emojis
+//import com.vdurmont.emoji.EmojiParser; // to parse emojis
 // check emojis at: 
 //   https://emojipedia.org/beaming-face-with-smiling-eyes/
 //   https://www.webfx.com/tools/emoji-cheat-sheet/
 
 import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
-import br.ufrn.imd.pds.business.UserServices;
+//import br.ufrn.imd.pds.business.UserServices;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

@@ -11,11 +11,12 @@ public class itemHashmap {
 		itemsMap = new HashMap<String, Item>();
 	}
 
-	public HashMap<String, Item> getMapaNoticias() {
+	public HashMap<String, Item> getItemsMap() {
 		return itemsMap;
 	}
 
-	public void setMapaNoticias(HashMap<String, Item> iMap) {
-		this.itemsMap = iMap;
+	public void setItemsMap( HashMap<String, Item> itemsMap ) {
+		this.itemsMap = itemsMap;
 	}
+	
 }

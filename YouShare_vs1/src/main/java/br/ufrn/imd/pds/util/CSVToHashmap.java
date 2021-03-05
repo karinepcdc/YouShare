@@ -1,12 +1,10 @@
 package br.ufrn.imd.pds.util;
 
 import java.util.List;
+import java.util.HashMap;
 
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.User;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 public class CSVToHashmap {
 	private userHashmap userCSV;
@@ -24,33 +22,31 @@ public class CSVToHashmap {
 	}
 	
 	public void createUserHashmapFromCSV( int minLength ) {
-		System.out.println("Criando HashMap de boatos.csv...");
-		HashMap<String,Noticia> temp = new HashMap<String,Noticia>();
-		processarTextos(minLength);
+		System.out.println("Criando HashMap de userDatabase.csv...");
+		HashMap<String,User> temp = new HashMap<String,User>();
 		
-		for ( Noticia n : listaNoticias ) {
-			try {
-				temp.put( SHAConverter.stringToSha1( n.getTextoProcessado() ), n );
-			} catch ( NoSuchAlgorithmException e ) {
-				e.printStackTrace();
-			}
+		for ( User user : listUsers ) {
+			temp.put( user.getTelegramUserName(), user );
 		}
 		
-		boatosCSV.setMapaNoticias(temp);
-		System.out.println("HashMap boatosCSV criado com sucesso!");
-	}	
-	
-	public void processarTextos( Integer minLength ) {
-		for ( Noticia n : listaNoticias ) {
-			n.setTextoProcessado( StringProcessor.processString( n.getConteudo(), minLength ) );
-		}
+		userCSV.setUsersMap(temp);
+		System.out.println("HashMap userCSV criado com sucesso!");
 	}
 	
-	public void imprimeBoatosCSV() {
-		for ( String key : boatosCSV.getMapaNoticias().keySet() ) {
-		    Noticia value = boatosCSV.getMapaNoticias().get(key);
-		    System.out.println( "CHAVE:" + key + ", VALOR: " + value.getTextoProcessado() );
+	public void createItemHashmapFromCSV( int minLength ) {
+		System.out.println("Criando HashMap de itemDatabase.csv...");
+		HashMap<String,Item> temp = new HashMap<String,Item>();
+		
+		for ( Item item : listItems ) {
+			temp.put( String.valueOf( item.getCode() ), item );
 		}
+		
+		itemCSV.setItemsMap(temp);
+		System.out.println("HashMap itemCSV criado com sucesso!");
+	}
+	
+	public void imprimeCSV( HashMap<String, Object> map ) {
+		map.forEach( (key, value) -> System.out.println( key + ":" + value) );
 	}
 
 }
