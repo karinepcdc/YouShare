@@ -15,5 +15,6 @@ public interface UserDAO {
 	
 	public void deleteUser(); // basta passar user id? no caso o telegramUserName ???
 	
-	public void reviewUser( String review, Float rating, User user ); // não seria melhor insert user review ???
+	public void reviewUser( String review, Float rating, User user ); // não seria melhor add user review ???
+	
 }
