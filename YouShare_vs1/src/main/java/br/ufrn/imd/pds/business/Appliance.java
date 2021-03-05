@@ -1,16 +1,25 @@
 package br.ufrn.imd.pds.business;
 
+import java.util.ArrayList;
+
 public class Appliance extends Item {
 
-	private String termsOfUSe;
+	private String termsOfUse;
 	private int voltage;
 	
+	public Appliance ( String n, String desc, int cd, float iG, ArrayList<Float> iRat, ArrayList<String> iRev, boolean isAv, double p,
+			String tOU, int v) {
+		super(n, desc, cd, iG, iRat, iRev, isAv, p);
+		this.termsOfUse = tOU;
+		this.voltage = v;
+	}
+	
 	public String getTermsOfUSe() {
-		return termsOfUSe;
+		return termsOfUse;
 	}
 	
 	public void setTermsOfUSe(String termsOfUSe) {
-		this.termsOfUSe = termsOfUSe;
+		this.termsOfUse = termsOfUSe;
 	}
 	
 	public int getVoltage() {

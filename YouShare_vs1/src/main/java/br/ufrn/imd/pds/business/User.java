@@ -7,27 +7,25 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String telegramUserName;
-	private String password;
 	private float userGrade;
-	private ArrayList<Float> ratings;
+	private ArrayList<Float> userRatings;
 	private ArrayList<String> userReviews;
 	
-	public User ( String fName, String lName, String tUserName, String passwd ) {
+	public User ( String fName, String lName, String tUserName, float uG, ArrayList<Float> uRtgs, ArrayList<String> uR ) {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.telegramUserName = tUserName;
-		this.password = passwd;
-		this.userGrade = 0;
-		this.ratings = new ArrayList<Float>();
-		this.userReviews = new ArrayList<String>();		
+		this.userGrade = uG;
+		this.userRatings = uRtgs;
+		this.userReviews = uR;		
 	}
 			
-	public ArrayList<Float> getRatings() {
-		return ratings;
+	public ArrayList<Float> getUserRatings() {
+		return userRatings;
 	}
 
 	public void setRatings( ArrayList<Float> ratings ) {
-		this.ratings = ratings;
+		this.userRatings = ratings;
 	}
 
 	public float getUserGrade() {
@@ -66,13 +64,6 @@ public class User {
 		this.telegramUserName = telegramUserName;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public ArrayList<String> getUserReviews() {
 		return userReviews;
