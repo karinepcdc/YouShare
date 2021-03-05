@@ -10,11 +10,13 @@ public class UserServices implements FacadeUser {
 		users = new ArrayList<User>();
 	}
 	
-	public void createUser( String firstName, String lastName , String password ) {
-		User user = new User( firstName, lastName, password );
+	@Override
+	public void createUser( String firstName, String lastName , String userName, String password ) {
+		User user = new User( firstName, lastName, userName, password );
 		users.add( user );
 	}
 	
+	@Override
 	public String readUser( User user  ) {
 		String userStats = "";
 		
@@ -34,11 +36,13 @@ public class UserServices implements FacadeUser {
 		
 	}
 	
+	@Override
 	public void reviewUser( String review, Float rating, User user ) {
 		user.getUserReviews().add( review );
 		user.getRatings().add( rating );
 	}
 	
+	@Override
 	public void calculateUserGrade ( User user ) {
 		float average = 0;
 		float counter = 0;
@@ -52,4 +56,14 @@ public class UserServices implements FacadeUser {
 		
 		user.setUserGrade( average );
 	}
+
+	@Override
+	public boolean verifyPassword(String userUserName, String passwd) {
+		// TODO Auto-generated method stub
+		
+		return true;
+		
+	}
+
+	
 }

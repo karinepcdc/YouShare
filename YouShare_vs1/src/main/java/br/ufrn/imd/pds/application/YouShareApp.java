@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import br.ufrn.imd.pds.gui.YouShareGUI;
+import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 
 public class YouShareApp {
 
@@ -18,7 +18,7 @@ public class YouShareApp {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             
             // Register YouShareBot
-            botsApi.registerBot(new YouShareGUI());
+            botsApi.registerBot( new TelegramBotAPIServices() );
             
         } catch (TelegramApiException e) {
             e.printStackTrace();
