@@ -63,8 +63,9 @@ public class UserDAOMemory implements UserDAO {
                 	userNameTemp = line;
                 }
                 // TODO: throw exceptions when Strings are "void"
-                User user = new User( firstNameTemp, lastNameTemp, userNameTemp );
-                users.add( user );
+                //User user = new User( firstNameTemp, lastNameTemp, userNameTemp ); 
+                // isso não pode ser feito aqui (comunicação intercamada é apenas de camadas superiores para inferiores)
+                //users.add( user );
             }
             reader.close();
  
@@ -73,11 +74,12 @@ public class UserDAOMemory implements UserDAO {
         }
 	}
 	
-	public void createUser( String firstName, String lastName, String telegramUserName, float userGrade, 
-			ArrayList<Float> userRatings, ArrayList<String> userReviews ) {
+	public void createUser( User newUser ) {
 		
-		User user = new User( firstName, lastName, telegramUserName, userGrade, userRatings, userReviews );
-		users.add( user );
+		users.add( newUser );
+		
+		// TODO atualzar database
+		
 	}
 	
 	public String readUser( User user  ) {
@@ -101,14 +103,14 @@ public class UserDAOMemory implements UserDAO {
 	
 	public void reviewUser( String review, Float rating, User user ) {
 		user.getUserReviews().add( review );
-		user.getRatings().add( rating );
+		user.getUserRatings().add( rating );
 	}
 	
 	public void calculateUserGrade ( User user ) {
 		float average = 0;
 		float counter = 0;
 		
-		for( Float rating : user.getRatings() ) {
+		for( Float rating : user.getUserRatings() ) {
 			average += rating;
 			counter++;
 		}

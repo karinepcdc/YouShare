@@ -17,15 +17,15 @@ public interface YouShareBotFacade {
 	 * 
 	 * @return Bot answer for log purposes.
 	 */
-	public String processReceivedTextMsg( String userFirstName, String userLastName, long userId, String userTxtMsg, String chatId );
+	public String processReceivedTextMsg( String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String chatId );
 
 	/// Process callback queries (when an user press a button) and request to APIInterface to send an appropriate reply. Return bot answer/action for log purposes. - double check arguments???
-	public String processCallBackQuery( String userFirstName, String userLastName, long userId, String callbackData, String chatId );
+	public String processCallBackQuery( String userFirstName, String userLastName, String telegramUserName, String callbackData, String chatId );
 	
 	/// Request registration of the id of an image of an item advertisement from the user in the database. Return bot answer/action for log purposes.  - double check arguments???
-	public String registerAdImage( String userFirstName, String userLastName, long userId, String fileId, String chatId );
+	public String registerAdImage( String userFirstName, String userLastName, String telegramUserName, String fileId, String chatId );
 	
 	/// Print a log of messages exchanged with users.
-	public void log( String userFirstName, String userLastName, String userId, String userTxtMsg, String botAnswer );
+	public void log( String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String botAnswer );
 
 }

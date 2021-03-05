@@ -68,17 +68,17 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	String userFirstName =  update.getMessage().getChat().getFirstName();
 	    	String userLastName = update.getMessage().getChat().getLastName();
 	    	String userUserName = update.getMessage().getChat().getUserName(); // eh util ???
-	    	long userId = update.getMessage().getChat().getId();
+	    	// long userId = update.getMessage().getChat().getId();
 	    	
 	    	
 	    	// register Bot reply, for log purposes
 	    	String botAnswer = "";
 	    		    	
 	    	/// process message. Define commands
-	    	botAnswer = ysServices.processReceivedTextMsg( userFirstName, userLastName, userId, userMessageText, chatId );
+	    	botAnswer = ysServices.processReceivedTextMsg( userFirstName, userLastName, userUserName, userMessageText, chatId );
 	    	
 	    	// create messages log
-	    	ysServices.log(userFirstName, userLastName, Long.toString(userId), userMessageText, botAnswer);
+	    	ysServices.log(userFirstName, userLastName, userUserName, userMessageText, botAnswer);
 	
 	    } 
 	}

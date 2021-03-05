@@ -12,6 +12,7 @@ public class ItemDAOMemory implements ItemDAO {
 	}
 	
 	public String readItem( Item item ) {
+		return null;
 		
 	}
 	
