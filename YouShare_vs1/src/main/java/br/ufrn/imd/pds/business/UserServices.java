@@ -31,13 +31,24 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public String readUser( String telegramUserName  ) {
+	public String readUser( String telegramUserName  ) { // tá certo ???
 		
 		// check if user is register in YouShare systems 
 		if( isRegistered( telegramUserName ) ) {
-			// TODO substituir null por userDatabase.find( telegramUserName )
-			return userDatabase.readUser( null );
-		
+			// TODO return userDatabase.readUser( userDatabase.readUser( telegramUserName ) );
+			
+			/*
+			String userProfile = "";
+			
+			userProfile = "All" + user.getFirstName() + " " + user.getLastName() + " stats:"
+	    			+ "\n"
+	    			+ "\n"
+	    			+ "";
+			
+			return userProfile;
+			*/
+			return "";
+			
 		} else {
 			// TODO tratar exceção
 			return "User not registered.";
@@ -45,34 +56,69 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void updateUser(String userName) {
+	public void updateUser(String userName, String campo, String value ) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void deleteUser(String userName) {
-		// TODO Auto-generated method stub
 		
+		User userToDelete = userDatabase.readUser(userName);
+		
+		// if user is register in the database
+		if( userToDelete != null ) {
+			userDatabase.deleteUser( userToDelete );
+			
+		} else {
+			// TODO throw exception
+			// User not registered
+		}
 	}
 	
 	@Override
-	public void addUserReview( User user, float rating, String review ) {
-		// TODO Auto-generated method stub
+	public void addUserReview( String userName, int grade, String review ) {
+
+		// get user from database
+		User userToUpdate = userDatabase.readUser( userName );
+		
+		// if user is register in the database
+		if( userToUpdate != null ) {
+			
+			// get current user grade data 
+			float currentUserGrade = userToUpdate.getUserGrade();
+			
+			userToUpdate.incrementUserGradeCount(); 
+			float totalNumGrades = userToUpdate.getUserGradeCount();
+			
+			/*
+			 *  compute progressive average: 
+			 *  M_k = M_(k-1) + (x_k - M_(k-1))/k
+			 */
+			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade )/totalNumGrades;
+					
+			// update user grade average
+			userToUpdate.setUserGrade( updatedUserGrade );
+			
+			// add review - and if review is empty???
+			userToUpdate.setLastReview(review);
+			
+			// update user
+			userDatabase.updateUser( userToUpdate );
+			
+		} else {
+			// TODO throw exception
+			// User not registered
+		}
+	
 	}
 	
-	@Override
-	public void updateUserGrade ( String userName, int grade ) {
-		// TODO Auto-generated method stub
-	}
 
 
 	@Override
 	public boolean isRegistered(String userName) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDatabase.readUser( userName ) != null;
 	}
-
 
 	
 }
