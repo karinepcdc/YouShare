@@ -61,5 +61,13 @@ public class User {
 	public void setUserGradeCount(int userGradeCount) {
 		this.userGradeCount = userGradeCount;
 	}
+
+	public String getLastReview() {
+		return lastReview;
+	}
+
+	public void setLastReview(String lastReview) {
+		this.lastReview = lastReview;
+	}
 	
 }

@@ -1,7 +1,5 @@
 package br.ufrn.imd.pds.business;
 
-import java.util.ArrayList;
-
 import br.ufrn.imd.pds.data.UserDAOMemory;
 
 public class UserServices implements FacadeUser {
