@@ -31,24 +31,21 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public String readUser( String telegramUserName  ) { // tá certo ???
+	public String readUser( String userName  ) { // tá certo ???
 		
+		// get user
+		User userToString = userDatabase.readUser( userName );
+
 		// check if user is register in YouShare systems 
-		if( isRegistered( telegramUserName ) ) {
-			// TODO return userDatabase.readUser( userDatabase.readUser( telegramUserName ) );
-			
-			/*
+		if( userToString != null ) {			
 			String userProfile = "";
 			
-			userProfile = "All" + user.getFirstName() + " " + user.getLastName() + " stats:"
-	    			+ "\n"
-	    			+ "\n"
-	    			+ "";
+			userProfile = "Name: " + userToString.getFirstName() + " " + userToString.getLastName() + "\n"
+	    			+ "Grade: " + userToString.getUserGrade() + "\n"
+	    			+ "Last review: \n" + userToString.getLastReview();
 			
 			return userProfile;
-			*/
-			return "";
-			
+						
 		} else {
 			// TODO tratar exceção
 			return "User not registered.";
@@ -113,7 +110,6 @@ public class UserServices implements FacadeUser {
 	
 	}
 	
-
 
 	@Override
 	public boolean isRegistered(String userName) {

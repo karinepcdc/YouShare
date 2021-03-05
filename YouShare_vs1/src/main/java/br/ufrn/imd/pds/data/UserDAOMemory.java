@@ -32,7 +32,8 @@ public class UserDAOMemory implements UserDAO {
 	@Override
 	public void createUser( User newUser ) {
 		
-		users.add( newUser );
+		// users.add( newUser );
+		System.out.println("Usuário criado!\n"); // temp
 		
 		// TODO atualzar database
 		
@@ -41,6 +42,9 @@ public class UserDAOMemory implements UserDAO {
 	@Override
 	public User readUser(String userName) {
 		// TODO Auto-generated method stub
+
+		System.out.println("Usuário não está registrado!\n"); // temp
+
 		return null;
 	}
 	
@@ -52,6 +56,8 @@ public class UserDAOMemory implements UserDAO {
 	@Override
 	public void deleteUser( User user ) {
 		// TODO
+		System.out.println("Usuário deletado!\n"); // temp
+
 	}
 	
 	@Override

@@ -28,26 +28,26 @@ public class YouShareBotServices implements YouShareBotFacade {
     	// check if text message has bot commands
 		if( userTxtMsg.equals( "/start" ) ) {
     		
-    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
-
-			// set bot repply
-	        botAnswer = "Welcome back " + userFirstName + EmojiParser.parseToUnicode("! :grin:\n\n")
-	        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
-	        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
-	        			+ "Type /help to see the main menu.\n\n"
-	        			+ "Or, if you want to leave our community, type /unregister.";
-	        
-			
-    		//} else { // new user
-			
-    		// set bot repply
-	        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
-	        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
-	        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
-	        			+ EmojiParser.parseToUnicode("Register into our community to start sharing! :wink:\n\n")
-	        			+ "/register - subscribe in YouShare system";
-	        
-	        //}
+    		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+	
+				// set bot repply
+		        botAnswer = "Welcome back " + userFirstName + EmojiParser.parseToUnicode("! :grin:\n\n")
+		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
+		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
+		        			+ "Type /help to see the main menu.\n\n"
+		        			+ "Or, if you want to leave our community, type /unregister.";
+		        
+				
+    		} else { // new user
+				
+	    		// set bot repply
+		        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
+		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
+		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
+		        			+ EmojiParser.parseToUnicode("Register into our community to start sharing! :wink:\n\n")
+		        			+ "/register - subscribe in YouShare system";
+		        
+	        }
 	        
 	        // request APIInterface to send text message to user
 	        apiServices.sendTextMsg( chatId, botAnswer );
@@ -55,7 +55,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		} else if( userTxtMsg.equals("/help") ){
     		
     		
-    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+    		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
 
     			// define bot answer
     			botAnswer = "Select the desired action:\n\n"
@@ -65,30 +65,31 @@ public class YouShareBotServices implements YouShareBotFacade {
 		        		+ "/profile - view and edit your user profile.\n"
 		        		+ "/unregister - unsubscribe YouShare system.";
 	        
-    		//} else { // new user
+    		} else { // new user
     			
     			// define bot answer
     			botAnswer = "Select the desired action:\n\n"
     					+ "/start - welcome menu.\n"
 	        			+ "/register - subscribe in YouShare system.";
-    		//}
+    		}
     		
     		// request APIInterface to send text message to user
     	    apiServices.sendTextMsg( chatId, botAnswer );
 	        
-    	} else if( userTxtMsg.equals("/register") ){ // tratamento de excessão ???
+    	} else if( userTxtMsg.equals("/register") ){ 
       		
-    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+    		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
     		
     			// define bot answer
 				botAnswer = userFirstName + ", you are already registered in our system!"
 						+ "Type /help to see the main menu.\n"
 						+ "Or, if you want to leave our community, type /unregister.";
     		
-	    	//} else { // new user
+	    	} else { // new user
 
 				// cadastrar novo usuário
 				userServices.createUser(userFirstName, userLastName, telegramUserName);
+				// TODO tratamento de excessão ???
 				
     			// define bot answer
     			botAnswer = userFirstName + " " + userLastName + ", "
@@ -96,65 +97,65 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    				+ "Type /help to see the main menu.\n"
 	    				+ "If you changed your mind, type /unregister. ";
 	    			    
-        	//}
+        	}
 
     		// request APIInterface to send text message to user
     	    apiServices.sendTextMsg( chatId, botAnswer );
     	    
     	} else if( userTxtMsg.equals("/unregister") ){
     		
-    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
-
-    		// define bot answer
-			botAnswer = userFirstName + ", are you sure you want to unregister?\n"
-					+ "All your itens and hystory will be erased from our system!\n\n"
-					+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
+    		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+	
+	    		// define bot answer
+				botAnswer = userFirstName + ", are you sure you want to unregister?\n"
+						+ "All your itens and hystory will be erased from our system!\n\n"
+						+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
+				
+				// send msg with inline keyboard and define callback query parameters... do ???
+				
+				// callback query process in another place.... do ???
+				
 			
-			// send msg with inline keyboard and define callback query parameters... do ???
-			
-			// callback query process in another place.... do ???
-			
-			
-	    	//} else { // new user
-    		
-    		// define bot answer
-			botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
-    				+ "I didn't find you in our systems!\n\n"
-    				+ "Type /help to see the main menu.\n";
-			
-			// request APIInterface to send text message to user
-    	    apiServices.sendTextMsg( chatId, botAnswer );
-    	    
-    		//}
+	    	} else { // new user
+	    		
+	    		// define bot answer
+				botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+	    				+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}
 
     		
     	} else if( userTxtMsg.equals("/profile") ){
     		
-    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
-
-    		// define bot answer
-    		botAnswer = "This is how YouShare users see you: \n\n";
-    				// + userServices.readUser( telegramUserName );
+    		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+	
+	    		// define bot answer
+	    		botAnswer = "This is how YouShare users see you: \n\n";
+	    				// + userServices.readUser( telegramUserName );
+	    		
+	    		// a message with picture could be send here... do ???
+	    		
+	    		botAnswer = "Do you want to change your profile?\n\n"
+	    				+ "/name - change name.\n";
+	    				//+ "/picture - change picute."; // ... do ???
+	    		
+	    		// fazer mecanismo de continuar navegando num submenu.... do ???
     		
-    		// a message with picture could be send here... do ???
-    		
-    		botAnswer = "Do you want to change your profile?\n\n"
-    				+ "/name - change name.\n";
-    				//+ "/picture - change picute."; // ... do ???
-    		
-    		// fazer mecanismo de continuar navegando num submenu.... do ???
-    		
-	    	//} else { // new user
-    		
-    		// define bot answer
-			botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
-    				+ "I didn't find you in our systems!\n\n"
-    				+ "Type /help to see the main menu.\n";
-			
-			// request APIInterface to send text message to user
-    	    apiServices.sendTextMsg( chatId, botAnswer );
-    	    
-    		//}
+	    	} else { // new user
+	    		
+	    		// define bot answer
+				botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+	    				+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}
     	    
     	} else { // unknow command
 			
