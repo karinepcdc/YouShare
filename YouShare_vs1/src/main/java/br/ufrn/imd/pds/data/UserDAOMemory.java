@@ -65,12 +65,12 @@ public class UserDAOMemory implements UserDAO {
                 	userNameTemp = line;
                 }
                 // TODO: throw exceptions when Strings are "void"
-                User user = new User( firstNameTemp, lastNameTemp, userNameTemp );
+                User user = new User( fName, lName, tUserName, uG, uRtgs, uR  );
                 users.add( user );
             }
             reader.close();
  
-        } catch (IOException e) {
+        } catch ( IOException e ) {
             e.printStackTrace();
         }
 	}

@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 public class UserServices implements FacadeUser {
 	
-	ArrayList<User> users;	
-	
 	public UserServices() {
-		users = new ArrayList<User>();
 	}
 	
 	@Override

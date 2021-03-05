@@ -3,169 +3,251 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="br.ufrn.imd.pds.business.Appliance" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Appliance.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="187" width="159" x="156" y="367"/>    
+    <position height="-1" width="-1" x="276" y="1009"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="br.ufrn.imd.pds.business.FacadeBot" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/FacadeBot.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="115" width="254" x="1131" y="756"/>    
+  <class id="2" language="java" name="br.ufrn.imd.pds.data.ItemDAOMemory" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/ItemDAOMemory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="788" y="195"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" language="java" name="br.ufrn.imd.pds.data.UserDAO" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/UserDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2584" y="440"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="br.ufrn.imd.pds.business.Item" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Item.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="205" width="144" x="552" y="122"/>    
+  <interface id="4" language="java" name="br.ufrn.imd.pds.business.FacadeUser" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/FacadeUser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1356" y="440"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
-  </class>  
-  <class id="4" language="java" name="br.ufrn.imd.pds.business.PartyCloth" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/PartyCloth.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="349" width="157" x="355" y="367"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="br.ufrn.imd.pds.business.UserServices" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/UserServices.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="169" width="199" x="1619" y="122"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="br.ufrn.imd.pds.business.Tool" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Tool.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="187" width="159" x="552" y="367"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="7" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/gui/YouShareGUI.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="133" width="182" x="1278" y="122"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="br.ufrn.imd.pds.business.Costume" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Costume.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="349" width="157" x="751" y="367"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="9" language="java" name="br.ufrn.imd.pds.business.YouShareBot" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/YouShareBot.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="187" width="159" x="1425" y="367"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="10" language="java" name="br.ufrn.imd.pds.business.ChildrenToy" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/ChildrenToy.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="133" width="143" x="948" y="367"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="11" language="java" name="br.ufrn.imd.pds.business.User" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/User.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="313" width="194" x="1624" y="367"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="12" language="java" name="br.ufrn.imd.pds.business.YouShareServices" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/YouShareServices.java" binary="false" 
+  </interface>  
+  <interface id="5" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIFacade" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface/TelegramBotAPIFacade.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="133" width="254" x="1131" y="367"/>    
+    <position height="-1" width="-1" x="2015" y="431"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="6" language="java" name="br.ufrn.imd.pds.business.UserServices" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/UserServices.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1356" y="186"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="br.ufrn.imd.pds.application.YouShareApp" project="YouShare_vs1" 
+  <class id="7" language="java" name="br.ufrn.imd.pds.business.PartyCloth" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/PartyCloth.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="832" y="1090"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="8" language="java" name="br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface/YouShareBotFacade.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1675" y="431"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="9" language="java" name="br.ufrn.imd.pds.YouShareInterface.YouShareBotServices" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface/YouShareBotServices.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1675" y="159"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="br.ufrn.imd.pds.business.Tool" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Tool.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1375" y="1009"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="br.ufrn.imd.pds.business.Costume" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Costume.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1914" y="1090"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="12" language="java" name="br.ufrn.imd.pds.data.ItemDAO" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/ItemDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="545" y="440"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="13" language="java" name="br.ufrn.imd.pds.business.Item" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Item.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1004" y="620"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface/TelegramBotAPIServices.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2171" y="195"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="br.ufrn.imd.pds.business.ChildrenToy" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/ChildrenToy.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2464" y="982"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="br.ufrn.imd.pds.business.User" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2986" y="566"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="br.ufrn.imd.pds.data.UserDAOMemory" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/UserDAOMemory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2798" y="204"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="br.ufrn.imd.pds.application.YouShareApp" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/application/YouShareApp.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="97" width="120" x="274" y="122"/>    
+    <position height="-1" width="-1" x="286" y="132"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="14">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="15" name="ysServices"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="17">    
+  <class id="19" language="java" name="br.ufrn.imd.pds.YouShareInterface.YouShareBot" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface/YouShareBot.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2270" y="458"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <generalization id="21">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="13"/>  
   </generalization>  
-  <association id="18">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="19" name="users"/>      
-      <multiplicity id="20" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="21">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="2"/>  
+  <realization id="22">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="5"/>  
   </realization>  
-  <generalization id="22">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
   <association id="23">    
-    <end type="SOURCE" refId="7" navigable="false">      
+    <end type="SOURCE" refId="14" navigable="false">      
       <attribute id="24" name="ysBot"/>      
       <multiplicity id="25" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="26">    
-    <end type="SOURCE" refId="6"/>    
+  <realization id="26">    
+    <end type="SOURCE" refId="17"/>    
     <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="27">    
+  </realization>  
+  <realization id="27">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <association id="28">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="29" name="users"/>      
+      <multiplicity id="30" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="31">    
     <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="13"/>  
   </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="3"/>  
+  <generalization id="32">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <association id="33">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="34" name="items"/>      
+      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="36">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="37">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="38" name="uniqueInstance"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="40">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="13"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
