@@ -10,6 +10,12 @@
   <description>Application to facilitate the sharing / rent of items in a community.</description>
   
     <dependencies>
+    
+	<dependency>
+    	<groupId>com.opencsv</groupId>
+    	<artifactId>opencsv</artifactId>
+    	<version>5.3</version>
+	</dependency>    
 
   	<dependency>
   		<groupId>org.telegram</groupId>

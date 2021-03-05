@@ -6,8 +6,9 @@ import br.ufrn.imd.pds.data.UserDAOMemory;
 
 public class UserServices implements FacadeUser {
 	
+
 	UserDAOMemory userDatabase; /// database manager class
-	
+
 	public UserServices() {
 		
 		// instantiate database
@@ -19,13 +20,9 @@ public class UserServices implements FacadeUser {
 		
 		// cheack if user is already in the systems
 		if( !isRegistered( userName ) ) {
-
-			// instanciate user ratings array and user review array
-			ArrayList<Float> userRatings = new ArrayList<Float>();
-			ArrayList<String> userReview = new ArrayList<String>();
 			
 			// create new user
-			User newUser = new User( firstName, lastName, userName, 0, userRatings, userReview );
+			User newUser = new User( firstName, lastName, userName, 0, 0, "No reviews yet!" );
 			userDatabase.createUser( newUser );
 			
 		} else {
@@ -62,23 +59,12 @@ public class UserServices implements FacadeUser {
 	
 	@Override
 	public void addUserReview( String review, Float rating, User user ) {
-		user.getUserReviews().add( review );
-		user.getUserRatings().add( rating );
+		// TODO Auto-generated method stub
 	}
 	
 	@Override
 	public void calculateUserGrade ( User user ) {
-		float average = 0;
-		float counter = 0;
-		
-		for( Float rating : user.getUserRatings() ) {
-			average += rating;
-			counter++;
-		}
-		
-		average = average/counter;
-		
-		user.setUserGrade( average );
+		// TODO Auto-generated method stub
 	}
 
 

@@ -18,6 +18,7 @@ public class UserDAOMemory implements UserDAO {
 	private UserDAOMemory() {
 		this.fileName = "userDatabase.txt";
 		users = new ArrayList<User>();
+		startDatabase();
 	}
 	
 	/* Singleton constructor */
@@ -51,6 +52,7 @@ public class UserDAOMemory implements UserDAO {
 	    
 	    if ( fileAlreadyExists ) {
 	    	fillListFromFile();
+	    	System.out.println( "Users read from file with success." );
 	    }	    
 	 }
 	
@@ -81,7 +83,7 @@ public class UserDAOMemory implements UserDAO {
             }
             reader.close();
  
-        } catch (IOException e) {
+        } catch ( IOException e ) {
             e.printStackTrace();
         }
 	}
