@@ -18,7 +18,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 	
 	@Override
-	public String processReceivedTextMsg( String userFirstName, String userLastName, long userId, String userTxtMsg, String chatId ) {
+	public String processReceivedTextMsg( String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String chatId ) {
 
 		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
 		UserServices userServices = new UserServices();
@@ -28,7 +28,7 @@ public class YouShareBotServices implements YouShareBotFacade {
     	// check if text message has bot commands
 		if( userTxtMsg.equals( "/start" ) ) {
     		
-    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
+    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
 
 			// set bot repply
 	        botAnswer = "Welcome back " + userFirstName + EmojiParser.parseToUnicode("! :grin:\n\n")
@@ -55,14 +55,15 @@ public class YouShareBotServices implements YouShareBotFacade {
 		} else if( userTxtMsg.equals("/help") ){
     		
     		
-    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
+    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
 
     			// define bot answer
     			botAnswer = "Select the desired action:\n\n"
 		        		+ "/search - Search an item of interest.\n"
-		        		+ "/myShare - check your ads.\n"
-		        		+ "/myReservations - check your reservations history and reviews.\n\n"
-		        		+ "/edit - edit your user profile.\n";
+		        		+ "/myshare - check your ads.\n"
+		        		+ "/myreservations - check your reservations history and reviews.\n\n"
+		        		+ "/profile - view and edit your user profile.\n"
+		        		+ "/unregister - unsubscribe YouShare system.";
 	        
     		//} else { // new user
     			
@@ -77,7 +78,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        
     	} else if( userTxtMsg.equals("/register") ){ // tratamento de excessão ???
       		
-    		//if( userServices.isRegistered( userId ) ) {	// user already regitered
+    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
     		
     			// define bot answer
 				botAnswer = userFirstName + ", you are already registered in our system!"
@@ -87,7 +88,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	//} else { // new user
 
 				// cadastrar novo usuário
-				userServices.createUser(userFirstName, userLastName, Long.toString(userId), "passwd");
+				userServices.createUser(userFirstName, userLastName, telegramUserName);
 				
     			// define bot answer
     			botAnswer = userFirstName + " " + userLastName + ", "
@@ -99,6 +100,61 @@ public class YouShareBotServices implements YouShareBotFacade {
 
     		// request APIInterface to send text message to user
     	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
+    	} else if( userTxtMsg.equals("/unregister") ){
+    		
+    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+
+    		// define bot answer
+			botAnswer = userFirstName + ", are you sure you want to unregister?\n"
+					+ "All your itens and hystory will be erased from our system!\n\n"
+					+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
+			
+			// send msg with inline keyboard and define callback query parameters... do ???
+			
+			// callback query process in another place.... do ???
+			
+			
+	    	//} else { // new user
+    		
+    		// define bot answer
+			botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+    				+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+			// request APIInterface to send text message to user
+    	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
+    		//}
+
+    		
+    	} else if( userTxtMsg.equals("/profile") ){
+    		
+    		//if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+
+    		// define bot answer
+    		botAnswer = "This is how YouShare users see you: \n\n";
+    				// + userServices.readUser( telegramUserName );
+    		
+    		// a message with picture could be send here... do ???
+    		
+    		botAnswer = "Do you want to change your profile?\n\n"
+    				+ "/name - change name.\n";
+    				//+ "/picture - change picute."; // ... do ???
+    		
+    		// fazer mecanismo de continuar navegando num submenu.... do ???
+    		
+	    	//} else { // new user
+    		
+    		// define bot answer
+			botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+    				+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+			// request APIInterface to send text message to user
+    	    apiServices.sendTextMsg( chatId, botAnswer );
+    	    
+    		//}
     	    
     	} else { // unknow command
 			
@@ -178,7 +234,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 
 	@Override
-	public String processCallBackQuery(String userFirstName, String userLastName, long userId, String callbackData, String chatId ) {		
+	public String processCallBackQuery(String userFirstName, String userLastName, String telegramUserName, String callbackData, String chatId ) {		
 		// TODO Auto-generated method stub
 		
 		return "todo";		
@@ -186,7 +242,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 
 	@Override
-	public String registerAdImage(String userFirstName, String userLastName, long userId, String imageId, String chatId ) {
+	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {
 		// TODO Auto-generated method stub
 		
 		return "todo";
@@ -195,12 +251,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 	// Print YouShareBot loggings
 	@Override
-	public void log(String userFirstName, String userLastName, String userId, String userTxtMsg, String botAnswer ) {
+	public void log(String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String botAnswer ) {
 		System.out.println("\n ----------------------------");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
-        System.out.println("Message from " + userFirstName + " " + userLastName + ". (id = " + userId + ") \n Text - " + userTxtMsg);
+        System.out.println("Message from " + userFirstName + " " + userLastName + ". (id = " + telegramUserName + ") \n Text - " + userTxtMsg);
         System.out.println("Bot answer: \n Text - " + botAnswer);
         
 	}

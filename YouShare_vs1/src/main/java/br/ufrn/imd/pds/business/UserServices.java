@@ -8,9 +8,21 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void createUser( String firstName, String lastName , String userName, String password ) {
-		User user = new User( firstName, lastName, userName, password );
-		users.add( user );
+	public void createUser( String firstName, String lastName , String userName ) {
+		
+		// cheack if user is already in the systems
+		
+		// if it is, throw exception
+		
+		// if not, create user  and add it to the data base
+		
+		// instanciate user ratings array and user review array
+		ArrayList<Float> userRatings = new ArrayList<Float>();
+		ArrayList<String> userReview = new ArrayList<String>();
+		
+		// create new user
+		User newUser = new User( firstName, lastName, userName, 0, userRatings, userReview );
+		users.add( newUser );
 	}
 	
 	@Override
@@ -36,7 +48,7 @@ public class UserServices implements FacadeUser {
 	@Override
 	public void reviewUser( String review, Float rating, User user ) {
 		user.getUserReviews().add( review );
-		user.getRatings().add( rating );
+		user.getUserRatings().add( rating );
 	}
 	
 	@Override
@@ -44,7 +56,7 @@ public class UserServices implements FacadeUser {
 		float average = 0;
 		float counter = 0;
 		
-		for( Float rating : user.getRatings() ) {
+		for( Float rating : user.getUserRatings() ) {
 			average += rating;
 			counter++;
 		}
