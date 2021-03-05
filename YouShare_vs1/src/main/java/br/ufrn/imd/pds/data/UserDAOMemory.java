@@ -15,6 +15,7 @@ public class UserDAOMemory implements UserDAO {
 	public UserDAOMemory() {
 		this.fileName = "userDatabase.txt";
 		users = new ArrayList<User>();
+		startDatabase();
 	}
 	
 	public void startDatabase (){
@@ -39,6 +40,7 @@ public class UserDAOMemory implements UserDAO {
 	    
 	    if ( fileAlreadyExists ) {
 	    	fillListFromFile();
+	    	System.out.println( "Users read from file with success." );
 	    }	    
 	 }
 	
