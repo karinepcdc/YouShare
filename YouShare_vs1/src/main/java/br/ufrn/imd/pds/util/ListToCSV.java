@@ -13,7 +13,7 @@ import br.ufrn.imd.pds.business.User;
 
 public class ListToCSV {
 	
-	public static void userListToCSV ( List<User> userList ) throws IOException{
+	public static void userListToCSV ( List<User> userList ){
 		
 		List<String[]> userStrings = userToStringList ( userList );
 		
@@ -22,6 +22,9 @@ public class ListToCSV {
         }
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		} 		
 	}
 	

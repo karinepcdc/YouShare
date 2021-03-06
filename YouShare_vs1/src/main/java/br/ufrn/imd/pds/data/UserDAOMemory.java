@@ -1,10 +1,12 @@
 package br.ufrn.imd.pds.data;
 
 import java.util.List;
+import java.io.IOException;
 import java.util.HashMap;
 
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.util.CSVtoList;
+import br.ufrn.imd.pds.util.ListToCSV;
 import br.ufrn.imd.pds.util.ListToHashmap;
 
 public class UserDAOMemory implements UserDAO {
@@ -24,7 +26,6 @@ public class UserDAOMemory implements UserDAO {
 		if( uniqueInstance == null ) {
 			uniqueInstance = new UserDAOMemory();
 		}
-		
 		return uniqueInstance;
 	}
 	
@@ -33,19 +34,24 @@ public class UserDAOMemory implements UserDAO {
 	public void createUser( User newUser ) {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
-		System.out.println("Usuário criado!\n"); // temp
+		listUsers.add( newUser );
 		
-		// TODO atualizar database
-		
+		ListToCSV.userListToCSV( listUsers );
+	
+		System.out.println( "Usuário criado!\n" ); // TODO: apagar
 	}
 
 	@Override
 	public User readUser( String userName ) {
-		// TODO Auto-generated method stub
-
-		System.out.println("Usuário não está registrado!\n"); // temp
-
-		return null;
+		
+		boolean isRegistered = userMap.containsKey( userName );
+		
+		if ( isRegistered ) {
+			return userMap.get( userName );
+		} else {
+			System.out.println("Usuário não está registrado!\n"); // TODO: apagar
+			return null;
+		}	
 	}
 	
 	@Override
