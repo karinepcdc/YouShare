@@ -33,12 +33,18 @@ public class UserDAOMemory implements UserDAO {
 	public void createUser( User newUser ) {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
+		System.out.println("Usuário criado!\n"); // temp
+		
+		// TODO atualizar database
 		
 	}
 
 	@Override
 	public User readUser( String userName ) {
 		// TODO Auto-generated method stub
+
+		System.out.println("Usuário não está registrado!\n"); // temp
+
 		return null;
 	}
 	
@@ -50,6 +56,8 @@ public class UserDAOMemory implements UserDAO {
 	@Override
 	public void deleteUser( User user ) {
 		// TODO
+		System.out.println("Usuário deletado!\n"); // temp
+
 	}
 	
 	@Override
