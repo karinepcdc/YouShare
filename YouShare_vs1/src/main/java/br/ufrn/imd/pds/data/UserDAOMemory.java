@@ -32,14 +32,12 @@ public class UserDAOMemory implements UserDAO {
 	@Override
 	public void createUser( User newUser ) {
 		
-		listUsers.add( newUser );
-		
-		// TODO atualizar database
+		userMap.put( newUser.getTelegramUserName(), newUser );
 		
 	}
 
 	@Override
-	public User readUser(String userName) {
+	public User readUser( String userName ) {
 		// TODO Auto-generated method stub
 		return null;
 	}
