@@ -9,22 +9,29 @@ public interface FacadeUser {
 	 */
 	public void createUser( String firstName, String lastName , String userName );
 	
-	/// Create a YouShare system user and require it is added to the database
+	/// Read a YouShare system user and return a string with it's relevant data
 	public String readUser( String userName );
 	
 	/// Require that a YouShare user be updated from database
-	public void updateUser( String userName );
+	public void updateUser( String userName, String campo, String value );
 	
 	/// Require that a YouShare user be removed from database
 	public void deleteUser( String userName );
 	
-	
-	public void addUserReview( String review, Float rating, User user );
-	
-	/// Calculate user Grade as a progressive average - TODO check if description is correct
-	public void calculateUserGrade ( User user );
-	
-	
+	/// Register a user review and grade in the database.
+	/* 
+	 * User Grade is calculated doing a progressive average.
+	 * 
+	 * Formula:
+	 *  M_k = M_(k-1) + (x_k - M_(k-1))/k
+	 *  
+	 *  where:
+	 *  M_k = average with k terms
+	 *  x_k = kth term 
+	 *  
+	 */
+	public void addUserReview( String userName, int grade, String review );
+		
 	/// Return true if user is already registered in the database
 	public boolean isRegistered( String userName );
 	

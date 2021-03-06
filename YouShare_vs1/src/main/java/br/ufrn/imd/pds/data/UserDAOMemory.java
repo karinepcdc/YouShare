@@ -29,6 +29,7 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	
+	@Override
 	public void createUser( User newUser ) {
 		
 		listUsers.add( newUser );
@@ -36,32 +37,26 @@ public class UserDAOMemory implements UserDAO {
 		// TODO atualizar database
 		
 	}
-	
-	public String readUser( User user ) {
-		String userStats = "";
-		
-		userStats = "All" + user.getFirstName() + " " + user.getLastName() + " stats:"
-    			+ "\n"
-    			+ "\n"
-    			+ "";
-		
-		return userStats;
+
+	@Override
+	public User readUser(String userName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	public void updateUser(  ) {
-		
+	@Override
+	public void updateUser( User user ) {
+		// TODO
 	}
 	
-	public void deleteUser() {
-		
+	@Override
+	public void deleteUser( User user ) {
+		// TODO
 	}
 	
+	@Override
 	public void reviewUser( String review, Float rating, User user ) {
-		
-	}
-	
-	public void calculateUserGrade ( User user ) {
-		
+		// TODO
 	}
 
 }
