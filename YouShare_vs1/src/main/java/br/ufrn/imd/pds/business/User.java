@@ -9,7 +9,11 @@ public class User {
 	private int userGradeCount;
 	private String lastReview;
 	
-
+	/* Default constructor */
+	public User () {
+		
+	}
+	
 	public User ( String fName, String lName, String tUserName, float uG, int qt, String lRev ) {
 		this.firstName = fName;
 		this.lastName = lName;
@@ -19,6 +23,7 @@ public class User {
 		this.lastReview = lRev;		
 	}			
 
+	
 	public float getUserGrade() {
 		return userGrade;
 	}

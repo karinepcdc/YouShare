@@ -25,6 +25,11 @@ public class CSVtoList {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<User> userList = 
 			new CsvToBeanBuilder( csvReader ).withType(User.class).build().parse();
+
+		
+		System.out.println("Lista criada com sucesso...");
+
+		
 		
 		return userList;
 	}

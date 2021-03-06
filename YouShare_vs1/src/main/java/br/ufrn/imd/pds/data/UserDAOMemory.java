@@ -2,6 +2,7 @@ package br.ufrn.imd.pds.data;
 
 import java.util.List;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import br.ufrn.imd.pds.business.User;
@@ -17,8 +18,18 @@ public class UserDAOMemory implements UserDAO {
 	private static UserDAOMemory uniqueInstance;
 	
 	private UserDAOMemory() {
+		
+		System.out.println("Construtor UserDAOMemory\n");
+		listUsers = new ArrayList<User>();
 		listUsers.addAll( CSVtoList.csvToUserList() );
+		
+		
 		userMap = ListToHashmap.createHashmapFromUserList( listUsers );
+		
+		for( User u: listUsers ) {
+			
+			System.out.println("user: " + u.getFirstName() + "\n" );
+		}
 	}
 	
 	/* Singleton constructor */
