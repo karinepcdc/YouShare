@@ -10,9 +10,9 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.User;
 
-public class CSVHandler {
+public class CSVtoList {
 	
-	public static List<User> csvToUser (){
+	public static List<User> csvToUserList (){
 		System.out.println("Convertendo userDatabase.csv para instancias da classe User...");
 
 		CSVReader csvReader = null; 
@@ -29,7 +29,7 @@ public class CSVHandler {
 		return userList;
 	}
 	
-	public static List<Item> csvToItem (){
+	public static List<Item> csvToItemList (){
 		System.out.println("Convertendo itemDatabase.csv para instancias da classe Item...");
 
 		CSVReader csvReader = null; 

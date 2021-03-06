@@ -1,12 +1,10 @@
-package br.ufrn.imd.pds.util;
+package br.ufrn.imd.pds.business;
 import java.util.HashMap;
 
-import br.ufrn.imd.pds.business.User;
-
-public class userHashmap {
+public class UserHashMap {
 	public HashMap<String, User> usersMap;
 	
-	public userHashmap() {
+	public UserHashMap() {
 		usersMap = new HashMap<String, User>();
 	}
 
