@@ -1,19 +1,22 @@
 package br.ufrn.imd.pds.data;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
 
 import br.ufrn.imd.pds.business.User;
+import br.ufrn.imd.pds.util.CSVtoList;
+import br.ufrn.imd.pds.util.ListToHashmap;
 
 public class UserDAOMemory implements UserDAO {
-	ArrayList<User> users;
-	String fileName;
+	
+	private List<User> listUsers;
+	private HashMap<String, User> userMap;
 	
 	private static UserDAOMemory uniqueInstance;
 	
 	private UserDAOMemory() {
-		this.fileName = "userDatabase.txt";
-		users = new ArrayList<User>();
-		startDatabase();
+		listUsers.addAll( CSVtoList.csvToUserList() );
+		userMap = ListToHashmap.createHashmapFromUserList( listUsers );
 	}
 	
 	/* Singleton constructor */
@@ -25,17 +28,14 @@ public class UserDAOMemory implements UserDAO {
 		return uniqueInstance;
 	}
 	
-	public void startDatabase (){
-		
-	 }
 	
 	@Override
 	public void createUser( User newUser ) {
 		
-		// users.add( newUser );
 		System.out.println("Usuário criado!\n"); // temp
+		listUsers.add( newUser );
 		
-		// TODO atualzar database
+		// TODO atualizar database
 		
 	}
 
@@ -64,8 +64,5 @@ public class UserDAOMemory implements UserDAO {
 	public void reviewUser( String review, Float rating, User user ) {
 		// TODO
 	}
-
-
-
 
 }

@@ -52,11 +52,19 @@ public abstract class Item {
 		this.itemGrade = itemGrade;
 	}
 
-	public boolean isAvailable() {
+	public String getLastReview() {
+		return lastReview;
+	}
+
+	public void setLastReview(String lastReview) {
+		this.lastReview = lastReview;
+	}
+
+	public boolean getIsAvailable() {
 		return isAvailable;
 	}
 
-	public void setAvailable(boolean isAvailable) {
+	public void setIsAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 
@@ -67,6 +75,7 @@ public abstract class Item {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
 	
 	
 }
