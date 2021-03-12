@@ -6,14 +6,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
 
-public class ListToCSV {
+public class BDWriter {
 	
-	public static void userListToCSV ( List<User> userList ){
+	public static void UserHashMapToCSV ( HashMap<String, User> userMap ){
+		
+		ArrayList<User> userList = new ArrayList<User>();
+		
+		for ( Map.Entry<String,User> pair : userMap.entrySet() ) {
+			userList.add( pair.getValue() );
+		}
 		
 		List<String[]> userStrings = userToStringList ( userList );
 		
@@ -22,7 +30,7 @@ public class ListToCSV {
         }
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
-		} catch (IOException e1) {
+		} catch ( IOException e1 ) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 		
@@ -35,8 +43,8 @@ public class ListToCSV {
 			String[] s = { 	user.getFirstName(), 
 							user.getLastName(), 
 							user.getTelegramUserName(),
-							String.valueOf( user.getUserGrade() ),
-							String.valueOf( user.getUserGradeCount() ),
+							user.getUserGrade(),
+							user.getUserGradeCount(),
 							user.getLastReview()
 							};
 			strings.add(s);

@@ -1,35 +1,28 @@
 package br.ufrn.imd.pds.data;
 
-import java.util.List;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 
 import br.ufrn.imd.pds.business.User;
-import br.ufrn.imd.pds.util.CSVtoList;
-import br.ufrn.imd.pds.util.ListToCSV;
-import br.ufrn.imd.pds.util.ListToHashmap;
+import br.ufrn.imd.pds.util.BDReader;
+import br.ufrn.imd.pds.util.BDWriter;
 
 public class UserDAOMemory implements UserDAO {
 	
-	private List<User> listUsers;
 	private HashMap<String, User> userMap;
 	
 	private static UserDAOMemory uniqueInstance;
 	
 	private UserDAOMemory() {
 		
-		System.out.println("Construtor UserDAOMemory\n");
-		listUsers = new ArrayList<User>();
-		listUsers.addAll( CSVtoList.csvToUserList() );
+		System.out.println( "Construtor UserDAOMemory \n" );
 		
+		userMap = BDReader.csvToUserHashMap();
 		
-		userMap = ListToHashmap.createHashmapFromUserList( listUsers );
-		
-		for( User u: listUsers ) {
-			
-			System.out.println("user: " + u.getFirstName() + "\n" );
+		for ( Map.Entry<String,User> pair : userMap.entrySet() ) {
+			System.out.println("user: " + pair.getValue().getFirstName() + "\n" );
 		}
+
 	}
 	
 	/* Singleton constructor */
@@ -45,9 +38,9 @@ public class UserDAOMemory implements UserDAO {
 	public void createUser( User newUser ) {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
-		listUsers.add( newUser );
+		BD
+				
 		
-		ListToCSV.userListToCSV( listUsers );
 	
 		System.out.println( "Usuário criado!\n" ); // TODO: apagar
 	}

@@ -5,10 +5,9 @@ import br.ufrn.imd.pds.data.UserDAOMemory;
 public class UserServices implements FacadeUser {
 	
 
-	UserDAOMemory userDatabase; /// database manager class
+	UserDAOMemory userDatabase; // database manager class
 
-	public UserServices() {
-		
+	public UserServices() {		
 		// instantiate database
 		userDatabase = UserDAOMemory.getInstance();
 	}
@@ -20,7 +19,7 @@ public class UserServices implements FacadeUser {
 		if( !isRegistered( userName ) ) {
 			
 			// create new user
-			User newUser = new User( firstName, lastName, userName, 0, 0, "No reviews yet!" );
+			User newUser = new User( firstName, lastName, userName, "0", "0", "No reviews yet!" );
 			userDatabase.createUser( newUser );
 			
 		} else {
@@ -83,22 +82,22 @@ public class UserServices implements FacadeUser {
 		if( userToUpdate != null ) {
 			
 			// get current user grade data 
-			float currentUserGrade = userToUpdate.getUserGrade();
+			float currentUserGrade = Float.parseFloat( userToUpdate.getUserGrade() );
 			
 			userToUpdate.incrementUserGradeCount(); 
-			float totalNumGrades = userToUpdate.getUserGradeCount();
+			float totalNumGrades = Float.parseFloat( userToUpdate.getUserGradeCount() );
 			
-			/*
-			 *  compute progressive average: 
+			/*  compute progressive average: 
 			 *  M_k = M_(k-1) + (x_k - M_(k-1))/k
 			 */
+			
 			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade )/totalNumGrades;
 					
 			// update user grade average
-			userToUpdate.setUserGrade( updatedUserGrade );
+			userToUpdate.setUserGrade( Float.toString( updatedUserGrade ) );
 			
 			// add review - and if review is empty???
-			userToUpdate.setLastReview(review);
+			userToUpdate.setLastReview( review );
 			
 			// update user
 			userDatabase.updateUser( userToUpdate );

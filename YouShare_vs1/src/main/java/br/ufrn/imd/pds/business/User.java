@@ -5,8 +5,8 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String telegramUserName;
-	private float userGrade;
-	private int userGradeCount;
+	private String userGrade;
+	private String userGradeCount;
 	private String lastReview;
 	
 	/* Default constructor */
@@ -14,21 +14,20 @@ public class User {
 		
 	}
 	
-	public User ( String fName, String lName, String tUserName, float uG, int qt, String lRev ) {
+	public User ( String fName, String lName, String tUserName, String uG, String qt, String lRev ) {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.telegramUserName = tUserName;
 		this.userGrade = uG;
 		this.userGradeCount = qt;
 		this.lastReview = lRev;		
-	}			
-
+	}		
 	
-	public float getUserGrade() {
+	public String getUserGrade() {
 		return userGrade;
 	}
 
-	public void setUserGrade(float userGrade) {
+	public void setUserGrade(String userGrade) {
 		this.userGrade = userGrade;
 	}
 
@@ -45,11 +44,9 @@ public class User {
 		return lastName;
 	}
 
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 
 	public String getTelegramUserName() {
 		return telegramUserName;
@@ -59,16 +56,17 @@ public class User {
 		this.telegramUserName = telegramUserName;
 	}
 
-	public int getUserGradeCount() {
+	public String getUserGradeCount() {
 		return userGradeCount;
 	}
 
-	public void setUserGradeCount(int userGradeCount) {
+	public void setUserGradeCount(String userGradeCount) {
 		this.userGradeCount = userGradeCount;
 	}
 	
 	public void incrementUserGradeCount() {
-		this.userGradeCount++;
+		int aux = Integer.parseInt( userGradeCount );
+		userGradeCount = String.valueOf( aux++ );
 	}
 
 	public String getLastReview() {
@@ -77,8 +75,6 @@ public class User {
 
 	public void setLastReview(String lastReview) {
 		this.lastReview = lastReview;
-	}
-
-	
+	}	
 	
 }

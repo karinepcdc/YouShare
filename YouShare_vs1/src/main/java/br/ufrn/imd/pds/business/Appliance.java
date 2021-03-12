@@ -3,10 +3,10 @@ package br.ufrn.imd.pds.business;
 public class Appliance extends Item {
 
 	private String termsOfUse;
-	private int voltage;
+	private String voltage;
 	
-	public Appliance ( String n, String desc, int cd, float iG, String lRev, boolean isAv, double p,
-			String tOU, int v) {
+	public Appliance ( String n, String desc, String cd, String iG, String lRev, String isAv, String p,
+			String tOU, String v) {
 		super( n, desc, cd, iG, lRev, isAv, p );
 		this.termsOfUse = tOU;
 		this.voltage = v;
@@ -20,11 +20,11 @@ public class Appliance extends Item {
 		this.termsOfUse = termsOfUSe;
 	}
 	
-	public int getVoltage() {
+	public String getVoltage() {
 		return voltage;
 	}
 	
-	public void setVoltage(int voltage) {
+	public void setVoltage(String voltage) {
 		this.voltage = voltage;
 	}
 	

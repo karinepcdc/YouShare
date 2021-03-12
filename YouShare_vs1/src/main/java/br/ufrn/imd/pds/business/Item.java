@@ -4,13 +4,13 @@ public abstract class Item {
 
 	protected String name;
 	protected String description;
-	protected int code;
-	private float itemGrade;
+	protected String code;
+	protected String itemGrade;
 	protected String lastReview;
-	protected boolean isAvailable;
-	protected double price;
+	protected String isAvailable;
+	protected String price;
 	
-	public Item ( String n, String desc, int cd, float iG, String lRev, boolean isAv, double p ) {
+	public Item ( String n, String desc, String cd, String iG, String lRev, String isAv, String p ) {
 		this.name = n;
 		this.description = desc;
 		this.code = cd;
@@ -36,19 +36,19 @@ public abstract class Item {
 		this.description = description;
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public float getItemGrade() {
+	public String getItemGrade() {
 		return itemGrade;
 	}
 
-	public void setItemGrade(float itemGrade) {
+	public void setItemGrade(String itemGrade) {
 		this.itemGrade = itemGrade;
 	}
 
@@ -60,22 +60,20 @@ public abstract class Item {
 		this.lastReview = lastReview;
 	}
 
-	public boolean getIsAvailable() {
+	public String getIsAvailable() {
 		return isAvailable;
 	}
 
-	public void setIsAvailable(boolean isAvailable) {
+	public void setIsAvailable(String isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 
-	public double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
-	}
-	
-	
+	}	
 	
 }
