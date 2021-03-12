@@ -113,13 +113,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 				
 				// send msg with inline keyboard
 				String[] buttonsLabels = {"Yes", "No"};
-				apiServices.sendTextMsgWithInlineKeyboard(chatId, botAnswer, "unregisterConfirmation", buttonsLabels , 2, 1);
-				
-				// callback query process in another place.... do ???
-				
-				// request APIInterface to send text message to user
-	    	    //apiServices.sendTextMsg( chatId, botAnswer ); // TODO apagar depois que implementar teclado
-	    	    
+				apiServices.sendTextMsgWithInlineKeyboard(chatId, botAnswer, "unregisterConfirmation", buttonsLabels , 2, 1);	    	    
 				
 	    	} else { // new user
 	    		
@@ -246,10 +240,34 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 
 	@Override
-	public String processCallBackQuery(String userFirstName, String userLastName, String telegramUserName, String callbackData, String chatId ) {		
-		// TODO Auto-generated method stub
+	public String processCallBackQuery(String telegramUserName, String callbackData, long messageId, String chatId ) {		
+		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
+		UserServices userServices = new UserServices();
+
+		// identify callback query
+		if( callbackData.equals("Yes_unregisterConfirmation") ) {
+			
+			String botAnswer = "Done! You've been successfully unsubscribed from YouShare!";
+			
+			// unregister user
+			userServices.deleteUser(telegramUserName);
+			
+			// edit callback message confirming operation and removing buttons
+			apiServices.editTextMsg(chatId, messageId, botAnswer);
+			
+		} else if( callbackData.equals("No_unregisterConfirmation") ) {
+						
+			String botAnswer = "Yay! You're staying!";
+						
+			// edit callback message confirming operation and removing buttons
+			apiServices.editTextMsg(chatId, messageId, botAnswer);
+			
+		} else {
+			// TODO callback querry not found
+			
+		}
 		
-		return "todo";		
+		return "";	// TODO	
 	}
 
 

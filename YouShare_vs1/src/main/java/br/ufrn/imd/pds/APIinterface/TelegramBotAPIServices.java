@@ -14,10 +14,13 @@ import java.util.List;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import static java.lang.Math.toIntExact;
 
 /// Class that create the Youshare Bot as a Long Polling Bot. Define the interface with the user.
 /**
@@ -61,7 +64,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	// register Bot reply, for log purposes
 	    	String botAnswer = "";
 	    		    	
-	    	/// process message. Define commands
+	    	// process message. Define commands
 	    	botAnswer = ysServices.processReceivedTextMsg( userFirstName, userLastName, userUserName, userMessageText, chatId );
 	    	
 	    	// create messages log
@@ -71,13 +74,16 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	
 	    	// set message variables
             String call_data = update.getCallbackQuery().getData();
-            long message_id = update.getCallbackQuery().getMessage().getMessageId();
-            long chat_id = update.getCallbackQuery().getMessage().getChatId();
+	    	String userUserName = update.getCallbackQuery().getFrom().getUserName(); // used as key in YouShare systems
+            long message_id = update.getCallbackQuery().getMessage().getMessageId(); // to edit callback message and remove buttons
+            String chat_id = update.getCallbackQuery().getMessage().getChatId().toString();
+            
+            // process callback query
+            ysServices.processCallBackQuery( userUserName, call_data, message_id, chat_id );
+            
+	    	// TODO create messages log
+	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );
 
-	    	
-	    	// TODO 
-	    	System.out.println("Callback Querry identified: "
-	    			+ update.getCallbackQuery().getData() +"\n");
 	    	
 	    }
 	}
@@ -203,9 +209,21 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 
 
 	@Override
-	public void editTextMsg( String chatId, long messageId, String botTxtMsg ) {
-		// TODO Auto-generated method stub
-		
+	public void editTextMsg( String chatId, long messageId, String editedBotTxtMsg ) {        
+		// set Bot reply variables
+		EditMessageText message = new EditMessageText();
+				
+		// set message's mandatory fields of the bot's repply
+		message.setChatId(chatId);
+		message.setMessageId(toIntExact(messageId));
+		message.setText(editedBotTxtMsg);
+        
+		try {
+            execute(message); 
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+        
 	}
 	
 }
