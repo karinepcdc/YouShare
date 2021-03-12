@@ -36,6 +36,7 @@ public class ListToCSV {
 							user.getLastName(), 
 							user.getTelegramUserName(),
 							String.valueOf( user.getUserGrade() ),
+							String.valueOf( user.getUserGradeCount() ),
 							user.getLastReview()
 							};
 			strings.add(s);
@@ -48,7 +49,7 @@ public class ListToCSV {
 		
 		List<String[]> itemStrings = toolToStringList ( itemList );
 		
-		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/userDatabase.csv" ) ) ) {
+		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/itemDatabase.csv" ) ) ) {
             writer.writeAll( itemStrings );
         }
 		catch ( FileNotFoundException e ) { 

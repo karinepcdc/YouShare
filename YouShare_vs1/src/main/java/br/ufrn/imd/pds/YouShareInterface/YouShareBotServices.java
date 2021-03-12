@@ -111,11 +111,16 @@ public class YouShareBotServices implements YouShareBotFacade {
 						+ "All your itens and hystory will be erased from our system!\n\n"
 						+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
 				
-				// send msg with inline keyboard and define callback query parameters... do ???
+				// send msg with inline keyboard
+				String[] buttonsLabels = {"Yes", "No"};
+				apiServices.sendTextMsgWithInlineKeyboard(chatId, botAnswer, "unregisterConfirmation", buttonsLabels , 2, 1);
 				
 				// callback query process in another place.... do ???
 				
-			
+				// request APIInterface to send text message to user
+	    	    //apiServices.sendTextMsg( chatId, botAnswer ); // TODO apagar depois que implementar teclado
+	    	    
+				
 	    	} else { // new user
 	    		
 	    		// define bot answer
@@ -134,17 +139,23 @@ public class YouShareBotServices implements YouShareBotFacade {
     		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
 	
 	    		// define bot answer
-	    		botAnswer = "This is how YouShare users see you: \n\n";
-	    				// + userServices.readUser( telegramUserName );
+	    		botAnswer = "This is how YouShare users see you: \n\n"
+	    				 + userServices.readUser( telegramUserName );
 	    		
 	    		// a message with picture could be send here... do ???
-	    		
+
+	    		// request APIInterface to send text message to user
+	    		apiServices.sendTextMsg( chatId, botAnswer );
+
 	    		botAnswer = "Do you want to change your profile?\n\n"
 	    				+ "/name - change name.\n";
 	    				//+ "/picture - change picute."; // ... do ???
 	    		
 	    		// fazer mecanismo de continuar navegando num submenu.... do ???
     		
+	    		// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
 	    	} else { // new user
 	    		
 	    		// define bot answer

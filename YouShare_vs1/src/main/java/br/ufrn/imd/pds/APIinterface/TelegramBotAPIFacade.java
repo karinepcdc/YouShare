@@ -10,7 +10,10 @@ public interface TelegramBotAPIFacade {
 	public void sendTextMsg( String chatId, String botTxtMsg );
 
 	/// Send a text message reply with buttons to an user - double check arguments ??? 
-	public void sendTextMsgWithButtons( String chatId, String botTxtMsg, String[] buttonsLabels );
+	public void sendTextMsgWithCustomKeyboard( String chatId, String botTxtMsg, String[] buttonsLabels );
+	
+	/// Send a text message reply with buttons to an user - double check arguments ??? 
+	public void sendTextMsgWithInlineKeyboard( String chatId, String botTxtMsg, String callbackLabel, String[] buttonsLabels, int columns, int lines );
 
 	/// Send an image (from an item advertisement) with caption to an user - double check arguments ??? 
 	public void sendImage( String chatId, String caption, String fileId );
