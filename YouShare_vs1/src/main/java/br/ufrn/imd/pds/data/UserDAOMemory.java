@@ -33,7 +33,6 @@ public class UserDAOMemory implements UserDAO {
 		return uniqueInstance;
 	}
 	
-	
 	@Override
 	public void createUser( User newUser ) {
 		
@@ -52,7 +51,7 @@ public class UserDAOMemory implements UserDAO {
 		if ( isRegistered ) {
 			return userMap.get( userName );
 		} else {
-			// TODO: apagar
+			// TODO: exception?
 			System.out.println( "Usuário não está registrado! \n" ); 
 			return null;
 		}	
@@ -63,20 +62,35 @@ public class UserDAOMemory implements UserDAO {
 		User aux;
 		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
 		
-		if ( isRegistered ) {
+		if ( isRegistered ) {			
 			aux = userMap.get( user.getTelegramUserName() );
-			aux = user;
+			aux.setFirstName		( user.getFirstName() );
+			aux.setLastName			( user.getLastName() );
+			aux.setTelegramUserName	( user.getTelegramUserName() );
+			aux.setUserGrade		( user.getUserGrade() );
+			aux.setUserGradeCount	( user.getUserGradeCount() );			
+			aux.setLastReview		( user.getFirstName() );
+			
 			BDWriter.userHashMapToCSV( userMap );
+			System.out.println( "Usuário atualizado com sucesso. \n" ); 
 		} else {
-			// TODO: apagar
+			// TODO: exception?
 			System.out.println( "Usuário não está registrado! \n" ); 
 		}
+		
 	}
 	
 	@Override
 	public void deleteUser( User user ) {
-		// TODO: apagar
-		System.out.println("Usuário deletado!\n");
+		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
+		
+		if ( isRegistered ) {
+			userMap.remove( user.getTelegramUserName() );
+			BDWriter.userHashMapToCSV( userMap );
+		} else {
+			// TODO: exception?
+			System.out.println( "Usuário não está registrado! \n" ); 
+		}	
 
 	}
 	
