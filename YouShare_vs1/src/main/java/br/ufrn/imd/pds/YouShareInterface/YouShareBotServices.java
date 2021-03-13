@@ -26,6 +26,11 @@ public class YouShareBotServices implements YouShareBotFacade {
     	String botAnswer = ""; // Bot repply
 
     	// check if text message has bot commands
+    	/* BotCommand
+    	 * command: Text of the command, 1-32 characters. 
+    	 * 			Can contain only lowercase English letters, digits and underscores.
+    	 * description: Description of the command, 3-256 characters.
+    	 */
 		if( userTxtMsg.equals( "/start" ) ) {
     		
     		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
@@ -108,12 +113,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 	    		// define bot answer
 				botAnswer = userFirstName + ", are you sure you want to unregister?\n"
-						+ "All your itens and hystory will be erased from our system!\n\n"
+						+ "All your data, items and reservations will be erased from our system!\n\n"
 						+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
 				
 				// send msg with inline keyboard
 				String[] buttonsLabels = {"Yes", "No"};
-				apiServices.sendTextMsgWithInlineKeyboard(chatId, botAnswer, "unregisterConfirmation", buttonsLabels , 2, 1);	    	    
+				apiServices.sendInlineKeyboardWithCallbackButtons(chatId, botAnswer, "unregisterConfirmation", buttonsLabels , 2, 1);	    	    
 				
 	    	} else { // new user
 	    		
@@ -162,6 +167,106 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
     		}
     	    
+    	} else if( userTxtMsg.equals("/myshare")) {
+    		
+    		if( userServices.isRegistered( telegramUserName ) ) {
+    			
+    			// check if the user have ads
+    			// if( userServices.haveAds??? ) { \\ TODO methold that check if user have any ad
+    			
+    			// define bot answer
+				botAnswer = "Here are your Ads:\n";
+				
+				// list user ads in inline keyboard \\ TODO include inline keyboard 
+				
+				botAnswer += "Type the item id for more details.\n";
+				botAnswer += "To include more items type /additem.\n";
+				
+				// } else {
+				botAnswer = "You don't have any ad yet!\n";
+				botAnswer += "To include an item type /additem.\n";
+
+				// }
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}  else { // new user
+	    		
+	    		// define bot answer
+				botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+	    				+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}
+    		
+    	} else if( userTxtMsg.equals("/myreservations")) {
+    		
+    		if( userServices.isRegistered( telegramUserName ) ) {
+    			
+    			// check if the user have reservations
+    			// if( userServices.haveReservations??? ) { \\ TODO methold that check if user have any reservation
+    			
+    			// define bot answer
+				botAnswer = "Here are the items you have solicited a reservation:\n";
+				
+				// list user ads in inline keyboard \\ TODO include inline keyboard 
+				
+				botAnswer += "Type the reservation id for more details.\n";
+				botAnswer += "If you would like to cancel a reservation, type /cancelreservation.\n\n";
+				botAnswer += "Type /search to find more items!\n";
+				
+				// } else {
+				botAnswer = "You don't have any reservation yet!\n";
+				botAnswer += "Type /search to find an items!\n";
+
+				// }
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}  else { // new user
+	    		
+	    		// define bot answer
+				botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+	    				+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}
+
+    	} else if( userTxtMsg.equals("/search")) {
+    		
+    		if( userServices.isRegistered( telegramUserName ) ) {
+    			
+    			// define bot answer
+				botAnswer = "Which item are you interested?\n";
+				
+				// list user ads in inline keyboard \\ TODO include inline keyboard 
+				// such that the person don't need to send the message to do the search
+				
+				//botAnswer += "Type the item id for more details.\n"; \\ TODO como pões essa msg???
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}  else { // new user
+	    		
+	    		// define bot answer
+				botAnswer = "Hello " + userFirstName + " " + userLastName + ", "
+	    				+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+				// request APIInterface to send text message to user
+	    	    apiServices.sendTextMsg( chatId, botAnswer );
+	    	    
+    		}
+
     	} else { // unknow command
 			
 			// set message mandatory fields
