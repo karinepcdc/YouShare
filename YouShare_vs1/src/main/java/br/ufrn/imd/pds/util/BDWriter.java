@@ -15,7 +15,7 @@ import br.ufrn.imd.pds.business.User;
 
 public class BDWriter {
 	
-	public static void UserHashMapToCSV ( HashMap<String, User> userMap ){
+	public static void userHashMapToCSV ( HashMap<String, User> userMap ){
 		
 		ArrayList<User> userList = new ArrayList<User>();
 		
@@ -31,9 +31,28 @@ public class BDWriter {
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
 		} catch ( IOException e1 ) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 		
+	}
+	
+	public static void toolHashMapToCSV ( HashMap<String, Tool> toolMap ) {
+		
+		ArrayList<Tool> toolList = new ArrayList<Tool>();
+		
+		for ( Map.Entry<String,Tool> pair : toolMap.entrySet() ) {
+			toolList.add( pair.getValue() );
+		}
+		
+		List<String[]> toolStrings = toolToStringList ( toolList );
+		
+		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/itemDatabase.csv" ) ) ) {
+            writer.writeAll( toolStrings );
+        }
+		catch ( FileNotFoundException e ) { 
+			e.printStackTrace(); 
+		} catch ( IOException e1 ) {
+			e1.printStackTrace();
+		}
 	}
 	
 	public static List<String[]> userToStringList ( List<User> userList ){
@@ -53,30 +72,18 @@ public class BDWriter {
 		return strings;
 	}
 	
-	public static void toolListToCSV ( List<Tool> itemList ) throws IOException{
-		
-		List<String[]> itemStrings = toolToStringList ( itemList );
-		
-		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/itemDatabase.csv" ) ) ) {
-            writer.writeAll( itemStrings );
-        }
-		catch ( FileNotFoundException e ) { 
-			e.printStackTrace(); 
-		} 		
-	}
-	
 	public static List<String[]> toolToStringList ( List<Tool> toolList ){
 		List<String[]> strings = new ArrayList<String[]>();
 		
 		for ( Tool tool : toolList ) { // description, code, itemGrade, lastReview, isAvailable, price, termsOfUse, voltage
 			String[] s = { 	tool.getDescription(),
-							String.valueOf( tool.getCode() ),
-							String.valueOf( tool.getItemGrade() ),
+							tool.getCode(),
+							tool.getItemGrade(),
 							tool.getLastReview(),
-							String.valueOf( tool.getIsAvailable() ),
-							String.valueOf( tool.getPrice() ),
+							tool.getIsAvailable(),
+							tool.getPrice(),
 							tool.getTermsOfUse(),
-							String.valueOf( tool.getVoltage() )
+							tool.getVoltage()
 							};
 			strings.add(s);
 		}
@@ -84,6 +91,4 @@ public class BDWriter {
 		return strings;
 	}
 	
-	
-
 }

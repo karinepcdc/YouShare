@@ -38,11 +38,10 @@ public class UserDAOMemory implements UserDAO {
 	public void createUser( User newUser ) {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
-		BD
-				
+		BDWriter.userHashMapToCSV( userMap );				
 		
-	
-		System.out.println( "Usuário criado!\n" ); // TODO: apagar
+		// TODO: apagar
+		System.out.println( "Usuário criado! \n" ); 
 	}
 
 	@Override
@@ -53,20 +52,31 @@ public class UserDAOMemory implements UserDAO {
 		if ( isRegistered ) {
 			return userMap.get( userName );
 		} else {
-			System.out.println("Usuário não está registrado!\n"); // TODO: apagar
+			// TODO: apagar
+			System.out.println( "Usuário não está registrado! \n" ); 
 			return null;
 		}	
 	}
 	
 	@Override
 	public void updateUser( User user ) {
-		// TODO
+		User aux;
+		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
+		
+		if ( isRegistered ) {
+			aux = userMap.get( user.getTelegramUserName() );
+			aux = user;
+			BDWriter.userHashMapToCSV( userMap );
+		} else {
+			// TODO: apagar
+			System.out.println( "Usuário não está registrado! \n" ); 
+		}
 	}
 	
 	@Override
 	public void deleteUser( User user ) {
-		// TODO
-		System.out.println("Usuário deletado!\n"); // temp
+		// TODO: apagar
+		System.out.println("Usuário deletado!\n");
 
 	}
 	
