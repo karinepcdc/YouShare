@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,9 @@ public class BDWriter {
 		List<String[]> userStrings = userToStringList ( userList );
 		
 		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/userDatabase.csv" ) ) ) {
-            writer.writeAll( userStrings );
+            writer.writeNext( new String[] {"firstName","lastName","telegramUserName"
+            		,"userGrade","userGradeCount","lastReview"} );
+			writer.writeAll( userStrings );
         }
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
@@ -39,12 +42,15 @@ public class BDWriter {
 		
 		ArrayList<Tool> toolList = new ArrayList<Tool>();
 		
+		// put tools from toolMap in a list
 		for ( Map.Entry<String,Tool> pair : toolMap.entrySet() ) {
 			toolList.add( pair.getValue() );
 		}
 		
+		// transform Tools objects in a list of strings
 		List<String[]> toolStrings = toolToStringList ( toolList );
 		
+		// write toolStrings to file
 		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/itemDatabase.csv" ) ) ) {
             writer.writeAll( toolStrings );
         }
@@ -72,9 +78,11 @@ public class BDWriter {
 		return strings;
 	}
 	
+	/// function that tells how to write a Tool in a CSV file
 	public static List<String[]> toolToStringList ( List<Tool> toolList ){
 		List<String[]> strings = new ArrayList<String[]>();
 		
+		// define what are the Tool's attributes to be read
 		for ( Tool tool : toolList ) { // description, code, itemGrade, lastReview, isAvailable, price, termsOfUse, voltage
 			String[] s = { 	tool.getDescription(),
 							tool.getCode(),
