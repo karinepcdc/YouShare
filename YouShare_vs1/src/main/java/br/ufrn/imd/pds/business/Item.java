@@ -1,20 +1,39 @@
 package br.ufrn.imd.pds.business;
 
+import com.opencsv.bean.CsvBindByName;
+
 public abstract class Item {
 
-	protected String name;
-	protected String description;
-	protected String code;
-	protected String itemGrade;
-	protected String lastReview;
-	protected String isAvailable;
-	protected String price;
+	@CsvBindByName
+	protected String name; /// item name
 	
-	public Item ( String n, String desc, String cd, String iG, String lRev, String isAv, String p ) {
+	@CsvBindByName
+	protected String description; /// item description
+	
+	@CsvBindByName
+	protected String code; /// used as id in the database
+	
+	@CsvBindByName
+	protected String itemGrade; /// average of grades received evaluating item performance
+	
+	@CsvBindByName
+	private String itemGradeCount; /// total number of grades 
+	
+	@CsvBindByName
+	protected String lastReview; /// last review received when he returned an item
+	
+	@CsvBindByName
+	protected String isAvailable; /// is item available for rent?
+	
+	@CsvBindByName
+	protected String price; /// rent price, set zero is it is borroed
+	
+	public Item ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p ) {
 		this.name = n;
 		this.description = desc;
 		this.code = cd;
 		this.itemGrade = iG;
+		this.itemGradeCount = iGC;
 		this.lastReview = lRev;
 		this.isAvailable = isAv;
 		this.price = p;
@@ -50,6 +69,14 @@ public abstract class Item {
 
 	public void setItemGrade(String itemGrade) {
 		this.itemGrade = itemGrade;
+	}
+
+	public String getItemGradeCount() {
+		return itemGradeCount;
+	}
+
+	public void setItemGradeCount(String itemGradeCount) {
+		this.itemGradeCount = itemGradeCount;
 	}
 
 	public String getLastReview() {

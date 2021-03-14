@@ -5,9 +5,9 @@ public class Appliance extends Item {
 	private String termsOfUse;
 	private String voltage;
 	
-	public Appliance ( String n, String desc, String cd, String iG, String lRev, String isAv, String p,
+	public Appliance ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p,
 			String tOU, String v) {
-		super( n, desc, cd, iG, lRev, isAv, p );
+		super( n, desc, cd, iG, iGC, lRev, isAv, p );
 		this.termsOfUse = tOU;
 		this.voltage = v;
 	}

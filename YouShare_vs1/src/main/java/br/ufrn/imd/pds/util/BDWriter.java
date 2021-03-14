@@ -24,14 +24,21 @@ public class BDWriter {
 			userList.add( pair.getValue() );
 		}
 		
+		// transform user objects in a list of strings
 		List<String[]> userStrings = userToStringList ( userList );
-		
-		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/userDatabase.csv" ) ) ) {
-            writer.writeNext( new String[] {"firstName","lastName","telegramUserName"
-            		,"userGrade","userGradeCount","lastReview"} );
-			writer.writeAll( userStrings );
-        }
-		catch ( FileNotFoundException e ) { 
+		try {
+			// write header
+			FileWriter writer = new FileWriter( "src/main/csv/userDatabase.csv");
+			writer.write( "firstName,lastName,telegramUserName,userGrade,userGradeCount,lastReview\n");
+			
+			// write database
+			CSVWriter csvWriter = new CSVWriter( writer ); 
+			csvWriter.writeAll( userStrings );
+			
+			// close writers
+			csvWriter.close();
+			writer.close();
+        } catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
 		} catch ( IOException e1 ) {
 			e1.printStackTrace();
@@ -50,20 +57,30 @@ public class BDWriter {
 		// transform Tools objects in a list of strings
 		List<String[]> toolStrings = toolToStringList ( toolList );
 		
-		// write toolStrings to file
-		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/itemDatabase.csv" ) ) ) {
-            writer.writeAll( toolStrings );
-        }
-		catch ( FileNotFoundException e ) { 
+		try {
+			// write header
+			FileWriter writer = new FileWriter( "src/main/csv/itemDatabase.csv");
+			writer.write( "name,description,code,itemGrade,itemGradeCount,lastReview,isAvailable,price,termsOfUse,voltage\n" );
+						
+			// write database
+			CSVWriter csvWriter = new CSVWriter( writer );
+            csvWriter.writeAll( toolStrings );
+            
+            // close writers
+            csvWriter.close();
+            writer.close();
+        } catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
 		} catch ( IOException e1 ) {
 			e1.printStackTrace();
 		}
 	}
 	
+	/// function that tells how to write a User into a CSV file
 	public static List<String[]> userToStringList ( List<User> userList ){
 		List<String[]> strings = new ArrayList<String[]>();
 		
+		// define what are the User's attributes to be read
 		for ( User user : userList ) {
 			String[] s = { 	user.getFirstName(), 
 							user.getLastName(), 
@@ -78,15 +95,17 @@ public class BDWriter {
 		return strings;
 	}
 	
-	/// function that tells how to write a Tool in a CSV file
+	/// function that tells how to write a Tool into a CSV file
 	public static List<String[]> toolToStringList ( List<Tool> toolList ){
 		List<String[]> strings = new ArrayList<String[]>();
 		
 		// define what are the Tool's attributes to be read
-		for ( Tool tool : toolList ) { // description, code, itemGrade, lastReview, isAvailable, price, termsOfUse, voltage
-			String[] s = { 	tool.getDescription(),
+		for ( Tool tool : toolList ) { // name, description, code, itemGrade, itemGradeCount, lastReview, isAvailable, price, termsOfUse, voltage
+			String[] s = { 	tool.getName(),
+							tool.getDescription(),
 							tool.getCode(),
 							tool.getItemGrade(),
+							tool.getItemGradeCount(),
 							tool.getLastReview(),
 							tool.getIsAvailable(),
 							tool.getPrice(),
