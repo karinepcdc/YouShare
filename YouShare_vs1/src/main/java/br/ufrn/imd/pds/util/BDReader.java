@@ -10,8 +10,10 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.bean.CsvToBeanFilter;
 
 import br.ufrn.imd.pds.business.Item;
+import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
 
 public class BDReader {
@@ -67,22 +69,29 @@ public class BDReader {
 	}
 	
 	public static HashMap<String,Item> csvToItemHashMap (){
-		System.out.println("Convertendo itemDatabase.csv para instancias da classe Item...");
+		System.out.println("Convertendo todos os bancos de dados de objetos itens para instancias da classe Item...");
 
-		// check if database file exist, if not, create it
-		File itemDatabaseFile = new File("src/main/csv/itemDatabase.csv");
+		// check if database files exist, if not, create them
+		File partyClothDatabaseFile = new File("src/main/csv/partyClothDatabase.csv");
+		File costumeDatabaseFile = new File("src/main/csv/costumeDatabase.csv");
+		File childrenToyDatabaseFile = new File("src/main/csv/childrenToyDatabase.csv");
+		File applianceDatabaseFile = new File("src/main/csv/applianceDatabase.csv");
+		File toolDatabaseFile = new File("src/main/csv/toolDatabase.csv");
+		
+		// Tool database
+		// check if database file already exist
 		try {
-			if( itemDatabaseFile.createNewFile() ) {
+			if( toolDatabaseFile.createNewFile() ) {
 				// write header
 				try {
-					FileWriter writer = new FileWriter( itemDatabaseFile );
+					FileWriter writer = new FileWriter( toolDatabaseFile );
 					writer.write( "name,description,code,itemGrade,itemGradeCount,lastReview,isAvailable,price,termsOfUse,voltage\n");
 					writer.close();
-					System.out.println("Item database file created!\n");
+					System.out.println("Tool database file created!\n");
 				} catch ( IOException e1 ) {
-					System.out.println("An error has occurred trying to write the item database header.\n");
+					System.out.println("An error has occurred trying to write the Tool database header.\n");
 					e1.printStackTrace();
-					} 		
+				} 		
 			}
 		} catch ( IOException e ) {
 			System.out.println("An error occurred trying to create item database file.\n");
@@ -92,17 +101,19 @@ public class BDReader {
 		// Prepare to read the file	
 		FileReader csvFile = null; 
 		try { 
-			csvFile = new FileReader( itemDatabaseFile ); 
+			csvFile = new FileReader( toolDatabaseFile ); 
 		} 
 		catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
 		} 	
 		
+		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Item> itemList = new CsvToBeanBuilder( csvFile ).withType(Item.class).build().parse();
+		List<Item> itemList = new CsvToBeanBuilder( csvFile ).withType(Tool.class).build().parse();
 		
-		System.out.println("Is item list empty? " + itemList.isEmpty() + "\n" );		
-
+		System.out.println("Is Tool list empty? " + itemList.isEmpty() + "\n" );	
+		
+		// build hashmap
 		HashMap<String,Item> itemMap = new HashMap<String,Item>();
 		
 		for ( Item item : itemList ) {

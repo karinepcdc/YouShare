@@ -1,24 +1,39 @@
 package br.ufrn.imd.pds.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.ufrn.imd.pds.business.Item;
+import br.ufrn.imd.pds.util.BDReader;
 
 public class ItemDAOMemory implements ItemDAO {
 	
-	ArrayList<Item> items;
-	String fileName;
+	private HashMap<String, Item> itemMap;
 	
+	private static ItemDAOMemory uniqueInstance;
+	
+	/* Default constructor */
 	public ItemDAOMemory() {
-		this.fileName = "itemDatabase.txt";
-		items = new ArrayList<Item>();
-		startDatabase();
+		System.out.println( "ItemDAOMemory's constructor \n" );
+		
+		// start user database
+		itemMap = BDReader.csvToItemHashMap();
+		
+		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+			System.out.println("item: " + pair.getValue().getName() + "\n" );
+		}
+		
 	}
 	
-	public void startDatabase (){
-		
-		
+	/* Singleton constructor */
+	public static synchronized ItemDAOMemory getInstance() {
+		if( uniqueInstance == null ) {
+			uniqueInstance = new ItemDAOMemory();
+		}
+		return uniqueInstance;
 	}
+
 	
 	public void createItem( String name, String description, int code, float itemGrade, ArrayList<Float> itemRatings, 
 			ArrayList<String> itemReviews, boolean isAvailable, double price ) {

@@ -6,6 +6,7 @@ import java.util.Date;
 import com.vdurmont.emoji.EmojiParser; // to parse emojis
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
+import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.UserServices;
 
 public class YouShareBotServices implements YouShareBotFacade {
@@ -22,6 +23,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
 		UserServices userServices = new UserServices();
+		ItemServices itemServices = new ItemServices();
 		
     	String botAnswer = ""; // Bot repply
 
@@ -186,6 +188,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 				botAnswer = "You don't have any ad yet!\n";
 				botAnswer += "To include an item type /additem.\n";
 
+				
+				
 				// }
 				
 				// request APIInterface to send text message to user

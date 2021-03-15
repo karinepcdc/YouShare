@@ -1,7 +1,10 @@
 package br.ufrn.imd.pds.business;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class ChildrenToy extends Item {
 
+	@CsvBindByName
 	private String condition;
 	
 	public ChildrenToy ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p,
