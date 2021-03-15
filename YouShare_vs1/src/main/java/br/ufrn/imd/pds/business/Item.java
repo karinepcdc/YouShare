@@ -17,7 +17,7 @@ public abstract class Item {
 	protected String itemGrade; /// average of grades received evaluating item performance
 	
 	@CsvBindByName
-	private String itemGradeCount; /// total number of grades 
+	protected String itemGradeCount; /// total number of grades 
 	
 	@CsvBindByName
 	protected String lastReview; /// last review received when he returned an item
@@ -27,6 +27,9 @@ public abstract class Item {
 	
 	@CsvBindByName
 	protected String price; /// rent price, set zero is it is borroed
+	
+	/* Constructor Default */
+	public Item () {}
 	
 	public Item ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p ) {
 		this.name = n;

@@ -1,3 +1,3 @@
-name, description, code, itemGrade, lastReview, isAvailable, price, termsOfUse, voltage
-"Hammer","Regular hammer", "1", "5.0", "great tool", "true", "1.00", "use it to hammer things", "none"
-"Drill","Boch drill", "2", "4.5", "great drill", "false", "5.00", "push button to drill stuff", "220" 
+name,description,code,itemGrade,itemGradeCount,lastReview,isAvailable,price,termsOfUse,voltage
+"Hammer","Regular hammer","1","5.0","1","great tool","true","1.00","use it to hammer things","none"
+"Drill","Boch drill","2","4.5","3","great drill","false","5.00","push button to drill stuff","220" 

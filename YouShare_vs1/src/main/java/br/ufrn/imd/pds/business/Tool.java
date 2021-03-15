@@ -10,6 +10,12 @@ public class Tool extends Item {
 	@CsvBindByName
 	private String voltage;
 	
+	/* Constructor Default */
+	public Tool () {
+		super();
+	}
+	
+	/* Constructor */
 	public Tool ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p,
 			String tOU, String v) {
 		super( n, desc, cd, iG, iGC, lRev, isAv, p );

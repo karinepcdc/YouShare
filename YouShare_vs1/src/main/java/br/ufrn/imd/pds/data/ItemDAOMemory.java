@@ -20,10 +20,6 @@ public class ItemDAOMemory implements ItemDAO {
 		// start user database
 		itemMap = BDReader.csvToItemHashMap();
 		
-		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
-			System.out.println("item: " + pair.getValue().getName() + "\n" );
-		}
-		
 	}
 	
 	/* Singleton constructor */

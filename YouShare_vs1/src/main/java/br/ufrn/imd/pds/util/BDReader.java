@@ -72,10 +72,6 @@ public class BDReader {
 		System.out.println("Convertendo todos os bancos de dados de objetos itens para instancias da classe Item...");
 
 		// check if database files exist, if not, create them
-		File partyClothDatabaseFile = new File("src/main/csv/partyClothDatabase.csv");
-		File costumeDatabaseFile = new File("src/main/csv/costumeDatabase.csv");
-		File childrenToyDatabaseFile = new File("src/main/csv/childrenToyDatabase.csv");
-		File applianceDatabaseFile = new File("src/main/csv/applianceDatabase.csv");
 		File toolDatabaseFile = new File("src/main/csv/toolDatabase.csv");
 		
 		// Tool database
@@ -109,7 +105,7 @@ public class BDReader {
 		
 		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Item> itemList = new CsvToBeanBuilder( csvFile ).withType(Tool.class).build().parse();
+		List<Tool> itemList = new CsvToBeanBuilder( csvFile ).withType(Tool.class).build().parse();
 		
 		System.out.println("Is Tool list empty? " + itemList.isEmpty() + "\n" );	
 		
@@ -124,6 +120,7 @@ public class BDReader {
 		System.out.println("Item HashMap successfully created.");
 		
 		return itemMap;
+		
 	}
 
 }
