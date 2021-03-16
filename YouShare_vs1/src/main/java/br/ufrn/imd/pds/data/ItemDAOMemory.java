@@ -31,6 +31,10 @@ public class ItemDAOMemory implements ItemDAO {
 		
 	}
 
+
+	/*
+	 * TODO Exception in data layer: DAOS concretos lançam exceções de acesso ao banco de dados;
+	 */
 	
 	public void createItem( Item newItem ) {
 		
@@ -48,11 +52,11 @@ public class ItemDAOMemory implements ItemDAO {
 		
 	}
 	
-	public void updateItem() {
+	public void updateItem(Item item) {
 		
 	}
 	
-	public void deleteItem() {
+	public void deleteItem(Item item) {
 		
 	}
 	
