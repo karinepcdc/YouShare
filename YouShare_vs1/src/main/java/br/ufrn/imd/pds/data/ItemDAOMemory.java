@@ -1,7 +1,7 @@
 package br.ufrn.imd.pds.data;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.util.BDReader;
@@ -36,6 +36,7 @@ public class ItemDAOMemory implements ItemDAO {
 	 * TODO Exception in data layer: DAOS concretos lançam exceções de acesso ao banco de dados;
 	 */
 	
+	@Override
 	public void createItem( Item newItem ) {
 		
 		// add Item to item map
@@ -47,21 +48,28 @@ public class ItemDAOMemory implements ItemDAO {
 		
 	}
 	
-	public String readItem( Item item ) {
+	@Override
+	public Item readItem(String code) {
+		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Item> readAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public void updateItem(Item item, String[] params) {
 		
 	}
 	
-	public void updateItem(Item item) {
-		
-	}
-	
+	@Override
 	public void deleteItem(Item item) {
 		
 	}
 	
-	public void reviewItem( String review, Float rating, Item item ) {
-		
-	}
+	
 
 }

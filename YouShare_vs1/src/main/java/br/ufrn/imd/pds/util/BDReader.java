@@ -8,9 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 
-import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.CsvToBeanFilter;
 
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
