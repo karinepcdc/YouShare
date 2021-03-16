@@ -188,7 +188,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 				botAnswer = "You don't have any ad yet!\n";
 				botAnswer += "To include an item type /additem.\n";
 
-				
+				itemServices.createItem("", "", "", "", "");	
 				
 				// }
 				

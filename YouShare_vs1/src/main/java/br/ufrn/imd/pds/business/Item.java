@@ -14,24 +14,24 @@ public abstract class Item {
 	protected String code; /// used as id in the database
 	
 	@CsvBindByName
-	protected String itemGrade; /// average of grades received evaluating item performance
+	protected double itemGrade; /// average of grades received evaluating item performance
 	
 	@CsvBindByName
-	protected String itemGradeCount; /// total number of grades 
+	protected int itemGradeCount; /// total number of grades 
 	
 	@CsvBindByName
 	protected String lastReview; /// last review received when he returned an item
 	
 	@CsvBindByName
-	protected String isAvailable; /// is item available for rent?
+	protected boolean isAvailable; /// is item available for rent?
 	
 	@CsvBindByName
-	protected String price; /// rent price, set zero is it is borroed
+	protected double price; /// rent price, set zero is it is borroed
 	
 	/* Constructor Default */
 	public Item () {}
 	
-	public Item ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p ) {
+	public Item ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p ) {
 		this.name = n;
 		this.description = desc;
 		this.code = cd;
@@ -66,20 +66,28 @@ public abstract class Item {
 		this.code = code;
 	}
 
-	public String getItemGrade() {
+	public double getItemGrade() {
 		return itemGrade;
 	}
 
-	public void setItemGrade(String itemGrade) {
+	public void setItemGrade(double itemGrade) {
 		this.itemGrade = itemGrade;
 	}
 
-	public String getItemGradeCount() {
+	public int getItemGradeCount() {
 		return itemGradeCount;
 	}
 
-	public void setItemGradeCount(String itemGradeCount) {
+	public void setItemGradeCount(int itemGradeCount) {
 		this.itemGradeCount = itemGradeCount;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
 	public String getLastReview() {
@@ -90,19 +98,11 @@ public abstract class Item {
 		this.lastReview = lastReview;
 	}
 
-	public String getIsAvailable() {
-		return isAvailable;
-	}
-
-	public void setIsAvailable(String isAvailable) {
-		this.isAvailable = isAvailable;
-	}
-
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}	
 	

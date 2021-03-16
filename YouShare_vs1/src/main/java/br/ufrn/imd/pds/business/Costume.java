@@ -19,7 +19,7 @@ public class Costume extends Item {
 	@CsvBindByName
 	private String partyStyle;
 	
-	public Costume ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p,
+	public Costume ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
 			String tOU, String c, String s, String cStyle, String pStyle ) {
 		super( n, desc, cd, iG, iGC, lRev, isAv, p );
 		this.termsOfUse = tOU;

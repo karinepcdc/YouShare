@@ -16,7 +16,7 @@ public class Tool extends Item {
 	}
 	
 	/* Constructor */
-	public Tool ( String n, String desc, String cd, String iG, String iGC, String lRev, String isAv, String p,
+	public Tool ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
 			String tOU, String v) {
 		super( n, desc, cd, iG, iGC, lRev, isAv, p );
 		this.termsOfUse = tOU;

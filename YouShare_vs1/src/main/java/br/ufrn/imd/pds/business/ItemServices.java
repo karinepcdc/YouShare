@@ -15,6 +15,10 @@ public class ItemServices implements FacadeItem {
 	@Override
 	public void createItem(String name, String description, String code, String isAvailable, String price) {
 		// TODO Auto-generated method stub
+		
+		
+		Tool newTool = new Tool("Electric sander3", "Good electric sander", "0223", 0.0, 0, "none yet", true, 12, "dont spoil", "220");
+		itemDatabase.createItem( newTool );
 	}
 
 	@Override

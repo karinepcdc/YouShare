@@ -69,25 +69,14 @@ public class BDReader {
 	}
 	
 	public static HashMap<String,Item> csvToItemHashMap (){
-		System.out.println("Convertendo todos os bancos de dados de objetos itens para instancias da classe Item...");
-
-		// check if database files exist, if not, create them
-		File toolDatabaseFile = new File("src/main/csv/toolDatabase.csv");
+		// TODO only Tool database inplemented. Do the others
 		
 		// Tool database
-		// check if database file already exist
+		// check if database files exist, if not, create them
+		File toolDatabaseFile = new File("src/main/csv/toolDatabase.csv");
 		try {
 			if( toolDatabaseFile.createNewFile() ) {
-				// write header
-				try {
-					FileWriter writer = new FileWriter( toolDatabaseFile );
-					writer.write( "name,description,code,itemGrade,itemGradeCount,lastReview,isAvailable,price,termsOfUse,voltage\n");
-					writer.close();
-					System.out.println("Tool database file created!\n");
-				} catch ( IOException e1 ) {
-					System.out.println("An error has occurred trying to write the Tool database header.\n");
-					e1.printStackTrace();
-				} 		
+				System.out.println("Tool database file created!\n");	
 			}
 		} catch ( IOException e ) {
 			System.out.println("An error occurred trying to create item database file.\n");
@@ -106,21 +95,17 @@ public class BDReader {
 		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Tool> itemList = new CsvToBeanBuilder( csvFile ).withType(Tool.class).build().parse();
-		
-		System.out.println("Is Tool list empty? " + itemList.isEmpty() + "\n" );	
-		
+				
 		// build hashmap
 		HashMap<String,Item> itemMap = new HashMap<String,Item>();
 		
+		// TODO delete prints latter
 		for ( Item item : itemList ) {
 			itemMap.put( item.getCode(), item );
-			System.out.println("item: " + item.getName() + " read\n" );
+			System.out.println("item: " + item.getName() + " R$" + item.getPrice() + " read\n" );
 		}
 		
-		System.out.println("Item HashMap successfully created.");
-		
-		return itemMap;
-		
+		return itemMap;		
 	}
 
 }
