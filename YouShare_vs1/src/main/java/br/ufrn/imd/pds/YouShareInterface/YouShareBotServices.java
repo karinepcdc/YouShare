@@ -8,6 +8,7 @@ import com.vdurmont.emoji.EmojiParser; // to parse emojis
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.UserServices;
+import br.ufrn.imd.pds.exceptions.DataException;
 
 public class YouShareBotServices implements YouShareBotFacade {
 	
@@ -23,7 +24,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
 		UserServices userServices = new UserServices();
-		ItemServices itemServices = new ItemServices();
+		ItemServices itemServices;
 		
     	String botAnswer = ""; // Bot repply
 
@@ -188,7 +189,14 @@ public class YouShareBotServices implements YouShareBotFacade {
 				botAnswer = "You don't have any ad yet!\n";
 				botAnswer += "To include an item type /additem.\n";
 
-				itemServices.createItem("", "", "", "", "");	
+				// TODO maybe this should be in a controler class
+				try {
+					itemServices = new ItemServices();
+					itemServices.createItem("", "", "", "", "");
+				} catch (DataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 				
 				// }
 				

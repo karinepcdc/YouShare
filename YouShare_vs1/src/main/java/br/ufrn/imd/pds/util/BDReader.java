@@ -66,29 +66,20 @@ public class BDReader {
 		return userMap;
 	}
 	
-	public static HashMap<String,Item> csvToItemHashMap (){
+	public static HashMap<String,Item> csvToItemHashMap () throws IOException {
 		// TODO only Tool database inplemented. Do the others
 		
 		// Tool database
 		// check if database files exist, if not, create them
 		File toolDatabaseFile = new File("src/main/csv/toolDatabase.csv");
-		try {
-			if( toolDatabaseFile.createNewFile() ) {
-				System.out.println("Tool database file created!\n");	
-			}
-		} catch ( IOException e ) {
-			System.out.println("An error occurred trying to create item database file.\n");
-			e.printStackTrace();
+		if( toolDatabaseFile.createNewFile() ) {
+			System.out.println("Tool database file created!\n");	
 		}
+		
 		
 		// Prepare to read the file	
 		FileReader csvFile = null; 
-		try { 
-			csvFile = new FileReader( toolDatabaseFile ); 
-		} 
-		catch ( FileNotFoundException e ) { 
-			e.printStackTrace(); 
-		} 	
+		csvFile = new FileReader( toolDatabaseFile );  	
 		
 		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })

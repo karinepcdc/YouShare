@@ -49,7 +49,12 @@ public class BDWriter {
 		} 		
 	}
 	
-	public static void itemHashMapToCSV ( HashMap<String, Item> itemMap ) {
+	/// Write current item hashMap in the database.
+	/*
+	 *  Write itemMap, a HashMap of items, into four item database files: applianceDatabase.csv; childrenToyDatabase.csv; costumeDatabase.csv; partyClothesDatabase.csv; toolDatabase.csv (the only one implemented now); 
+	 */
+	public static void itemHashMapToCSV ( HashMap<String, Item> itemMap ) 
+			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 		ArrayList<Tool> toolList = new ArrayList<Tool>();
 		
 		// put tools from toolMap in a list
@@ -59,20 +64,12 @@ public class BDWriter {
 			}
 		}
 
-		try {						
-			// write database
-			FileWriter writer = new FileWriter( "src/main/csv/toolDatabase.csv" );
-			StatefulBeanToCsv<Tool> toolToCsv = new StatefulBeanToCsvBuilder<Tool>(writer).build();
-			toolToCsv.write( toolList );
-			
-            writer.close();
-        } catch ( FileNotFoundException e ) { 
-			e.printStackTrace(); 
-		} catch ( IOException e1 ) {
-			e1.printStackTrace();
-		} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e2) {
-			e2.printStackTrace();
-		}
+		// write database
+		FileWriter writer = new FileWriter( "src/main/csv/toolDatabase.csv" );
+		StatefulBeanToCsv<Tool> toolToCsv = new StatefulBeanToCsvBuilder<Tool>(writer).build();
+		toolToCsv.write( toolList );
+		
+		writer.close();
 		
 	}
 	
