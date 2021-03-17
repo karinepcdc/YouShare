@@ -1,13 +1,18 @@
 package br.ufrn.imd.pds.business;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class Appliance extends Item {
 
+	@CsvBindByName
 	private String termsOfUse;
+	
+	@CsvBindByName
 	private String voltage;
 	
-	public Appliance ( String n, String desc, String cd, String iG, String lRev, String isAv, String p,
+	public Appliance ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
 			String tOU, String v) {
-		super( n, desc, cd, iG, lRev, isAv, p );
+		super( n, desc, cd, iG, iGC, lRev, isAv, p );
 		this.termsOfUse = tOU;
 		this.voltage = v;
 	}

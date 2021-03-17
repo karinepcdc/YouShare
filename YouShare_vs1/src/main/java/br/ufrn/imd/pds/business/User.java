@@ -1,13 +1,26 @@
 package br.ufrn.imd.pds.business;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class User {
 
+	@CsvBindByName
 	private String firstName;
+	
+	@CsvBindByName
 	private String lastName;
-	private String telegramUserName;
-	private String userGrade;
-	private String userGradeCount;
-	private String lastReview;
+	
+	@CsvBindByName
+	private String telegramUserName; /// used as id in the system
+	
+	@CsvBindByName
+	private String userGrade;	/// average of grades received when he returned an item to its owner
+	
+	@CsvBindByName
+	private String userGradeCount; /// total number of grades 
+	
+	@CsvBindByName
+	private String lastReview; /// last review received when he returned an item
 	
 	/* Default constructor */
 	public User () {

@@ -1,16 +1,27 @@
 package br.ufrn.imd.pds.business;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class Costume extends Item {
 
+	@CsvBindByName
 	private String termsOfUse;
+	
+	@CsvBindByName
 	private String color;
+	
+	@CsvBindByName
 	private String size;
+	
+	@CsvBindByName
 	private String clotheStyle;
+	
+	@CsvBindByName
 	private String partyStyle;
 	
-	public Costume ( String n, String desc, String cd, String iG, String lRev, String isAv, String p,
+	public Costume ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
 			String tOU, String c, String s, String cStyle, String pStyle ) {
-		super( n, desc, cd, iG, lRev, isAv, p );
+		super( n, desc, cd, iG, iGC, lRev, isAv, p );
 		this.termsOfUse = tOU;
 		this.color = c;
 		this.size = s;

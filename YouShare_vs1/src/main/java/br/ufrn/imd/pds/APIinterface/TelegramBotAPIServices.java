@@ -122,7 +122,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 
 
 	@Override
-	public void sendTextMsgWithCustomKeyboard( String chatId, String botTxtMsg, String[] buttonsLabels ) {
+	public void sendInlineKeyboardWithInlineButtons( String chatId, String botTxtMsg, String[] buttonsLabels ) {
 		// set Bot reply variables
         SendMessage message = new SendMessage(); 
 		
@@ -142,7 +142,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	}
 
 	@Override
-	public void sendTextMsgWithInlineKeyboard( String chatId, String botTxtMsg, String callbackLabel, String[] buttonsLabels, int columns, int lines ) {
+	public void sendInlineKeyboardWithCallbackButtons( String chatId, String botTxtMsg, String callbackLabel, String[] buttonsLabels, int columns, int lines ) {
 		
 		// TODO colocar dentro de um log de erros...
 		// check number of labels

@@ -1,6 +1,10 @@
 package br.ufrn.imd.pds.util;
 
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
 
@@ -23,41 +28,56 @@ public class BDWriter {
 			userList.add( pair.getValue() );
 		}
 		
+		// transform user objects in a list of strings
 		List<String[]> userStrings = userToStringList ( userList );
-		
-		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/userDatabase.csv" ) ) ) {
-            writer.writeAll( userStrings );
-        }
-		catch ( FileNotFoundException e ) { 
+		try {
+			// write header
+			FileWriter writer = new FileWriter( "src/main/csv/userDatabase.csv");
+			writer.write( "firstName,lastName,telegramUserName,userGrade,userGradeCount,lastReview\n");
+			
+			// write database
+			CSVWriter csvWriter = new CSVWriter( writer ); 
+			csvWriter.writeAll( userStrings );
+			
+			// close writers
+			csvWriter.close();
+			writer.close();
+        } catch ( FileNotFoundException e ) { 
 			e.printStackTrace(); 
 		} catch ( IOException e1 ) {
 			e1.printStackTrace();
 		} 		
 	}
 	
-	public static void toolHashMapToCSV ( HashMap<String, Tool> toolMap ) {
-		
+	/// Write current item hashMap in the database.
+	/*
+	 *  Write itemMap, a HashMap of items, into four item database files: applianceDatabase.csv; childrenToyDatabase.csv; costumeDatabase.csv; partyClothesDatabase.csv; toolDatabase.csv (the only one implemented now); 
+	 */
+	public static void itemHashMapToCSV ( HashMap<String, Item> itemMap ) 
+			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 		ArrayList<Tool> toolList = new ArrayList<Tool>();
 		
-		for ( Map.Entry<String,Tool> pair : toolMap.entrySet() ) {
-			toolList.add( pair.getValue() );
+		// put tools from toolMap in a list
+		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+			if( pair.getValue() instanceof Tool ) {
+				toolList.add( (Tool) pair.getValue() );
+			}
 		}
+
+		// write database
+		FileWriter writer = new FileWriter( "src/main/csv/toolDatabase.csv" );
+		StatefulBeanToCsv<Tool> toolToCsv = new StatefulBeanToCsvBuilder<Tool>(writer).build();
+		toolToCsv.write( toolList );
 		
-		List<String[]> toolStrings = toolToStringList ( toolList );
+		writer.close();
 		
-		try ( CSVWriter writer = new CSVWriter( new FileWriter( "src/main/csv/itemDatabase.csv" ) ) ) {
-            writer.writeAll( toolStrings );
-        }
-		catch ( FileNotFoundException e ) { 
-			e.printStackTrace(); 
-		} catch ( IOException e1 ) {
-			e1.printStackTrace();
-		}
 	}
 	
+	/// function that tells how to write a User into a CSV file
 	public static List<String[]> userToStringList ( List<User> userList ){
 		List<String[]> strings = new ArrayList<String[]>();
 		
+		// define what are the User's attributes to be read
 		for ( User user : userList ) {
 			String[] s = { 	user.getFirstName(), 
 							user.getLastName(), 
@@ -71,24 +91,5 @@ public class BDWriter {
 		
 		return strings;
 	}
-	
-	public static List<String[]> toolToStringList ( List<Tool> toolList ){
-		List<String[]> strings = new ArrayList<String[]>();
 		
-		for ( Tool tool : toolList ) { // description, code, itemGrade, lastReview, isAvailable, price, termsOfUse, voltage
-			String[] s = { 	tool.getDescription(),
-							tool.getCode(),
-							tool.getItemGrade(),
-							tool.getLastReview(),
-							tool.getIsAvailable(),
-							tool.getPrice(),
-							tool.getTermsOfUse(),
-							tool.getVoltage()
-							};
-			strings.add(s);
-		}
-		
-		return strings;
-	}
-	
 }

@@ -4,7 +4,7 @@ public interface FacadeUser {
 	
 	/// Criate a YouShare system user and add it to the database
 	/*
-	 * By default, new users grade are zero and also review and rating arrays are empty.
+	 * By default, new users grade and gradeCount are zero and a default lastreview is setted. 
 	 * 
 	 */
 	public void createUser( String firstName, String lastName , String userName );

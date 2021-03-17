@@ -13,10 +13,12 @@ public class UserDAOMemory implements UserDAO {
 	
 	private static UserDAOMemory uniqueInstance;
 	
+	/* Default constructor */
 	private UserDAOMemory() {
 		
-		System.out.println( "Construtor UserDAOMemory \n" );
-		
+		System.out.println( "UserDAOMemory's constructor \n" );
+				
+		// start user database
 		userMap = BDReader.csvToUserHashMap();
 		
 		for ( Map.Entry<String,User> pair : userMap.entrySet() ) {

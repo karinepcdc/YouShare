@@ -27,3 +27,6 @@ src/main/conf
 
 # Mac extentions
 .DS_Store
+
+# database
+src/main/csv

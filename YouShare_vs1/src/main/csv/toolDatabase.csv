@@ -1,0 +1,7 @@
+"CODE","DESCRIPTION","ISAVAILABLE","ITEMGRADE","ITEMGRADECOUNT","LASTREVIEW","NAME","PRICE","TERMSOFUSE","VOLTAGE"
+"1","Regular hammer","true","5.0","1","great tool","Hammer","1.0","use it to hammer things","none"
+"012","Good electric sander","true","0.0","0","none yet","Electric sander","12.0","dont spoil","220"
+"2","Boch drill","false","4.5","3","great drill","Drill","5.0","push button to drill stuff","220"
+"0323","Good electric sander","true","0.0","0","none yet","Electric sander4","12.0","dont spoil","220"
+"0123","Good electric sander","true","0.0","0","none yet","Electric sander2","12.0","dont spoil","220"
+"0223","Good electric sander","true","0.0","0","none yet","Electric sander3","12.0","dont spoil","220"
