@@ -52,15 +52,15 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void updateUser(String userName, String campo, String value ) {
+	public void updateUser( String userName, String campo, String value ) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void deleteUser(String userName) {
+	public void deleteUser( String userName ) {
 		
-		User userToDelete = userDatabase.readUser(userName);
+		User userToDelete = userDatabase.readUser( userName );
 		
 		// if user is register in the database
 		if( userToDelete != null ) {
@@ -111,7 +111,7 @@ public class UserServices implements FacadeUser {
 	
 
 	@Override
-	public boolean isRegistered(String userName) {
+	public boolean isRegistered( String userName ) {
 		return userDatabase.readUser( userName ) != null;
 	}
 
