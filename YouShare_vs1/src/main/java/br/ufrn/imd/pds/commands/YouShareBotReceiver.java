@@ -1,4 +1,4 @@
-package br.ufrn.imd.pds.Commands;
+package br.ufrn.imd.pds.commands;
 
 import com.vdurmont.emoji.EmojiParser;
 
@@ -29,7 +29,7 @@ public class YouShareBotReceiver {
     	} else { // new user
 
 			// cadastrar novo usuário
-			userServices.createUser(userFirstName, userLastName, telegramUserName);
+			userServices.createUser( userFirstName, userLastName, telegramUserName );
 			// TODO tratamento de excessão ???
 			
 			// define bot answer

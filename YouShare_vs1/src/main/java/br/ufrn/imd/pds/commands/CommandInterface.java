@@ -1,4 +1,4 @@
-package br.ufrn.imd.pds.Commands;
+package br.ufrn.imd.pds.commands;
 
 public interface CommandInterface {
 	
