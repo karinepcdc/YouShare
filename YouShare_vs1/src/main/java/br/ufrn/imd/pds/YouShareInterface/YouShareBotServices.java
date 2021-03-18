@@ -6,16 +6,139 @@ import java.util.Date;
 import com.vdurmont.emoji.EmojiParser; // to parse emojis
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
+import br.ufrn.imd.pds.APIinterface.MessageData;
 import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public class YouShareBotServices implements YouShareBotFacade {
 	
+	private static TelegramBotAPIServices apiServices;
+	private static UserServices userServices;
+	private static ItemServices itemServices;
+
+	
 	/* Default constructor */	
 	public YouShareBotServices() {
+		apiServices = new TelegramBotAPIServices();
+		userServices = new UserServices();
+		//itemServices = new ItemServices();
 		
 		System.out.println("YouShareBotServices criado!");
+	}
+	
+	/*********************
+	 * BotCommands *
+	 *********************/
+	
+	/* BotCommand
+	 * command: Text of the command, 1-32 characters. 
+	 * 			Can contain only lowercase English letters, digits and underscores.
+	 * description: Description of the command, 3-256 characters.
+	 */
+	public static void start ( MessageData message ){
+		String botAnswer = ""; // Bot reply
+		
+		if( userServices.isRegistered( message.getTelegramUserName() ) ) {	// user already regitered
+			
+			// set bot repply
+	        botAnswer = "Welcome back " + message.getUserFirstName() + EmojiParser.parseToUnicode("! :grin:\n\n")
+	        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
+	        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
+	        			+ "Type /help to see the main menu.\n\n"
+	        			+ "Or, if you want to leave our community, type /unregister.";
+	        
+			
+		} else { // new user
+			
+    		// set bot repply
+	        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
+	        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
+	        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
+	        			+ EmojiParser.parseToUnicode("Register into our community to start sharing! :wink:\n\n")
+	        			+ "/register - subscribe in YouShare system";
+	        
+        }
+        
+        // request APIInterface to send text message to user
+        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+
+
+	}
+	
+	
+	public static void register ( MessageData message ) {
+		String botAnswer = ""; // Bot reply
+
+		if( userServices.isRegistered( message.getTelegramUserName() ) ) {	// user already regitered
+    		
+			// define bot answer
+			botAnswer = message.getUserFirstName() + ", you are already registered in our system!"
+					+ "Type /help to see the main menu.\n"
+					+ "Or, if you want to leave our community, type /unregister.";
+		
+    	} else { // new user
+
+			// cadastrar novo usuário
+			userServices.createUser( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName() );
+			// TODO tratamento de excessão ???
+			
+			// define bot answer
+			botAnswer = message.getUserFirstName() + " " + message.getUserLastName() + ", "
+    				+ "you've been successfully registered into our system!\n\n"
+    				+ "Type /help to see the main menu.\n"
+    				+ "If you changed your mind, type /unregister. ";
+    			    
+    	}
+
+		// request APIInterface to send text message to user
+	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+	    
+	}
+	
+	
+	public static void unregister ( MessageData message ) {
+		String botAnswer = ""; // Bot reply
+
+		if( userServices.isRegistered( message.getTelegramUserName() ) ) {	// user already regitered
+			
+    		// define bot answer
+			botAnswer = message.getUserFirstName() + ", are you sure you want to unregister?\n"
+					+ "All your data, items and reservations will be erased from our system!\n\n"
+					+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
+			
+			// send msg with inline keyboard
+			String[] buttonsLabels = {"Yes", "No"};
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "unregisterConfirmation", buttonsLabels , 2, 1);	    	    
+			
+    	} else { // new user
+    		
+    		// define bot answer
+			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+    				+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+			// request APIInterface to send text message to user
+    	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+    	    
+		}
+
+
+	}
+	
+	
+	/*********************
+	 * Callback commands *
+	 *********************/
+	
+	public static void yesUnregister ( MessageData callbackMessage ) {
+		String botAnswer = "Done! You've been successfully unsubscribed from YouShare!";
+		
+		// unregister user
+		userServices.deleteUser( callbackMessage.getTelegramUserName() );
+		
+		// edit callback message confirming operation and removing buttons
+		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 	}
 	
 	
@@ -288,67 +411,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        apiServices.sendTextMsg( chatId, botAnswer );
 	        
     	}
-		
-    /* old... erase latter
-  	  
-  	  else if( userMessageText.equals("/register") || (expectedRepplyRegister > 0) ){
-  		
-
-  		switch (expectedRepplyRegister) {
-  		
-	    		case 0:
-	    			// define bot answer
-			        botAnswer = "Hello " + userFirstName + " " + userLastName + "!\n"
-			        			+ "Create a password to login into our system.";
-			        
-			        // update: require one answer from user
-			        expectedRepplyRegister = 1;
-			        
-			        break;
-			        
-	    		case 1:		    			
-	    			
-	    			// validate password?
-	    			
-	    			// register user
-	    			userServices.createUser(userFirstName, userLastName, userUserName, userMessageText);
-	    			
-	    			// define bot answer
-			        botAnswer = "Registration complete.";
-			        
-			        // set bot's repply mandatory fields
-  		        message.setChatId(chatId);
-  		        message.setText(botAnswer);
-  		        
-  		        /// send repply
-  		        try {
-  		            execute(message); // Call method to send the message
-  		        } catch (TelegramApiException e) {
-  		            e.printStackTrace();
-  		        }
-  		       
-	    			// fazer o login - mudar tela? o que o bot faz aqui???
-  		        
-  				// define bot answer
-  		        botAnswer = "Type /help to access the main menu.";
-			        
-			        // update: no more answers are required
-			        expectedRepplyRegister = 0;
-			        break;
-			        
-			    default:
-	    			// define bot answer
-			        botAnswer = "Something went wrong with the registration process.\n Contact support.";
-			        
-			        // update: no more answers are required
-			        expectedRepplyRegister = 0;
-			        break;
-	    			
-  		}
-	        
-  	}  */
-
-		
 		
 		// return bot answer for log purpose
 		return botAnswer;

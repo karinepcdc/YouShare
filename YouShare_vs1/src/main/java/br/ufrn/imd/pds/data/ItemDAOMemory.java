@@ -9,11 +9,11 @@ import java.util.Map;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
+import br.ufrn.imd.pds.DBHandlers.BDReader;
+import br.ufrn.imd.pds.DBHandlers.BDWriter;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.exceptions.DataException;
-import br.ufrn.imd.pds.util.BDReader;
-import br.ufrn.imd.pds.util.BDWriter;
 
 public class ItemDAOMemory implements ItemDAO {
 	

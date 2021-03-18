@@ -23,10 +23,13 @@ public class ItemServices implements FacadeItem {
 	
 	@Override
 	public void createItem(String name, String description, String code, String isAvailable, String price) throws DataException {
-		// TODO Auto-generated method stub
+
+		// validate item
 		
-		
+		// create user // TODO do that in the controller latter???
 		Tool newTool = new Tool("Electric sander3", "Good electric sander", "0223", 0.0, 0, "none yet", true, 12, "dont spoil", "220");
+		
+		// require item registration in the database
 		itemDatabase.createItem( newTool );
 	}
 

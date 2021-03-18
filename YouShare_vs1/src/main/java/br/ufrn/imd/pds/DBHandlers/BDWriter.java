@@ -1,4 +1,4 @@
-package br.ufrn.imd.pds.util;
+package br.ufrn.imd.pds.DBHandlers;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;

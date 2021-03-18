@@ -3,9 +3,9 @@ package br.ufrn.imd.pds.data;
 import java.util.Map;
 import java.util.HashMap;
 
+import br.ufrn.imd.pds.DBHandlers.BDReader;
+import br.ufrn.imd.pds.DBHandlers.BDWriter;
 import br.ufrn.imd.pds.business.User;
-import br.ufrn.imd.pds.util.BDReader;
-import br.ufrn.imd.pds.util.BDWriter;
 
 public class UserDAOMemory implements UserDAO {
 	

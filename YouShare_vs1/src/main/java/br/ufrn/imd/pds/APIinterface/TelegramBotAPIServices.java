@@ -8,6 +8,7 @@ package br.ufrn.imd.pds.APIinterface;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 //import br.ufrn.imd.pds.business.UserServices;
+import br.ufrn.imd.pds.commands.CommandsInvoker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,12 +64,23 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	
 	    	// register Bot reply, for log purposes
 	    	String botAnswer = "";
-	    		    	
+	    	
+	    	// set message data
+	    	MessageData message = new MessageData();
+	    	message.setUserTxtMsg(userMessageText);
+	    	message.setChatId(chatId);
+	    	message.setUserFirstName(userFirstName);
+	    	message.setUserLastName(userLastName);
+	    	message.setTelegramUserName(userUserName);
+	    	
+	    	// process command
+			CommandsInvoker.executeCommand(userMessageText, message );
+	    	
 	    	// process message. Define commands
-	    	botAnswer = ysServices.processReceivedTextMsg( userFirstName, userLastName, userUserName, userMessageText, chatId );
+	    	//botAnswer = ysServices.processReceivedTextMsg( userFirstName, userLastName, userUserName, userMessageText, chatId );
 	    	
 	    	// create messages log
-	    	ysServices.log(userFirstName, userLastName, userUserName, userMessageText, botAnswer);
+	    	//ysServices.log(userFirstName, userLastName, userUserName, userMessageText, botAnswer);
 	
 	    } else if( update.hasCallbackQuery() ) {
 	    	
