@@ -24,7 +24,7 @@ public class CommandsInvoker {
 		// BotCommands answers
 		commandsMap.put( "/start", new StartCommand() );
 		commandsMap.put( "/register", new RegisterCommand() );
-		commandsMap.put( "/unregister", new UnegisterCommand() );
+		commandsMap.put( "/unregister", new UnregisterCommand() );
 		
 		// Callback query answers
 		commandsMap.put("Yes_unregisterConfirmation", new YesUnregisterCommand() );

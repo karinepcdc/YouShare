@@ -18,7 +18,7 @@ import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
 
-public class BDWriter {
+public class DBWriter {
 	
 	public static void userHashMapToCSV ( HashMap<String, User> userMap ){
 		

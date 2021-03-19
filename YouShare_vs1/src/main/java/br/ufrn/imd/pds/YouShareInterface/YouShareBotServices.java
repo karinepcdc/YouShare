@@ -10,21 +10,30 @@ import br.ufrn.imd.pds.APIinterface.MessageData;
 import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.DataException;
+import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
+import br.ufrn.imd.pds.exceptions.UserAlreadyRegisteredException;
+import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
+import br.ufrn.imd.pds.exceptions.UserHeaderException;
+import br.ufrn.imd.pds.exceptions.UserNotRegisteredException;
 
 public class YouShareBotServices implements YouShareBotFacade {
 	
 	private static TelegramBotAPIServices apiServices;
 	private static UserServices userServices;
-	private static ItemServices itemServices;
+	// private static ItemServices itemServices;
 
 	
 	/* Default constructor */	
-	public YouShareBotServices() {
+	public YouShareBotServices() throws UserDatabaseCreationException {
 		apiServices = new TelegramBotAPIServices();
-		userServices = new UserServices();
+		try {
+			userServices = new UserServices();
+		} catch ( UserHeaderException e ) {
+			e.printStackTrace();
+		}
 		//itemServices = new ItemServices();
 		
-		System.out.println("YouShareBotServices criado!");
+		System.out.println( "YouShareBotServices criado!" );
 	}
 	
 	/*********************
@@ -67,7 +76,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	}
 	
 	
-	public static void register ( MessageData message ) {
+	public static void register ( MessageData message ) throws UserAlreadyRegisteredException {
 		String botAnswer = ""; // Bot reply
 
 		if( userServices.isRegistered( message.getTelegramUserName() ) ) {	// user already regitered
@@ -128,10 +137,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 	
 	/*********************
-	 * Callback commands *
+	 * Callback commands 
+	 * @throws UserNotRegisteredException *
 	 *********************/
 	
-	public static void yesUnregister ( MessageData callbackMessage ) {
+	public static void yesUnregister ( MessageData callbackMessage ) throws UserNotRegisteredException {
 		String botAnswer = "Done! You've been successfully unsubscribed from YouShare!";
 		
 		// unregister user
@@ -143,10 +153,13 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 	
 	@Override
-	public String processReceivedTextMsg( String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String chatId ) {
+	public String processReceivedTextMsg( String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String chatId ) 
+			throws UserHeaderException, ReadItemFromDatabaseException, UserDatabaseCreationException, UserAlreadyRegisteredException, UserNotRegisteredException {
 
 		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
-		UserServices userServices = new UserServices();
+		UserServices userServices;
+		userServices = new UserServices();
+		
 		ItemServices itemServices;
 		
     	String botAnswer = ""; // Bot repply
@@ -159,7 +172,7 @@ public class YouShareBotServices implements YouShareBotFacade {
     	 */
 		if( userTxtMsg.equals( "/start" ) ) {
     		
-    		if( userServices.isRegistered( telegramUserName ) ) {	// user already regitered
+    		if( userServices.isRegistered( telegramUserName ) ) {	// user already registered
 	
 				// set bot repply
 		        botAnswer = "Welcome back " + userFirstName + EmojiParser.parseToUnicode("! :grin:\n\n")
@@ -312,7 +325,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 				botAnswer = "You don't have any ad yet!\n";
 				botAnswer += "To include an item type /additem.\n";
 
-				// TODO maybe this should be in a controler class
+				// TODO maybe this should be in a controller class
 				try {
 					itemServices = new ItemServices();
 					itemServices.createItem("", "", "", "", "");
@@ -419,7 +432,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 
 	@Override
-	public String processCallBackQuery(String telegramUserName, String callbackData, long messageId, String chatId ) {		
+	public String processCallBackQuery(String telegramUserName, String callbackData, long messageId, String chatId ) throws UserHeaderException, UserDatabaseCreationException, UserNotRegisteredException {		
 		TelegramBotAPIServices apiServices = new TelegramBotAPIServices();
 		UserServices userServices = new UserServices();
 
@@ -429,7 +442,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			String botAnswer = "Done! You've been successfully unsubscribed from YouShare!";
 			
 			// unregister user
-			userServices.deleteUser(telegramUserName);
+			userServices.deleteUser( telegramUserName );
 			
 			// edit callback message confirming operation and removing buttons
 			apiServices.editTextMsg(chatId, messageId, botAnswer);

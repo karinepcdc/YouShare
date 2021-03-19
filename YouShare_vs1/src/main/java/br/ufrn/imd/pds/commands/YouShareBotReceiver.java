@@ -1,6 +1,6 @@
 package br.ufrn.imd.pds.commands;
 
-import com.vdurmont.emoji.EmojiParser;
+// import com.vdurmont.emoji.EmojiParser;
 
 
 /// Object that knows how to execute the tasks performed by the commands.
