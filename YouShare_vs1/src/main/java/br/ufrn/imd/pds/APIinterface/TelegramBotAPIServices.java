@@ -9,6 +9,9 @@ import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 //import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
+import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
+import br.ufrn.imd.pds.exceptions.UserHeaderException;
+import br.ufrn.imd.pds.exceptions.UserNotRegisteredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,12 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	@Override
 	public void onUpdateReceived(Update update) {
 		
-		YouShareBotServices ysServices = new YouShareBotServices();
+		YouShareBotServices ysServices;
+		try {
+			ysServices = new YouShareBotServices();
+		} catch ( UserDatabaseCreationException e ) {
+			e.printStackTrace();
+		}
 		
 		// Check if the update has a message and the message has text
 	    if ( update.hasMessage() && update.getMessage().hasText() ) {
@@ -91,7 +99,11 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
             String chat_id = update.getCallbackQuery().getMessage().getChatId().toString();
             
             // process callback query
-            ysServices.processCallBackQuery( userUserName, call_data, message_id, chat_id );
+            try {
+				ysServices.processCallBackQuery( userUserName, call_data, message_id, chat_id );
+			} catch (UserHeaderException | UserDatabaseCreationException | UserNotRegisteredException e) {
+				e.printStackTrace();
+			}
             
 	    	// TODO create messages log
 	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );
