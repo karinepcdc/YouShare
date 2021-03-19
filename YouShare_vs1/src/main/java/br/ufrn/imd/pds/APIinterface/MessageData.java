@@ -7,6 +7,8 @@ public class MessageData {
 	private String telegramUserName;
 	private String userTxtMsg;
 	private String chatId;
+	private String callbackData;
+
 	private long messageId;
 	private boolean isCallback;
 	
@@ -52,6 +54,14 @@ public class MessageData {
 
 	public void setChatId(String chatId) {
 		this.chatId = chatId;
+	}
+
+	public String getCallbackData() {
+		return callbackData;
+	}
+
+	public void setCallbackData(String callbackData) {
+		this.callbackData = callbackData;
 	}
 
 	public long getMessageId() {

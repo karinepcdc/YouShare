@@ -33,6 +33,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	/* Default constructor */	
 	public YouShareBotServices() throws UserDatabaseCreationException {
 		apiServices = new TelegramBotAPIServices();
+		
 		try {
 			userServices = new UserServices();
 		} catch ( UserHeaderException e ) { // TODO é para ser dataexception
@@ -52,6 +53,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 	/*********************
 	 * BotCommands 
+	 * @return 
 	 * @throws UserNotRegisteredException *
 	 *********************/
 	
@@ -90,6 +92,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        // request APIInterface to send text message to user
 	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
+	        // YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	        
+	        
 		} catch (UserNotRegisteredException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,9 +128,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 			}
 			
 			// request APIInterface to send text message to user
-		    apiServices.sendTextMsg( message.getChatId(), botAnswer );} 
-			
-		catch (UserNotRegisteredException e) {
+		    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		
+		    // YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	        
+		} catch (UserNotRegisteredException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -159,6 +168,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// request APIInterface to send text message to user
 		    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 
+		    // YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+		    
 		} catch (UserNotRegisteredException | UserAlreadyRegisteredException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -195,6 +207,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
 			}
+
+			// YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+
 		} catch ( UserNotRegisteredException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -239,6 +255,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
 			}
+			
+		    // YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+
+			
 		} catch ( UserNotRegisteredException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -295,6 +316,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
 			}
+			
+		    // YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+
 		} catch ( UserNotRegisteredException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -341,6 +366,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
 			}		
+			
+		    // YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+
 		} catch ( UserNotRegisteredException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -378,6 +407,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
 			}
+
+			// YouShare bot loggins
+	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+
 		} catch ( UserNotRegisteredException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -404,6 +437,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		// edit callback message confirming operation and removing buttons
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
+		
+		// YouShare bot callback loggins
+        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
 
@@ -412,6 +448,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		// edit callback message confirming operation and removing buttons
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
+		
+		// YouShare bot callback loggins
+        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 
 
@@ -420,19 +459,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// TODO Auto-generated method stub
 		
 		return "todo";
-	}
-
-	
-	// Print YouShareBot loggings
-	@Override
-	public void log(String userFirstName, String userLastName, String telegramUserName, String userTxtMsg, String botAnswer ) {
-		System.out.println("\n ----------------------------");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        System.out.println(dateFormat.format(date));
-        System.out.println("Message from " + userFirstName + " " + userLastName + ". (id = " + telegramUserName + ") \n Text - " + userTxtMsg);
-        System.out.println("Bot answer: \n Text - " + botAnswer);
-        
 	}
 
 	

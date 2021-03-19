@@ -39,7 +39,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 
 		// instantiate YouShare Bot
 		ysBot = new YouShareBot();
-
+    
 		System.out.println("TelegramBotAPIServices criado!");
 		
 	}
@@ -80,6 +80,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	message.setUserFirstName(userFirstName);
 	    	message.setUserLastName(userLastName);
 	    	message.setTelegramUserName(userUserName);
+	    	message.setCallback(false);
 	    	
 	    	// process command
 			try {
@@ -87,10 +88,6 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 			} catch (CommandNotFoundExeption e) {
 				sendTextMsg(chatId, "Unknow command... Check what I can do typing /help.");
 			}
-	    	
-	    	
-	    	// create messages log
-	    	//ysServices.log(userFirstName, userLastName, userUserName, userMessageText, botAnswer);
 	
 	    } else if( update.hasCallbackQuery() ) {
 	    	
@@ -105,6 +102,8 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	message.setChatId(chatId);
 	    	message.setTelegramUserName(userUserName);
 	    	message.setMessageId(messageId);
+	    	message.setCallback(true);
+	    	message.setCallbackData(callData);
             
             // process callback query
 			try {
