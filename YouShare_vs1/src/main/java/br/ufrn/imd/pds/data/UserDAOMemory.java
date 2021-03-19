@@ -3,9 +3,12 @@ package br.ufrn.imd.pds.data;
 import java.util.Map;
 import java.util.HashMap;
 
-import br.ufrn.imd.pds.DBHandlers.BDReader;
-import br.ufrn.imd.pds.DBHandlers.BDWriter;
+import br.ufrn.imd.pds.DBHandlers.DBReader;
+import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.User;
+import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
+import br.ufrn.imd.pds.exceptions.UserHeaderException;
+import br.ufrn.imd.pds.exceptions.UserNotRegisteredException;
 
 public class UserDAOMemory implements UserDAO {
 	
@@ -14,12 +17,12 @@ public class UserDAOMemory implements UserDAO {
 	private static UserDAOMemory uniqueInstance;
 	
 	/* Default constructor */
-	private UserDAOMemory() {
+	private UserDAOMemory() throws UserHeaderException, UserDatabaseCreationException {
 		
 		System.out.println( "UserDAOMemory's constructor \n" );
 				
 		// start user database
-		userMap = BDReader.csvToUserHashMap();
+		userMap = DBReader.csvToUserHashMap();
 		
 		for ( Map.Entry<String,User> pair : userMap.entrySet() ) {
 			System.out.println("user: " + pair.getValue().getFirstName() + "\n" );
@@ -28,9 +31,13 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	/* Singleton constructor */
-	public static synchronized UserDAOMemory getInstance() {
-		if( uniqueInstance == null ) {
-			uniqueInstance = new UserDAOMemory();
+	public static synchronized UserDAOMemory getInstance() throws UserHeaderException, UserDatabaseCreationException {
+		try {
+			if( uniqueInstance == null ) {
+				uniqueInstance = new UserDAOMemory();
+			}
+		} catch ( UserHeaderException e ) {
+			e.printStackTrace();
 		}
 		return uniqueInstance;
 	}
@@ -39,10 +46,9 @@ public class UserDAOMemory implements UserDAO {
 	public void createUser( User newUser ) {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
-		BDWriter.userHashMapToCSV( userMap );				
+		DBWriter.userHashMapToCSV( userMap );				
 		
-		// TODO: apagar
-		System.out.println( "Usuário criado! \n" ); 
+		System.out.println( "Usuário criado! \n" );
 	}
 
 	@Override
@@ -53,14 +59,12 @@ public class UserDAOMemory implements UserDAO {
 		if ( isRegistered ) {
 			return userMap.get( userName );
 		} else {
-			// TODO: exception?
-			System.out.println( "Usuário não está registrado! \n" ); 
 			return null;
 		}	
 	}
 	
 	@Override
-	public void updateUser( User user ) {
+	public void updateUser( User user ) throws UserNotRegisteredException {
 		User aux;
 		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
 		
@@ -73,22 +77,22 @@ public class UserDAOMemory implements UserDAO {
 			aux.setUserGradeCount	( user.getUserGradeCount() );			
 			aux.setLastReview		( user.getFirstName() );
 			
-			BDWriter.userHashMapToCSV( userMap );
+			DBWriter.userHashMapToCSV( userMap );
 			System.out.println( "Usuário atualizado com sucesso. \n" ); 
 		} else {
-			// TODO: exception?
-			System.out.println( "Usuário não está registrado! \n" ); 
+
+			throw new UserNotRegisteredException();
 		}
 		
 	}
 	
 	@Override
-	public void deleteUser( User user ) {
+	public void deleteUser( User user ) throws UserNotRegisteredException {
 		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
 		
 		if ( isRegistered ) {
 			userMap.remove( user.getTelegramUserName() );
-			BDWriter.userHashMapToCSV( userMap );
+			DBWriter.userHashMapToCSV( userMap );
 		} else {
 			// TODO: exception?
 			System.out.println( "Usuário não está registrado! \n" ); 
@@ -97,8 +101,13 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	@Override
-	public void reviewUser( String review, Float rating, User user ) {
-		// TODO
+	public void addUserReview( String review, Float rating, User user ) throws UserNotRegisteredException {
+		if ( userMap.containsKey( user.getTelegramUserName() ) ) {
+			
+		}
+		else {
+			
+		}
 	}
 
 }

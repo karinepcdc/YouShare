@@ -4,7 +4,11 @@ import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
+
 import br.ufrn.imd.pds.exceptions.CommandNotFoundExeption;
+import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ import static java.lang.Math.toIntExact;
 public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
 	
 	private YouShareBot ysBot;
-	private static YouShareBotServices ysBotServices;
+	private static YouShareBotFacade ysServices;
 		
 	/* Default constructor */	
 	public TelegramBotAPIServices() {		
@@ -43,8 +47,15 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	/// Class that check for updates from the user (coming from Telegram servers), like user text messages, callback queries, images, etc
 	@Override
 	public void onUpdateReceived(Update update) {
-		// TODO onde instanciar isso? não é usado mais diretamente, mas precisa ser instanciado em algum lugar pois os commands usam...
-		ysBotServices = new YouShareBotServices();
+		
+		
+		try {
+			// TODO onde instanciar isso? não é usado mais diretamente, mas precisa ser instanciado em algum lugar pois os commands usam...
+			ysServices = new YouShareBotServices();
+		} catch ( UserDatabaseCreationException e ) {
+			e.printStackTrace();
+		}
+
 		
 		// Check if the update has a message and the message has text
 	    if ( update.hasMessage() && update.getMessage().hasText() ) {
@@ -60,7 +71,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	
 	    	
 	    	// register Bot reply, for log purposes
-	    	String botAnswer = "";
+	    	//String botAnswer = "";
 	    	
 	    	// set message data
 	    	MessageData message = new MessageData();
@@ -102,7 +113,6 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 				// TODO será que deveria ser separado aqui?
 				sendTextMsg(chatId, "Problem Processing your choice. Contact support.");
 			}
-            
 	    	// TODO create messages log
 	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );
 

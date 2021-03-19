@@ -8,7 +8,6 @@ public class YesUnregisterCommand implements CommandInterface {
 	@Override
 	public void execute( MessageData message ) {
 		YouShareBotServices.yesUnregister( message );
-
 	}
 
 	@Override

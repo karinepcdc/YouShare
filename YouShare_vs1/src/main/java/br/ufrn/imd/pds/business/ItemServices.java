@@ -4,12 +4,13 @@ import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.data.ItemDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
+import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
 
 public class ItemServices implements FacadeItem {
 
 	ItemDAO itemDatabase; // database manager class
 
-	public ItemServices() throws DataException {		
+	public ItemServices() throws DataException, ReadItemFromDatabaseException {		
 		// instantiate database
 		itemDatabase = ItemDAOMemory.getInstance();
 	}

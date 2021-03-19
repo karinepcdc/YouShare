@@ -13,32 +13,38 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
+import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
+import br.ufrn.imd.pds.exceptions.UserHeaderException;
 
-public class BDReader {
+public class DBReader {
 	
-	public static HashMap<String,User> csvToUserHashMap (){
+	public static HashMap<String,User> csvToUserHashMap () throws UserHeaderException, UserDatabaseCreationException {
 		
-		System.out.println("Convertendo userDatabase.csv para instancias da classe User...");
+		System.out.println( "Convertendo userDatabase.csv para instancias da classe User..." );
 
 		// check if database file exist, if not, create it
 		File userDatabaseFile = new File("src/main/csv/userDatabase.csv");
 		try {
-		if( userDatabaseFile.createNewFile() ) {
+			if( userDatabaseFile.createNewFile() ) {
+				
+				// write header
+				try {
+					FileWriter writer = new FileWriter( userDatabaseFile );
+		            writer.write( "firstName,lastName,telegramUserName,userGrade,userGradeCount,lastReview\n");
+		            writer.close();
+		            
+		            // writing header was successful
+					System.out.println( "User database file created!\n" );
+					
+		        } catch ( IOException e1 ) {
+		        	e1.printStackTrace();
+					throw new UserHeaderException();				
+				} 		
+			}
 			
-			// write header
-			try {
-				FileWriter writer = new FileWriter( userDatabaseFile );
-	            writer.write( "firstName,lastName,telegramUserName,userGrade,userGradeCount,lastReview\n");
-	            writer.close();
-				System.out.println("User database file created!\n");
-	        } catch ( IOException e1 ) {
-				System.out.println("An error has occurred trying to write the user database header.\n");
-				e1.printStackTrace();
-			} 		
-		}
 		} catch ( IOException e ) {
-			System.out.println("An error occurred trying to create user database file.\n");
 			e.printStackTrace();
+			throw new UserDatabaseCreationException();
 		}
 		
 		// Prepare to read the file
@@ -53,7 +59,7 @@ public class BDReader {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<User> userList = new CsvToBeanBuilder( csvFile ).withType(User.class).build().parse();
 		
-		System.out.println("Is user list empty? " + userList.isEmpty() + "\n" );		
+		System.out.println( "Is user list empty? " + userList.isEmpty() + "\n" );		
 		HashMap<String,User> userMap = new HashMap<String,User>();
 		
 		for ( User user : userList ) {
@@ -61,7 +67,7 @@ public class BDReader {
 			System.out.println("user: " + user.getFirstName() + " read\n" );
 		}
 		
-		System.out.println("Users HashMap successfully created.");
+		System.out.println( "Users HashMap successfully created." );
 		
 		return userMap;
 	}

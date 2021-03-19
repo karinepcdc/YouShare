@@ -9,11 +9,12 @@ import java.util.Map;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import br.ufrn.imd.pds.DBHandlers.BDReader;
-import br.ufrn.imd.pds.DBHandlers.BDWriter;
+import br.ufrn.imd.pds.DBHandlers.DBReader;
+import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.exceptions.DataException;
+import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
 
 public class ItemDAOMemory implements ItemDAO {
 	
@@ -22,14 +23,14 @@ public class ItemDAOMemory implements ItemDAO {
 	private static ItemDAOMemory uniqueInstance;
 	
 	/* Default constructor */
-	public ItemDAOMemory() throws DataException {
+	public ItemDAOMemory() throws ReadItemFromDatabaseException {
 		System.out.println( "ItemDAOMemory's constructor started\n" );
 		
 		startDatabase();
 	}
 	
 	/* Singleton constructor */
-	public static synchronized ItemDAOMemory getInstance() throws DataException {
+	public static synchronized ItemDAOMemory getInstance() throws ReadItemFromDatabaseException {
 		if( uniqueInstance == null ) {
 			uniqueInstance = new ItemDAOMemory();
 		}
@@ -43,13 +44,13 @@ public class ItemDAOMemory implements ItemDAO {
 	 */
 	
 	@Override
-	public void startDatabase( ) throws DataException {
+	public void startDatabase( ) throws ReadItemFromDatabaseException {
 		
 		// start item database
 		try {
-			itemMap = BDReader.csvToItemHashMap();
-		} catch (IOException e) {
-			throw new DataException("An error occurred trying to read item database file.");
+			itemMap = DBReader.csvToItemHashMap();
+		} catch ( IOException e ) {
+			throw new ReadItemFromDatabaseException();
 		}
 	}
 	
@@ -65,13 +66,13 @@ public class ItemDAOMemory implements ItemDAO {
 				
 			// update database
 			try {
-				BDWriter.itemHashMapToCSV( itemMap );
-			} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-				// TODO detail better exeption, trying to tell what exactly have happened
-				throw new DataException("Problem trying to write new item in the database.");
+				DBWriter.itemHashMapToCSV( itemMap );
+			} catch ( CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e ) {
+				// TODO detail better exception, trying to tell what exactly have happened
+				throw new DataException( "Problem trying to write new item in the database." );
 			}
 		} else {
-			throw new DataException("Item is alredy registered in the database.");
+			throw new DataException( "Item is alredy registered in the database." );
 		}
 		
 	}
@@ -144,7 +145,7 @@ public class ItemDAOMemory implements ItemDAO {
 			
 			// update database
 			try {
-				BDWriter.itemHashMapToCSV( itemMap );
+				DBWriter.itemHashMapToCSV( itemMap );
 			} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
 				// TODO detail better exeption, trying to tell what exactly have happened
 				throw new DataException("Problem trying to write updated item in the database.");
@@ -166,7 +167,7 @@ public class ItemDAOMemory implements ItemDAO {
 			
 			// update database
 			try {
-				BDWriter.itemHashMapToCSV( itemMap );
+				DBWriter.itemHashMapToCSV( itemMap );
 			}  catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
 				// TODO detail better exeption, trying to tell what exactly have happened
 				throw new DataException("Problem trying to update database after removing an item.");
