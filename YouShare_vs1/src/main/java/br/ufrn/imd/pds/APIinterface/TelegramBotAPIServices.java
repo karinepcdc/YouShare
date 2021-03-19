@@ -1,14 +1,10 @@
 package br.ufrn.imd.pds.APIinterface;
 
-//import com.vdurmont.emoji.EmojiParser; // to parse emojis
-// check emojis at: 
-//   https://emojipedia.org/beaming-face-with-smiling-eyes/
-//   https://www.webfx.com/tools/emoji-cheat-sheet/
-
 import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
+import br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
-//import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
+import br.ufrn.imd.pds.exceptions.CommandNotFoundExeption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +27,9 @@ import static java.lang.Math.toIntExact;
  */
 public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
 	
-	private YouShareBot ysBot;	
-	
+	private YouShareBot ysBot;
+	private static YouShareBotServices ysBotServices;
+		
 	/* Default constructor */	
 	public TelegramBotAPIServices() {		
 
@@ -46,8 +43,8 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	/// Class that check for updates from the user (coming from Telegram servers), like user text messages, callback queries, images, etc
 	@Override
 	public void onUpdateReceived(Update update) {
-		
-		YouShareBotServices ysServices = new YouShareBotServices();
+		// TODO onde instanciar isso? não é usado mais diretamente, mas precisa ser instanciado em algum lugar pois os commands usam...
+		ysBotServices = new YouShareBotServices();
 		
 		// Check if the update has a message and the message has text
 	    if ( update.hasMessage() && update.getMessage().hasText() ) {
@@ -74,10 +71,12 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	message.setTelegramUserName(userUserName);
 	    	
 	    	// process command
-			CommandsInvoker.executeCommand(userMessageText, message );
+			try {
+				CommandsInvoker.executeCommand(userMessageText, message );
+			} catch (CommandNotFoundExeption e) {
+				sendTextMsg(chatId, "Unknow command... Check what I can do typing /help.");
+			}
 	    	
-	    	// process message. Define commands
-	    	//botAnswer = ysServices.processReceivedTextMsg( userFirstName, userLastName, userUserName, userMessageText, chatId );
 	    	
 	    	// create messages log
 	    	//ysServices.log(userFirstName, userLastName, userUserName, userMessageText, botAnswer);
@@ -85,13 +84,24 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    } else if( update.hasCallbackQuery() ) {
 	    	
 	    	// set message variables
-            String call_data = update.getCallbackQuery().getData();
+            String callData = update.getCallbackQuery().getData();
 	    	String userUserName = update.getCallbackQuery().getFrom().getUserName(); // used as key in YouShare systems
-            long message_id = update.getCallbackQuery().getMessage().getMessageId(); // to edit callback message and remove buttons
-            String chat_id = update.getCallbackQuery().getMessage().getChatId().toString();
+            long messageId = update.getCallbackQuery().getMessage().getMessageId(); // to edit callback message and remove buttons
+            String chatId = update.getCallbackQuery().getMessage().getChatId().toString();
+            
+            // set message data
+	    	MessageData message = new MessageData();
+	    	message.setChatId(chatId);
+	    	message.setTelegramUserName(userUserName);
+	    	message.setMessageId(messageId);
             
             // process callback query
-            ysServices.processCallBackQuery( userUserName, call_data, message_id, chat_id );
+			try {
+				CommandsInvoker.executeCommand(callData, message );
+			} catch (CommandNotFoundExeption e) {
+				// TODO será que deveria ser separado aqui?
+				sendTextMsg(chatId, "Problem Processing your choice. Contact support.");
+			}
             
 	    	// TODO create messages log
 	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );

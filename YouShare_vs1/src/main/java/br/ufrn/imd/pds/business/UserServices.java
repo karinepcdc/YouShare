@@ -1,15 +1,18 @@
 package br.ufrn.imd.pds.business;
 
+import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
 
 public class UserServices implements FacadeUser {
 	
 
-	UserDAOMemory userDatabase; // database manager class
+	UserDAO userDatabase; // database manager class
 
 	public UserServices() {		
 		// instantiate database
 		userDatabase = UserDAOMemory.getInstance();
+		
+		System.out.println("UserServices criated!");
 	}
 	
 	@Override

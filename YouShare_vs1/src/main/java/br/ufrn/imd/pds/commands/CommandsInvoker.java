@@ -3,6 +3,7 @@ package br.ufrn.imd.pds.commands;
 import java.util.HashMap;
 
 import br.ufrn.imd.pds.APIinterface.MessageData;
+import br.ufrn.imd.pds.exceptions.CommandNotFoundExeption;
 
 
 /// Define availabe commands. 
@@ -23,15 +24,29 @@ public class CommandsInvoker {
 	static {
 		// BotCommands answers
 		commandsMap.put( "/start", new StartCommand() );
+		commandsMap.put( "/help", new HelpCommand() );
 		commandsMap.put( "/register", new RegisterCommand() );
 		commandsMap.put( "/unregister", new UnegisterCommand() );
+		commandsMap.put( "/profile", new ProfileCommand() );
+		commandsMap.put( "/myshare", new MyshareCommand() );
+		commandsMap.put( "/myreservations", new MyreservationsCommand() );
+		commandsMap.put( "/search", new SearchCommand() );
+
 		
 		// Callback query answers
-		commandsMap.put("Yes_unregisterConfirmation", new YesUnregisterCommand() );
+		commandsMap.put("Yes_unregister", new YesUnregisterCommand() );
+		commandsMap.put("No_unregister", new NoUnregisterCommand() );
+
 	}
 	
-	public static void executeCommand( String command, MessageData message ) {
-		commandsMap.get( command ).execute( message );
+	public static void executeCommand( String command, MessageData message ) throws CommandNotFoundExeption {
+		
+		if( commandsMap.get( command ) != null ) {
+			commandsMap.get( command ).execute( message );
+		} else {
+			// TODO Especificar melhor erro
+			throw new CommandNotFoundExeption("command not found"); 
+		}
 	}
 	
 	public static void undoCommand( String command ) { // TODO  faz algum sentido?

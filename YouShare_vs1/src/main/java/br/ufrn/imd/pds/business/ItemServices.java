@@ -1,12 +1,13 @@
 package br.ufrn.imd.pds.business;
 
+import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.data.ItemDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public class ItemServices implements FacadeItem {
 
-	ItemDAOMemory itemDatabase; // database manager class
+	ItemDAO itemDatabase; // database manager class
 
 	public ItemServices() throws DataException {		
 		// instantiate database
