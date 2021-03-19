@@ -23,14 +23,14 @@ public class ItemDAOMemory implements ItemDAO {
 	private static ItemDAOMemory uniqueInstance;
 	
 	/* Default constructor */
-	public ItemDAOMemory() throws ReadItemFromDatabaseException {
+	public ItemDAOMemory() throws DataException {
 		System.out.println( "ItemDAOMemory's constructor started\n" );
 		
 		startDatabase();
 	}
 	
 	/* Singleton constructor */
-	public static synchronized ItemDAOMemory getInstance() throws ReadItemFromDatabaseException {
+	public static synchronized ItemDAOMemory getInstance() throws DataException {
 		if( uniqueInstance == null ) {
 			uniqueInstance = new ItemDAOMemory();
 		}
@@ -44,13 +44,13 @@ public class ItemDAOMemory implements ItemDAO {
 	 */
 	
 	@Override
-	public void startDatabase( ) throws ReadItemFromDatabaseException {
+	public void startDatabase( ) throws DataException {
 		
 		// start item database
 		try {
 			itemMap = DBReader.csvToItemHashMap();
 		} catch ( IOException e ) {
-			throw new ReadItemFromDatabaseException();
+			throw new DataException("An error occurred trying to read item database file.");
 		}
 	}
 	

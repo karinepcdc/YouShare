@@ -10,7 +10,7 @@ import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
 public interface ItemDAO {
 	
 	/// Read all item database (for now, only toolDatabase) and load items into an hashmap of items.
-	public void startDatabase( ) throws ReadItemFromDatabaseException;
+	public void startDatabase( ) throws DataException;
 	
 	/// Register newItem in the database.
 	/*
