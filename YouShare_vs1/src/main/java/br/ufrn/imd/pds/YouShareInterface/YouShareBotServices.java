@@ -8,7 +8,7 @@ import com.vdurmont.emoji.EmojiParser;
 ** https://www.webfx.com/tools/emoji-cheat-sheet/
 */
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
@@ -232,18 +232,40 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) {	// user already regitered
+			/*
+			Tool newTool3 = new Tool("Drill", "Drill that do what's expected", "", message.getTelegramUserName(), 0, 0, "", "14", "none", "220");
+			Tool newTool4 = new Tool("Vacuum cleaner", "dam good vacuum cleaner", "", message.getTelegramUserName(), 0, 0, "", "12.4", "dont spoil", "220");
+			Tool newTool5 = new Tool("Electric sander", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.6", "take care", "110");
+
+			try {
+				newTool3.setCode(itemServices.createItem( newTool3 ) );
+				newTool4.setCode(itemServices.createItem( newTool4 ));			
+				newTool5.setCode(itemServices.createItem( newTool5 ));
+			} catch (BusinessException | DataException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			*/
 			
 			// check if the user have ads
-			//boolean isUserAdsListEmpty = itemServices.readAll( message.getTelegramUserName() ).isEmpty();
-			boolean isUserAdsListEmpty = true;
-			if( !isUserAdsListEmpty ) { // TODO methold that check if user have any ad
+			List<Item> userAds = new ArrayList<Item>();
+			try {
+				userAds = itemServices.readAll( message.getTelegramUserName() );
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if( !userAds.isEmpty() ) { 
 				
 			// define bot answer
-			botAnswer = "Here are your Ads:\n";
+			botAnswer = "Here are your Ads:\n\n";
 			
 				// list user ads in inline keyboard \\ TODO include inline keyboard 
+				for( Item it: userAds ) {
+					botAnswer += it.getName() + " (id: " + it.getCode() + ")\n";
+				}
 				
-				botAnswer += "Type the item id for more details.\n";
+				botAnswer += "\nType '/itemdetails_' + 'id' for more details.\n";
 				botAnswer += "To include more items type /additem.\n";
 				
 			 } else {
@@ -272,13 +294,79 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 	}
 
+	public static void itemDetails ( MessageData message ) {
+		String botAnswer = ""; 
+
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		if( isUserRegistered ) {
+			if( message.hasParameter() ) {
+				try {
+					itemServices.validateId(message.getParameter(), message.getTelegramUserName());
+				} catch (BusinessException e) {
+					
+					// define bot answer			
+					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
+							+ e.getMessage()
+							+ "\nThe command /itemdetail require a item id as parameter.\n"
+							+ "Type /itemdetail_id, replacing id by the id number of the item you want to see."
+							+ "For instance, /itemdetail_123.\n\n"
+							+ "To check you items id type /myshare.";
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				}
+				
+				try {
+					Item item = itemServices.readItem(message.getParameter());
+					
+					// display item ad
+					botAnswer = "Item id #" + message.getParameter() + " Ad:\n\n"
+							+ item.getName() + "\n"
+							+ "Status: " + (item.isAvailable() ? "available" : "not available") + "\n"
+							+ "Grade: " + item.getItemGrade() + "\n"
+							+ "Most recent review: " + item.getLastReview() + "\n"
+							+ "Price: $" + item.getPrice() + "\n\n";
+					
+					// item specifics
+					if( item instanceof Tool ) {
+						botAnswer += "Terms of use: " + ((Tool) item).getTermsOfUse() + "\n"
+								+ "Voltage: " + ((Tool) item).getVoltage();
+					}
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
+				} catch (BusinessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		} else { // new user
+	    		
+	    	// define bot answer
+			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+						+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+			// request APIInterface to send text message to user
+	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
+		}
+		
+	}
 
 	public static void myreservations ( MessageData message ) {
 
-		String botAnswer = ""; // Bot reply
+		String botAnswer = ""; 
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already regitered    		
+		if( isUserRegistered ) {    		
 			
 			// check if the user have reservations
 			// if( userServices.haveReservations??? ) { \\ TODO methold that check if user have any reservation

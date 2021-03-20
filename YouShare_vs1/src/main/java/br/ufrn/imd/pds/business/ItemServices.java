@@ -236,6 +236,27 @@ public class ItemServices implements FacadeItem {
 	}
 
 
+	@Override
+	public void validateId(String code, String user) throws BusinessException {
+
+		try {
+			Long.parseLong(code);
+		} catch ( NumberFormatException e ) {
+			throw new BusinessException("Id is not a integer number.");
+		}
+		
+		Item item = itemDatabase.readItem(code);
+		if( item == null ) { 
+			throw new BusinessException("Item with id " + code + " not found.");
+		}
+		
+		if( !item.getOwner().equals(user) ) {
+			throw new BusinessException("Item with id " + code + " does not belong to you.");
+		}
+		
+	}
+
+
 	/*
 	@Override
 	public void addItemReview(String code, int grade, String review) {

@@ -29,6 +29,7 @@ public class CommandsInvoker {
 		commandsMap.put( "/unregister", new UnregisterCommand() );
 		commandsMap.put( "/profile", new ProfileCommand() );
 		commandsMap.put( "/myshare", new MyshareCommand() );
+		commandsMap.put( "/itemdetails", new ItemDetailsCommand() );
 		commandsMap.put( "/myreservations", new MyreservationsCommand() );
 		commandsMap.put( "/search", new SearchCommand() );
 

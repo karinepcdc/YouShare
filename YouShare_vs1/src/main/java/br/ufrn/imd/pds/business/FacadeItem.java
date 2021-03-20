@@ -74,5 +74,8 @@ public interface FacadeItem {
 	 * @return id of item created.
 	 */
 	public String changeAvailability ( String code ) throws BusinessException, DataException;
-	
+
+	/// Check if the item id is valid and if it registered to the user.
+	public void validateId ( String code, String user ) throws BusinessException;
+
 }
