@@ -19,7 +19,7 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void createUser( User newUser ) throws DataException {
+	public void createUser( User newUser ) throws BusinessException, DataException {
 		
 		// check if user is already in the systems
 		if( !isRegistered( newUser.getTelegramUserName() ) ) {
@@ -28,13 +28,13 @@ public class UserServices implements FacadeUser {
 			userDatabase.createUser( newUser );
 			
 		} else {
-			throw new DataException();
+			throw new BusinessException();
 		}
 		
 	}
 	
 	@Override
-	public String readUser( String userName  ) throws DataException {
+	public String readUser( String userName  ) throws BusinessException, DataException {
 		
 		// get user
 		User userToString = userDatabase.readUser( userName );
@@ -50,18 +50,18 @@ public class UserServices implements FacadeUser {
 			return userProfile;
 						
 		} else {
-			throw new DataException();
+			throw new BusinessException();
 		}
 	}
 	
 	@Override
-	public void updateUser( String userName, String campo, String value ) {
+	public void updateUser( String userName, String campo, String value ) throws BusinessException, DataException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void deleteUser( String userName ) throws DataException {
+	public void deleteUser( String userName ) throws BusinessException, DataException {
 		
 		User userToDelete = userDatabase.readUser( userName );
 		
@@ -76,7 +76,7 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void addUserReview( String userName, int grade, String review ) throws DataException {
+	public void addUserReview( String userName, int grade, String review ) throws BusinessException, DataException  {
 
 		// get user from database
 		User userToUpdate = userDatabase.readUser( userName );
@@ -141,6 +141,7 @@ public class UserServices implements FacadeUser {
 		if( hasViolations ) {
 			throw new BusinessException( exceptionMessages );
 		}
+
 		
 	}
 

@@ -76,7 +76,7 @@ public class DBReader {
 		// TODO only Tool database inplemented. Do the others
 		
 		// Tool database
-		// check if database files exist, if not, create them
+		// If items database files does not exist, create them
 		File toolDatabaseFile = new File("src/main/csv/toolDatabase.csv");
 		if( toolDatabaseFile.createNewFile() ) {
 			System.out.println("Tool database file created!\n");	
