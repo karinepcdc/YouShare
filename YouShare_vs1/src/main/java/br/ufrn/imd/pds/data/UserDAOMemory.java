@@ -6,9 +6,7 @@ import java.util.HashMap;
 import br.ufrn.imd.pds.DBHandlers.DBReader;
 import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.User;
-import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
-import br.ufrn.imd.pds.exceptions.UserHeaderException;
-import br.ufrn.imd.pds.exceptions.UserNotRegisteredException;
+import br.ufrn.imd.pds.exceptions.DataException;
 
 public class UserDAOMemory implements UserDAO {
 	
@@ -17,7 +15,7 @@ public class UserDAOMemory implements UserDAO {
 	private static UserDAOMemory uniqueInstance;
 	
 	/* Default constructor */
-	private UserDAOMemory() throws UserHeaderException, UserDatabaseCreationException {
+	private UserDAOMemory() throws DataException {
 		
 		System.out.println( "UserDAOMemory's constructor \n" );
 				
@@ -31,12 +29,12 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	/* Singleton constructor */
-	public static synchronized UserDAOMemory getInstance() throws UserHeaderException, UserDatabaseCreationException {
+	public static synchronized UserDAOMemory getInstance() throws DataException {
 		try {
 			if( uniqueInstance == null ) {
 				uniqueInstance = new UserDAOMemory();
 			}
-		} catch ( UserHeaderException e ) {
+		} catch ( DataException e ) {
 			e.printStackTrace();
 		}
 		return uniqueInstance;
@@ -64,7 +62,7 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	@Override
-	public void updateUser( User user ) throws UserNotRegisteredException {
+	public void updateUser( User user ) throws DataException {
 		User aux;
 		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
 		
@@ -81,13 +79,13 @@ public class UserDAOMemory implements UserDAO {
 			System.out.println( "Usuário atualizado com sucesso. \n" ); 
 		} else {
 
-			throw new UserNotRegisteredException();
+			throw new DataException();
 		}
 		
 	}
 	
 	@Override
-	public void deleteUser( User user ) throws UserNotRegisteredException {
+	public void deleteUser( User user ) throws DataException {
 		boolean isRegistered = userMap.containsKey( user.getTelegramUserName() );
 		
 		if ( isRegistered ) {
@@ -101,7 +99,7 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	@Override
-	public void addUserReview( String review, Float rating, User user ) throws UserNotRegisteredException {
+	public void addUserReview( String review, Float rating, User user ) throws DataException {
 		if ( userMap.containsKey( user.getTelegramUserName() ) ) {
 			
 		}

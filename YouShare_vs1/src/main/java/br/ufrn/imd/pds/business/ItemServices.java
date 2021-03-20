@@ -9,27 +9,18 @@ import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
-import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
-import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
-import br.ufrn.imd.pds.exceptions.UserHeaderException;
+
 
 public class ItemServices implements FacadeItem {
 
 	ItemDAO itemDatabase; // item database manager class
 	UserDAO userDatabase; // user database manager class
 
-	public ItemServices() throws DataException, ReadItemFromDatabaseException {		
+	public ItemServices() throws DataException {		
 		// instantiate database
 		itemDatabase = ItemDAOMemory.getInstance();
-		try {
-			userDatabase = UserDAOMemory.getInstance();
-		} catch (UserHeaderException e) {
-			// TODO delete latter
-			//e.printStackTrace();
-		} catch (UserDatabaseCreationException e) {
-			// TODO delete latter
-			//e.printStackTrace();
-		}
+		userDatabase = UserDAOMemory.getInstance();
+		
 
 	}
 	

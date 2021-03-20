@@ -3,7 +3,7 @@ package br.ufrn.imd.pds.commands;
 import java.util.HashMap;
 
 import br.ufrn.imd.pds.APIinterface.MessageData;
-import br.ufrn.imd.pds.exceptions.CommandNotFoundExeption;
+import br.ufrn.imd.pds.exceptions.CommandNotFoundException;
 
 
 /// Define availabe commands. 
@@ -39,13 +39,13 @@ public class CommandsInvoker {
 
 	}
 	
-	public static void executeCommand( String command, MessageData message ) throws CommandNotFoundExeption {
+	public static void executeCommand( String command, MessageData message ) throws CommandNotFoundException {
 		
 		if( commandsMap.get( command ) != null ) {
 			commandsMap.get( command ).execute( message );
 		} else {
 			// TODO Especificar melhor erro
-			throw new CommandNotFoundExeption("command not found"); 
+			throw new CommandNotFoundException("command not found"); 
 		}
 	}
 	

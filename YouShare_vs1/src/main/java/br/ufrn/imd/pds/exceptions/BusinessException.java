@@ -8,23 +8,15 @@ public class BusinessException extends Exception {
 
 	public BusinessException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public BusinessException(String message) {
+	public BusinessException( String message ) {
 		super( message );
-		// TODO Auto-generated constructor stub
 	}
 
-	public BusinessException(List<String> exeptionMessages) {
-		// TODO temp
+	public BusinessException( List<String> exeptionMessages ) {
 		for( String e: exeptionMessages ) {
 			System.out.println(e);
-		}
-		
-	}
-
-	
-	
-	
+		}		
+	}	
 }
