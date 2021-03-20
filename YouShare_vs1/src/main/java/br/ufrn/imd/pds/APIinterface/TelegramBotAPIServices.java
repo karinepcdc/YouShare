@@ -10,6 +10,7 @@ import br.ufrn.imd.pds.exceptions.DataException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -82,10 +83,22 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	message.setUserLastName(userLastName);
 	    	message.setTelegramUserName(userUserName);
 	    	message.setCallback(false);
+	    	message.setHasParameter(false);
 	    	
+	    	// chek if command have a parameter
+	    	String REGEX = "_";
+	    	Pattern commandPattern = Pattern.compile(REGEX);
+	    	String[] parameters = commandPattern.split(userMessageText);
+	    	
+	    	String command = parameters[0];
+	    	if( parameters.length > 1 ) {
+	    		message.setHasParameter(true);
+	    		message.setParameter(parameters[1]);
+	    	}
+	    		    	
 	    	// process command
 			try {
-				CommandsInvoker.executeCommand(userMessageText, message );
+				CommandsInvoker.executeCommand(command, message );
 			} catch (CommandNotFoundException e) {
 				sendTextMsg(chatId, "Unknow command... Check what I can do typing /help.");
 			}

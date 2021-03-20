@@ -8,9 +8,11 @@ public class MessageData {
 	private String userTxtMsg;
 	private String chatId;
 	private String callbackData;
+	private String parameter;
 
 	private long messageId;
 	private boolean isCallback;
+	private boolean hasParameter;
 	
 	public MessageData() {
 		super();
@@ -78,7 +80,24 @@ public class MessageData {
 
 	public void setCallback(boolean isCallback) {
 		this.isCallback = isCallback;
+	}
+
+	public String getParameter() {
+		return parameter;
+	}
+
+	public void setParameter(String parameter) {
+		this.parameter = parameter;
+	}
+
+	public boolean hasParameter() {
+		return hasParameter;
+	}
+
+	public void setHasParameter(boolean hasParameter) {
+		this.hasParameter = hasParameter;
 	} 
+	
 	
 	
 	
