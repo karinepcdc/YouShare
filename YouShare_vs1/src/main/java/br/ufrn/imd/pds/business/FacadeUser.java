@@ -12,7 +12,7 @@ public interface FacadeUser {
 	public String readUser( String userName ) throws BusinessException, DataException;
 	
 	/// Require that a YouShare user be updated from database
-	public void updateUser( String userName, String campo, String value ) throws BusinessException, DataException;
+	public void updateUser( User user ) throws BusinessException, DataException;
 	
 	/// Require that a YouShare user be removed from database
 	public void deleteUser( String userName ) throws BusinessException, DataException;

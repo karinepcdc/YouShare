@@ -48,9 +48,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 		String botAnswer = "";
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );			
-		if( isUserRegistered ) {	// user already regitered
+		if( isUserRegistered ) {	// user already registered
 				
-			// set bot repply
+			// set bot reply
 		    botAnswer = "Welcome back " + message.getUserFirstName() + EmojiParser.parseToUnicode("! :grin:\n\n")
 		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
 		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
@@ -60,7 +60,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 				
 		} else { // new user
 				
-	    	// set bot repply
+	    	// set bot reply
 		    botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
 		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
 		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
@@ -72,7 +72,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    // request APIInterface to send text message to user
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
-	    // YouShare bot loggins
+	    // YouShare bot logins
 	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 	}
 	
@@ -80,7 +80,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		String botAnswer = ""; // Bot reply
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already regitered
+		if( isUserRegistered ) {	// user already registered
 	
 			// define bot answer
 			botAnswer = "Select the desired action:\n\n"
@@ -101,7 +101,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// request APIInterface to send text message to user
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		
-		// YouShare bot loggins
+		// YouShare bot logins
 	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 	    
 	}
@@ -122,11 +122,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), "0", "0", "No reviews yet!" );
 			try {
 				userServices.createUser( newUser );
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
+			} catch ( BusinessException e ) {
 				e.printStackTrace();
-			} catch (DataException e) {
-				// TODO Auto-generated catch block
+			} catch ( DataException e ) {
 				e.printStackTrace();
 			}
 				
@@ -152,9 +150,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 		String botAnswer = ""; // Bot reply
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already registered    		
+		if( isUserRegistered ) {  		
 				
-	    	// define bot answer
 			botAnswer = message.getUserFirstName() + ", are you sure you want to unregister?\n"
 						+ "All your data, items and reservations will be erased from our system!\n\n"
 						+ EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
@@ -175,7 +172,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
 		}
 
-		// YouShare bot loggins
+		// YouShare bot logins
 	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
 	}
@@ -184,30 +181,28 @@ public class YouShareBotServices implements YouShareBotFacade {
 		String botAnswer = ""; // Bot reply
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already regitered    		
+		if( isUserRegistered ) {	// user already registered    		
 				
 	    	// define bot answer
 	    	try {
 				botAnswer = "This is how YouShare users see you: \n\n"
 							 + userServices.readUser( message.getTelegramUserName() );
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
+			} catch ( BusinessException e ) {
 				e.printStackTrace();
-			} catch (DataException e) {
-				// TODO Auto-generated catch block
+			} catch ( DataException e ) {
 				e.printStackTrace();
 			}
 	    		
-	   		// a message with picture could be send here... do ???
+	   		// TODO: a message with picture could be send here... do ???
 	
 	   		// request APIInterface to send text message to user
 	   		apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	
 	   		botAnswer = "Do you want to change your profile?\n\n"
 	    				+ "/name - change name.\n";
-	    				//+ "/picture - change picute."; // ... do ???
+	    				//+ "/picture - change picture."; // ... do ???
 	    		
-	    	// fazer mecanismo de continuar navegando num submenu.... do ???
+	    	// TODO: fazer mecanismo de continuar navegando num submenu.... do ???
 			
 	   		// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );

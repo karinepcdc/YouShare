@@ -10,25 +10,23 @@ import br.ufrn.imd.pds.exceptions.DataException;
 
 public class UserServices implements FacadeUser {	
 
-	UserDAO userDatabase; // database manager class
+	UserDAO userDatabase;
 
 	public UserServices() throws DataException {		
 		userDatabase = UserDAOMemory.getInstance();
 		
-		System.out.println("UserServices created!");
+		System.out.println( "UserServices created!" );
 	}
 	
 	@Override
 	public void createUser( User newUser ) throws BusinessException, DataException {
 		
-		// check if user is already in the systems
 		if( !isRegistered( newUser.getTelegramUserName() ) ) {
 			
-			// create new user
 			userDatabase.createUser( newUser );
 			
 		} else {
-			throw new BusinessException();
+			throw new BusinessException( "User is already registered. \n" );
 		}
 		
 	}
@@ -36,10 +34,8 @@ public class UserServices implements FacadeUser {
 	@Override
 	public String readUser( String userName  ) throws BusinessException, DataException {
 		
-		// get user
 		User userToString = userDatabase.readUser( userName );
 
-		// check if user is registered in YouShare systems 
 		if( userToString != null ) {			
 			String userProfile = "";
 			
@@ -55,8 +51,9 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void updateUser( String userName, String campo, String value ) throws BusinessException, DataException {
-		// TODO Auto-generated method stub
+	public void updateUser( User user ) throws BusinessException, DataException {
+		
+		userDatabase.updateUser( user );	
 		
 	}
 
