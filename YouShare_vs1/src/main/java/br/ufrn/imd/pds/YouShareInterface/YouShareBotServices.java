@@ -14,6 +14,7 @@ import br.ufrn.imd.pds.APIinterface.TelegramBotAPIFacade;
 import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.ItemServices;
+import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
@@ -291,13 +292,26 @@ public class YouShareBotServices implements YouShareBotFacade {
 				botAnswer += "To include an item type /additem.\n";
 	
 				try {
-					itemServices.createItem("", "", "", "", "");
+				
+					// create item: Tool
+					
+										
+					Tool newTool3 = new Tool("Electric sander3", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "14", "none", "220");
+					itemServices.createItem( newTool3 );
+					
+					Tool newTool4 = new Tool("Electric sander88", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.4", "dont spoil", "220");
+					itemServices.createItem( newTool4 );
+					
+					Tool newTool5 = new Tool("Electric sander77", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.6", "dont spoil", "110");
+					itemServices.createItem( newTool5 );
+					
+					
 				} catch (BusinessException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (DataException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				
 				// }

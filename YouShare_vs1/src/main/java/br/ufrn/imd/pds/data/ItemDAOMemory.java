@@ -56,11 +56,10 @@ public class ItemDAOMemory implements ItemDAO {
 	
 	@Override
 	public void createItem( Item newItem ) throws DataException {
-		
+
 		boolean isRegistered = itemMap.containsKey( newItem.getCode() );		
 
-		if( isRegistered ) {
-	
+		if( !isRegistered ) {
 			// add Item to item map
 			itemMap.put( newItem.getCode() ,  newItem );
 				
@@ -124,10 +123,11 @@ public class ItemDAOMemory implements ItemDAO {
 
 		boolean isRegistered = itemMap.containsKey( item.getCode() );		
 		if( isRegistered ) {
+			
 			// Tool item
 			if( item instanceof Tool ) {
 				Tool toolAux = (Tool) itemMap.get( item.getCode() );
-				
+
 				toolAux.setName( 			((Tool) item ).getName() );
 				toolAux.setCode( 			((Tool) item ).getCode() );
 				toolAux.setDescription( 	((Tool) item ).getDescription() );

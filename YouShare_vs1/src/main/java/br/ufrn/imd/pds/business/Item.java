@@ -14,6 +14,9 @@ public abstract class Item {
 	protected String code; /// used as id in the database
 	
 	@CsvBindByName
+	protected String owner; /// user that owns item
+	
+	@CsvBindByName
 	protected double itemGrade; /// average of grades received evaluating item performance
 	
 	@CsvBindByName
@@ -23,22 +26,23 @@ public abstract class Item {
 	protected String lastReview; /// last review received when he returned an item
 	
 	@CsvBindByName
-	protected boolean isAvailable; /// is item available for rent?
+	protected boolean isAvailable = false; /// is item available for rent?
 	
 	@CsvBindByName
-	protected double price; /// rent price, set zero is it is borroed
+	protected String price; /// rent price, set zero is it is borroed
 	
 	/* Constructor Default */
 	public Item () {}
 	
-	public Item ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p ) {
+	/* Constructor full */
+	public Item ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p ) {
 		this.name = n;
 		this.description = desc;
 		this.code = cd;
+		this.owner = owner;
 		this.itemGrade = iG;
 		this.itemGradeCount = iGC;
 		this.lastReview = lRev;
-		this.isAvailable = isAv;
 		this.price = p;
 	}
 
@@ -64,6 +68,14 @@ public abstract class Item {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	public double getItemGrade() {
@@ -98,12 +110,13 @@ public abstract class Item {
 		this.lastReview = lastReview;
 	}
 
-	public double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
-	}	
+	}
+
 	
 }

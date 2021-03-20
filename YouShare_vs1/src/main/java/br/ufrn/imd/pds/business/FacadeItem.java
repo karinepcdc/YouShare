@@ -10,16 +10,33 @@ public interface FacadeItem {
 	 * By default, new item grade and gradeCount are zero and a default lastreview is setted
 	 * 
 	 */
-	public void createItem( String name, String description , String code, String isAvailable, String price ) throws BusinessException, DataException;
+	public void createItem( Item newItem ) throws BusinessException, DataException;
 	
 	/// Read a YouShare system item and return a string with it's relevant data
-	public String readItem( String code ) throws BusinessException, DataException;
+	public Item readItem( String code ) throws BusinessException, DataException;
 	
 	/// Require that a YouShare item be updated from database
-	public void updateUser( String code, String campo, String value ) throws BusinessException, DataException;
+	public void updateItem( Item item, String campo, String value ) throws BusinessException, DataException;
 	
 	/// Require that a YouShare item be removed from database
-	public void deleteUser( String code ) throws BusinessException, DataException;
+	public void deleteItem( String code ) throws BusinessException, DataException;
+	
+	/// Validate item.
+	/*
+	 * Check if all item fields required are non null and not empty;
+	 * Required fields:
+	 *  - item: name, description, price, isAvailable;
+	 *  - tool: termOfUse, voltage
+	 * Check if price is a double
+	 * TODO Check if already exist in the database.???
+	 * Check if owner is register and already has alredy reach 10 items ads
+	 * Check in any field has excess a characteres limmmit
+	 * Check if voltage is 110, 220 or none
+	 * 
+	 * 
+	 * TODO todos os checks
+	 */
+	public void validateItem ( Item item ) throws BusinessException;
 	
 	/// Register a item review and grade in the database.
 	/* 

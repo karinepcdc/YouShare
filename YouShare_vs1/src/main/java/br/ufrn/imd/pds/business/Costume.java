@@ -19,9 +19,9 @@ public class Costume extends Item {
 	@CsvBindByName
 	private String partyStyle;
 	
-	public Costume ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
+	public Costume ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p,
 			String tOU, String c, String s, String cStyle, String pStyle ) {
-		super( n, desc, cd, iG, iGC, lRev, isAv, p );
+		super( n, desc, cd, owner, iG, iGC, lRev, p );
 		this.termsOfUse = tOU;
 		this.color = c;
 		this.size = s;

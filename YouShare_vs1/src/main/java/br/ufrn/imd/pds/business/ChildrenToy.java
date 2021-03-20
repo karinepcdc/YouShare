@@ -7,9 +7,9 @@ public class ChildrenToy extends Item {
 	@CsvBindByName
 	private String condition;
 	
-	public ChildrenToy ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
+	public ChildrenToy ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p,
 			String cond ) {
-		super( n, desc, cd, iG, iGC, lRev, isAv, p );
+		super( n, desc, cd, owner, iG, iGC, lRev, p );
 		this.condition = cond;
 	}
 

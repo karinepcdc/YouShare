@@ -15,14 +15,14 @@ public class Tool extends Item {
 		super();
 	}
 	
-	/* Constructor */
-	public Tool ( String n, String desc, String cd, double iG, int iGC, String lRev, boolean isAv, double p,
+	/* Constructor full */
+	public Tool ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p,
 			String tOU, String v) {
-		super( n, desc, cd, iG, iGC, lRev, isAv, p );
+		super( n, desc, cd, owner, iG, iGC, lRev, p );
 		this.termsOfUse = tOU;
 		this.voltage = v;
 	}
-
+	
 	public String getTermsOfUse() {
 		return termsOfUse;
 	}
