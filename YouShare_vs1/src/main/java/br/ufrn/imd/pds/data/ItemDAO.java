@@ -5,7 +5,6 @@ import java.util.List;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.exceptions.DataException;
-import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
 
 public interface ItemDAO {
 	
@@ -15,18 +14,22 @@ public interface ItemDAO {
 	/// Register newItem in the database.
 	/*
 	 * @param newItem item to be saved in the database.
+	 * @return id of item created.
 	 */
-	public void createItem( Item newItem ) throws DataException;
+	public String createItem( Item newItem ) throws DataException;
 	
 	/// Check if item with id code is register in database and return it. If item is not found return null.
 	/*
 	 * @param code unique id code of the item.
 	 */
-	public Item readItem( String code ) throws DataException;
+	public Item readItem( String code );
 	
 	/// Return all items regitered in the database.
 	public List<Item> readAll( );	
 	
+	/// Return all items from user owner in the database.
+	public List<Item> readAll( String owner );
+		
 	/// Return all Tools regitered in the database.
 	public List<Tool> readAllTools( );	
 		
@@ -34,14 +37,16 @@ public interface ItemDAO {
 	/*
 	 * @param item item to be updated in the database.
 	 * @param params list of parameter tal will be updated.
+	 * @return id of item updated.
 	 */
-	public void updateItem(Item item) throws DataException;
+	public String updateItem(Item item) throws DataException;
 	
 	/// Remove Item from the database.
 	/*
 	 * @ item item to be removed.
+	 * @return id of item deleted.
 	 */
-	public void deleteItem(Item item) throws DataException;
+	public String deleteItem(Item item) throws DataException;
 	
 	/// 
 	//public void addReviewItem( String review, Float rating, Item item );

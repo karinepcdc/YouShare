@@ -52,10 +52,27 @@ public class ItemDAOMemory implements ItemDAO {
 		} catch ( IOException e ) {
 			throw new DataException("An error occurred trying to read item database file.");
 		}
+		
+		// start idcounter with biggest item id in database
+		if( !itemMap.isEmpty() ) {
+			List<Long> idList = new ArrayList<Long>();
+			for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+				idList.add( Long.valueOf( pair.getValue().getCode() ) );
+			}
+			
+			long largestId = 0;
+			for(long id: idList) {
+				if( largestId < id ) {
+					largestId = id;
+				}
+			}
+			
+			IdCounter.setCounter(largestId);
+		}
 	}
 	
 	@Override
-	public void createItem( Item newItem ) throws DataException {
+	public String createItem( Item newItem ) throws DataException {
 
 		// set unique code
 		String code = String.valueOf(IdCounter.nextId());
@@ -73,11 +90,13 @@ public class ItemDAOMemory implements ItemDAO {
 			throw new DataException( "Problem trying to write new item in the database." );
 		}
 		
+		return newItem.getCode();
+		
 	}
 	
 	@Override
-	public Item readItem(String code) throws DataException {
-		
+	public Item readItem(String code) {
+
 		boolean isRegistered = itemMap.containsKey( code );		
 		if( isRegistered ) {
 			return itemMap.get( code );
@@ -99,6 +118,20 @@ public class ItemDAOMemory implements ItemDAO {
 		return items; // TODO check if it is fine to return empty list
 	}
 	
+	@Override
+	public List<Item> readAll(String owner) {
+		ArrayList<Item> items = new ArrayList<Item>();
+		
+		// put items from toolMap in a list
+		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+			Item item = pair.getValue();
+			if( item.getOwner().equals(owner) ) {
+				items.add( item );
+			}
+		}
+		
+		return items; // TODO check if it is fine to return empty list
+	}
 
 	@Override
 	public List<Tool> readAllTools() {
@@ -116,7 +149,7 @@ public class ItemDAOMemory implements ItemDAO {
 
 	
 	@Override
-	public void updateItem(Item item) throws DataException {
+	public String updateItem(Item item) throws DataException {
 		
 		/*
 		// Tool item
@@ -149,11 +182,13 @@ public class ItemDAOMemory implements ItemDAO {
 			// TODO detail better exeption, trying to tell what exactly have happened
 			throw new DataException("Problem trying to write updated item in the database.");
 		}
+		
+		return item.getCode();
 			
 	}
 	
 	@Override
-	public void deleteItem(Item item) throws DataException {
+	public String deleteItem(Item item) throws DataException {
 		
 		// remove item form item map
 		itemMap.remove( item.getCode() );
@@ -166,7 +201,7 @@ public class ItemDAOMemory implements ItemDAO {
 			throw new DataException("Problem trying to update database after removing an item.");
 		}
 			
-		
+		return item.getCode();
 	}
 
 	

@@ -8,4 +8,8 @@ public class IdCounter {
         return ++counter;     
     }
     
+    public static void setCounter( long init ) {
+    	counter = init;
+    }
+    
 }
