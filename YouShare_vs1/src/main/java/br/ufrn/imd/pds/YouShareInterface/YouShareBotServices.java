@@ -183,7 +183,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) {	// user already registered    		
 				
-	    	// define bot answer
 	    	try {
 				botAnswer = "This is how YouShare users see you: \n\n"
 							 + userServices.readUser( message.getTelegramUserName() );
@@ -231,7 +230,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already regitered
+		if( isUserRegistered ) {	// user already registered
 			/*
 			Tool newTool3 = new Tool("Drill", "Drill that do what's expected", "", message.getTelegramUserName(), 0, 0, "", "14", "none", "220");
 			Tool newTool4 = new Tool("Vacuum cleaner", "dam good vacuum cleaner", "", message.getTelegramUserName(), 0, 0, "", "12.4", "dont spoil", "220");

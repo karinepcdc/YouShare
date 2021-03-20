@@ -21,6 +21,8 @@ public class UserServices implements FacadeUser {
 	@Override
 	public void createUser( User newUser ) throws BusinessException, DataException {
 		
+		validateUser( newUser );
+		
 		if( !isRegistered( newUser.getTelegramUserName() ) ) {
 			
 			userDatabase.createUser( newUser );
@@ -46,14 +48,14 @@ public class UserServices implements FacadeUser {
 			return userProfile;
 						
 		} else {
-			throw new BusinessException();
+			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );
 		}
 	}
 	
 	@Override
 	public void updateUser( User user ) throws BusinessException, DataException {
 		
-		userDatabase.updateUser( user );	
+		userDatabase.updateUser( user );
 		
 	}
 
@@ -62,54 +64,47 @@ public class UserServices implements FacadeUser {
 		
 		User userToDelete = userDatabase.readUser( userName );
 		
-		// if user is register in the database
 		if( userToDelete != null ) {
 			userDatabase.deleteUser( userToDelete );
 			
 		} else {
-			// TODO throw exception
-			// User not registered
+			throw new BusinessException( "The user you were trying to delete is not registered in the database. \n" );
 		}
 	}
 	
 	@Override
 	public void addUserReview( String userName, int grade, String review ) throws BusinessException, DataException  {
 
-		// get user from database
 		User userToUpdate = userDatabase.readUser( userName );
 		
-		// if user is register in the database
 		if( userToUpdate != null ) {
 			
-			// get current user grade data 
 			float currentUserGrade = Float.parseFloat( userToUpdate.getUserGrade() );
 			
 			userToUpdate.incrementUserGradeCount(); 
 			float totalNumGrades = Float.parseFloat( userToUpdate.getUserGradeCount() );
 			
-			/*  compute progressive average: 
-			 *  M_k = M_(k-1) + (x_k - M_(k-1))/k
-			 */
-			
+			/*  compute progressive average: M_k = M_(k-1) + (x_k - M_(k-1))/k
+			 */			
 			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade )/totalNumGrades;
 					
-			// update user grade average
 			userToUpdate.setUserGrade( Float.toString( updatedUserGrade ) );
 			
-			// add review - and if review is empty???
-			userToUpdate.setLastReview( review );
+			if ( review == null || review.isBlank() ) {
+				throw new BusinessException( "A written review is required. \n" );
+			}
+			else {
+				userToUpdate.setLastReview( review );
+			}
 			
-			// update user
 			userDatabase.updateUser( userToUpdate );
 			
 		} else {
-			// TODO throw exception
-			// User not registered
+			throw new BusinessException ( "The user you were trying to review is not registered in the database. \n" );
 		}
 	
 	}
 	
-
 	@Override
 	public boolean isRegistered( String userName ) {
 		return userDatabase.readUser( userName ) != null ;
@@ -137,10 +132,6 @@ public class UserServices implements FacadeUser {
 		
 		if( hasViolations ) {
 			throw new BusinessException( exceptionMessages );
-		}
-
-		
-	}
-
-	
+		}	
+	}	
 }
