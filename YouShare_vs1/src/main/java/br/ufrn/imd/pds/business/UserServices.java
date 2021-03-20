@@ -2,45 +2,41 @@ package br.ufrn.imd.pds.business;
 
 import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
-import br.ufrn.imd.pds.exceptions.UserAlreadyRegisteredException;
-import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
-import br.ufrn.imd.pds.exceptions.UserHeaderException;
-import br.ufrn.imd.pds.exceptions.UserNotRegisteredException;
+import br.ufrn.imd.pds.exceptions.DataException;
 
 public class UserServices implements FacadeUser {	
 
 	UserDAO userDatabase; // database manager class
 
-	public UserServices() throws UserHeaderException, UserDatabaseCreationException {		
+	public UserServices() throws DataException {		
 		// instantiate database
 		userDatabase = UserDAOMemory.getInstance();
 		
-		System.out.println("UserServices criated!");
+		System.out.println("UserServices created!");
 	}
 	
 	@Override
-	public void createUser( String firstName, String lastName , String userName ) throws UserAlreadyRegisteredException {
+	public void createUser( User newUser ) throws DataException {
 		
 		// check if user is already in the systems
-		if( !isRegistered( userName ) ) {
+		if( !isRegistered( newUser.getTelegramUserName() ) ) {
 			
 			// create new user
-			User newUser = new User( firstName, lastName, userName, "0", "0", "No reviews yet!" );
 			userDatabase.createUser( newUser );
 			
 		} else {
-			throw new UserAlreadyRegisteredException();
+			throw new DataException();
 		}
 		
 	}
 	
 	@Override
-	public String readUser( String userName  ) throws UserNotRegisteredException {
+	public String readUser( String userName  ) throws DataException {
 		
 		// get user
 		User userToString = userDatabase.readUser( userName );
 
-		// check if user is register in YouShare systems 
+		// check if user is registered in YouShare systems 
 		if( userToString != null ) {			
 			String userProfile = "";
 			
@@ -51,7 +47,7 @@ public class UserServices implements FacadeUser {
 			return userProfile;
 						
 		} else {
-			throw new UserNotRegisteredException();
+			throw new DataException();
 		}
 	}
 	
@@ -62,7 +58,7 @@ public class UserServices implements FacadeUser {
 	}
 
 	@Override
-	public void deleteUser( String userName ) throws UserNotRegisteredException {
+	public void deleteUser( String userName ) throws DataException {
 		
 		User userToDelete = userDatabase.readUser( userName );
 		
@@ -77,7 +73,7 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void addUserReview( String userName, int grade, String review ) throws UserNotRegisteredException {
+	public void addUserReview( String userName, int grade, String review ) throws DataException {
 
 		// get user from database
 		User userToUpdate = userDatabase.readUser( userName );

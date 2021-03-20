@@ -1,8 +1,8 @@
 package br.ufrn.imd.pds.YouShareInterface;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
 import com.vdurmont.emoji.EmojiParser; // to parse emojis
 //check emojis at: 
 //https://emojipedia.org/beaming-face-with-smiling-eyes/
@@ -15,14 +15,11 @@ import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.Tool;
+import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
-import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
-import br.ufrn.imd.pds.exceptions.UserAlreadyRegisteredException;
-import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
-import br.ufrn.imd.pds.exceptions.UserHeaderException;
-import br.ufrn.imd.pds.exceptions.UserNotRegisteredException;
+
 
 public class YouShareBotServices implements YouShareBotFacade {
 	
@@ -32,18 +29,18 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 	
 	/* Default constructor */	
-	public YouShareBotServices() throws UserDatabaseCreationException {
+	public YouShareBotServices() throws DataException {
 		apiServices = new TelegramBotAPIServices();
 		
 		try {
 			userServices = new UserServices();
-		} catch ( UserHeaderException e ) { // TODO é para ser dataexception
+		} catch ( DataException e ) { // TODO é para ser dataexception
 			e.printStackTrace();
 		}		
 
 		try {
 			itemServices = new ItemServices();
-		} catch (DataException | ReadItemFromDatabaseException e) { // TODO Tem que ser so dataExeption
+		} catch ( DataException  e ) { // TODO Tem que ser so dataExeption
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -97,8 +94,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 	        
 	        
-		} catch (UserNotRegisteredException e) {
-			// TODO Auto-generated catch block
+		} catch ( DataException e ) {
 			e.printStackTrace();
 		}
 
@@ -134,8 +130,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		    // YouShare bot loggins
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 	        
-		} catch (UserNotRegisteredException e) {
-			// TODO Auto-generated catch block
+		} catch ( DataException e ) {
 			e.printStackTrace();
 		}
 	    
@@ -146,7 +141,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		try {
 			boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-			if( isUserRegistered ) {	// user already regitered    		
+			if( isUserRegistered ) {	// user already registered    		
 			// define bot answer
 			botAnswer = message.getUserFirstName() + ", you are already registered in our system!"
 					+ "Type /help to see the main menu.\n"
@@ -155,7 +150,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	} else { // new user
 	
 				// cadastrar novo usuário
-				userServices.createUser( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName() );
+	    		User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), "0", "0", "No reviews yet!" );
+				userServices.createUser( newUser );
 				// TODO tratamento de excessão ???
 				
 				// define bot answer
@@ -172,12 +168,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 		    // YouShare bot loggins
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 		    
-		} catch (UserNotRegisteredException | UserAlreadyRegisteredException e) {
-			// TODO Auto-generated catch block
+		} catch ( DataException e ) {
 			e.printStackTrace();
-		}			
-	
-		
+		}		
 	}
 	
 	
@@ -186,7 +179,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		try {
 			boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-			if( isUserRegistered ) {	// user already regitered    		
+			if( isUserRegistered ) {	// user already registered    		
 				
 	    		// define bot answer
 				botAnswer = message.getUserFirstName() + ", are you sure you want to unregister?\n"
@@ -212,7 +205,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// YouShare bot loggins
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
-		} catch ( UserNotRegisteredException e ) {
+		} catch ( DataException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -261,7 +254,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
 			
-		} catch ( UserNotRegisteredException e ) {
+		} catch ( DataException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -334,14 +327,13 @@ public class YouShareBotServices implements YouShareBotFacade {
 		    // YouShare bot loggins
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
-		} catch ( UserNotRegisteredException e ) {
-			// TODO Auto-generated catch block
+		} catch ( DataException e ) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public static void myreservations ( MessageData message ) {
+	public static void myeservations ( MessageData message ) {
 		String botAnswer = ""; // Bot reply
 		
 		try {
@@ -384,7 +376,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		    // YouShare bot loggins
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
-		} catch ( UserNotRegisteredException e ) {
+		} catch ( DataException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -425,7 +417,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// YouShare bot loggins
 	        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
-		} catch ( UserNotRegisteredException e ) {
+		} catch ( DataException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -444,7 +436,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// unregister user
 		try {
 			userServices.deleteUser( callbackMessage.getTelegramUserName() );
-		} catch (UserNotRegisteredException e) {
+		} catch ( DataException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

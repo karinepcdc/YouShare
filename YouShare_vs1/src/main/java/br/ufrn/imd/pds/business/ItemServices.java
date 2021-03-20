@@ -13,7 +13,7 @@ public class ItemServices implements FacadeItem {
 
 	ItemDAO itemDatabase; // database manager class
 
-	public ItemServices() throws DataException, ReadItemFromDatabaseException {		
+	public ItemServices() throws DataException {		
 		// instantiate database
 		itemDatabase = ItemDAOMemory.getInstance();
 	}

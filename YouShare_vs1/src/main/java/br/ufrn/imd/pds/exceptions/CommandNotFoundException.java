@@ -1,21 +1,19 @@
 package br.ufrn.imd.pds.exceptions;
 
-public class CommandNotFoundExeption extends Exception {
+public class CommandNotFoundException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CommandNotFoundExeption() {
+	public CommandNotFoundException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommandNotFoundExeption( String message ) {
+	public CommandNotFoundException( String message ) {
 		super(message);
 		// TODO Auto-generated constructor stub
-	}
-
-	
+	}	
 }

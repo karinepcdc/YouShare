@@ -13,17 +13,17 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
-import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
-import br.ufrn.imd.pds.exceptions.UserHeaderException;
+import br.ufrn.imd.pds.exceptions.DataException;
+
 
 public class DBReader {
 	
-	public static HashMap<String,User> csvToUserHashMap () throws UserHeaderException, UserDatabaseCreationException {
+	public static HashMap<String,User> csvToUserHashMap () throws DataException {
 		
 		System.out.println( "Convertendo userDatabase.csv para instancias da classe User..." );
 
 		// check if database file exist, if not, create it
-		File userDatabaseFile = new File("src/main/csv/userDatabase.csv");
+		File userDatabaseFile = new File( "src/main/csv/userDatabase.csv" );
 		try {
 			if( userDatabaseFile.createNewFile() ) {
 				
@@ -38,13 +38,13 @@ public class DBReader {
 					
 		        } catch ( IOException e1 ) {
 		        	e1.printStackTrace();
-					throw new UserHeaderException();				
+					throw new DataException( "An error has occurred while trying to write the user database header. \n" );				
 				} 		
 			}
 			
 		} catch ( IOException e ) {
 			e.printStackTrace();
-			throw new UserDatabaseCreationException();
+			throw new DataException( "An error occurred while trying to create user database file. \n" );
 		}
 		
 		// Prepare to read the file
