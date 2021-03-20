@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
+import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public class UserServices implements FacadeUser {	
@@ -12,7 +13,6 @@ public class UserServices implements FacadeUser {
 	UserDAO userDatabase; // database manager class
 
 	public UserServices() throws DataException {		
-		// instantiate database
 		userDatabase = UserDAOMemory.getInstance();
 		
 		System.out.println("UserServices created!");
@@ -119,11 +119,27 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public void validateUser( User user ) {
-		List<String> exceptionMessages = new ArrayList<String>();
+	public void validateUser( User user ) throws BusinessException {
+		List<String> exceptionMessages = new ArrayList<String>();		
+		boolean hasViolations = false;
 		
-		if ( ValidatorUtil.isEmpty(user) ) {
-			
+		if( user.getFirstName() == null || user.getFirstName().isBlank() ) {
+			hasViolations = true;
+			exceptionMessages.add( "FirstName is required. \n" );
+		} 
+		
+		if ( user.getLastName() == null || user.getLastName().isBlank() ) {
+			hasViolations = true;
+			exceptionMessages.add( "LastName is required. \n" );
+		}
+		
+		if( user.getTelegramUserName() == null || user.getTelegramUserName().isBlank() ) {
+			hasViolations = true;
+			exceptionMessages.add( "TelegramUserName is required. \n" );
+		}
+		
+		if( hasViolations ) {
+			throw new BusinessException( exceptionMessages );
 		}
 		
 	}

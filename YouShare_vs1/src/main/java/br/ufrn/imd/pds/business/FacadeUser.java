@@ -1,5 +1,6 @@
 package br.ufrn.imd.pds.business;
 
+import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public interface FacadeUser {
@@ -22,6 +23,6 @@ public interface FacadeUser {
 	/// Return true if user is already registered in the database
 	public boolean isRegistered( String userName ) throws DataException;
 	
-	public void validateUser( User user );
+	public void validateUser( User user ) throws BusinessException;
 	
 }

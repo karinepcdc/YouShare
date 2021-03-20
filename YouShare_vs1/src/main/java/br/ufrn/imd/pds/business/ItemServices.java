@@ -144,7 +144,7 @@ public class ItemServices implements FacadeItem {
 
 	@Override
 	public String deleteItem(Item item) throws BusinessException, DataException {
-		// check if code is from regitered item
+		// check if code is from registered item
 		Item itemAux = itemDatabase.readItem( item.getCode() );
 		if( itemAux == null ) {
 			throw new BusinessException("Item not registered in the database, thus cannot be removed.");
@@ -161,18 +161,18 @@ public class ItemServices implements FacadeItem {
 	}
 
 	@Override
-	public void validateItem(Item item) throws BusinessException {
+	public void validateItem( Item item ) throws BusinessException {
 		boolean hasViolations = false;
-		List<String> exeptionMessages = new ArrayList<String>();
+		List<String> exceptionMessages = new ArrayList<String>();
 		
 		if( item.getName() == null || item.getName().isBlank() ) {
 			hasViolations = true;
-			exeptionMessages.add("Name is required.\n");
+			exceptionMessages.add("Name is required.\n");
 		}
 		
 		if( item.getDescription() == null || item.getDescription().isBlank() ) {
 			hasViolations = true;
-			exeptionMessages.add("Description is required.\n");
+			exceptionMessages.add("Description is required.\n");
 		}
 		
 		// check if price is valid
@@ -180,41 +180,41 @@ public class ItemServices implements FacadeItem {
 			Double.parseDouble( item.getPrice() );
 		} catch ( NullPointerException e1 ) {
 			hasViolations = true;
-			exeptionMessages.add("Price is required.\n");
+			exceptionMessages.add("Price is required.\n");
 		} catch ( NumberFormatException e2 ) {
 			hasViolations = true;
-			exeptionMessages.add("Price must be a number (don't use currency symbols).\n");
+			exceptionMessages.add("Price must be a number (don't use currency symbols).\n");
 		}
 		
-		// TODO Check if owner is register and already has alredy reach 10 items ads
+		// TODO Check if owner is registered and already has already reached 10 items ads
 		
-		// TODO Check in any field has excess a characteres limmmit
+		// TODO Check in any field has excess a characters limit
 	
 		
 		if( item instanceof Tool ) {
 			
 			if( ( (Tool) item).getTermsOfUse() == null || ( (Tool) item).getTermsOfUse().isBlank() ) {
 				hasViolations = true;
-				exeptionMessages.add("Terms of Use are required.\n");
+				exceptionMessages.add("Terms of Use are required.\n");
 			}
 			
 			
 			if( ( (Tool) item).getVoltage() == null || ( (Tool) item).getVoltage().isBlank() ) {
 				hasViolations = true;
-				exeptionMessages.add("Voltage is required (110, 220 or none values are accepted).\n");
+				exceptionMessages.add("Voltage is required (110, 220 or none values are accepted).\n");
 			}
 			
 			// valid voltages: 110, 220 or none
 			String voltage = ( (Tool) item).getVoltage();
 			if( !voltage.equals("110") && !voltage.equals("220")  && !voltage.equals("none") ) {
 				hasViolations = true;
-				exeptionMessages.add("Voltage is invalid (110, 220 or none values are accepted).\n");				
+				exceptionMessages.add("Voltage is invalid (110, 220 or none values are accepted).\n");				
 			}
 
 		}
 		
 		if( hasViolations ) {
-			throw new BusinessException( exeptionMessages );
+			throw new BusinessException( exceptionMessages );
 		}
 				
 	}
