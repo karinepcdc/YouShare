@@ -5,17 +5,23 @@ import java.util.List;
 
 import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.data.ItemDAOMemory;
+import br.ufrn.imd.pds.data.UserDAO;
+import br.ufrn.imd.pds.data.UserDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
-import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
+
 
 public class ItemServices implements FacadeItem {
 
-	ItemDAO itemDatabase; // database manager class
+	ItemDAO itemDatabase; // item database manager class
+	UserDAO userDatabase; // user database manager class
 
 	public ItemServices() throws DataException {		
 		// instantiate database
 		itemDatabase = ItemDAOMemory.getInstance();
+		userDatabase = UserDAOMemory.getInstance();
+		
+
 	}
 	
 	
@@ -27,7 +33,7 @@ public class ItemServices implements FacadeItem {
 	 */
 	
 	@Override
-	public void createItem( Item newItem ) throws BusinessException, DataException {
+	public String createItem( Item newItem ) throws BusinessException, DataException {
 
 		// validate item
 		validateItem(newItem);
@@ -55,10 +61,11 @@ public class ItemServices implements FacadeItem {
 			toolDb.setItemGradeCount(0);
 			
 			// require item registration in the database
-			itemDatabase.createItem( toolDb );
-							
+			return itemDatabase.createItem( toolDb );
+										
 		} // TODO other items creation		
 		
+		return null;
 	}
 
 	@Override
@@ -76,6 +83,14 @@ public class ItemServices implements FacadeItem {
 		return itemDatabase.readAll();
 	}
 
+	@Override
+	public List<Item> readAll(String owner) throws BusinessException {
+		if( userDatabase.readUser(owner) == null ) {
+			throw new BusinessException("Can't read user items, user not registered.");
+		}
+		
+		return itemDatabase.readAll(owner);
+	}
 
 	@Override
 	public List<Tool> readAllTools() {
@@ -84,7 +99,7 @@ public class ItemServices implements FacadeItem {
 
 
 	@Override
-	public void updateItem(Item item) throws BusinessException, DataException {
+	public String updateItem(Item item) throws BusinessException, DataException {
 		// validate item
 		validateItem(item);
 				
@@ -113,34 +128,34 @@ public class ItemServices implements FacadeItem {
 			toolDb.setTermsOfUse( ((Tool) item).getTermsOfUse() );
 			toolDb.setVoltage( ((Tool) item).getVoltage() );
 					
-			// TODO copy restricted fields
+			// copy restricted fields
 			toolDb.setLastReview( ((Tool) itemAux).getLastReview() );
 			toolDb.setItemGrade( ((Tool) itemAux).getItemGrade() );
 			toolDb.setItemGradeCount( ((Tool) itemAux).getItemGradeCount() );
 
 			
 			// require item registration in the database
-			itemDatabase.updateItem( toolDb );
+			return itemDatabase.updateItem( toolDb );
 									
 		} // TODO other items update
 
+		return null;
 	}
 
 	@Override
-	public void deleteItem(Item item) throws BusinessException, DataException {
+	public String deleteItem(Item item) throws BusinessException, DataException {
 		// check if code is from regitered item
 		Item itemAux = itemDatabase.readItem( item.getCode() );
-		if( itemAux != null ) {
+		if( itemAux == null ) {
 			throw new BusinessException("Item not registered in the database, thus cannot be removed.");
 		}
 		
 		// check if user owns item
-		if(itemAux.getOwner().equals(item.getOwner()) ) {
-			itemDatabase.deleteItem( itemAux );
-		} else {
+		if(!itemAux.getOwner().equals(item.getOwner()) ) {
 			throw new BusinessException("Item does not belong you! You can't remove it.");
 		}
-			
+		
+		return itemDatabase.deleteItem( itemAux );
 		
 		
 	}
@@ -160,7 +175,7 @@ public class ItemServices implements FacadeItem {
 			exeptionMessages.add("Description is required.\n");
 		}
 		
-		// check if price is a double
+		// check if price is valid
 		try {
 			Double.parseDouble( item.getPrice() );
 		} catch ( NullPointerException e1 ) {
@@ -171,12 +186,10 @@ public class ItemServices implements FacadeItem {
 			exeptionMessages.add("Price must be a number (don't use currency symbols).\n");
 		}
 		
-		// Check if owner is register and already has alredy reach 10 items ads
+		// TODO Check if owner is register and already has alredy reach 10 items ads
 		
-		// Check in any field has excess a characteres limmmit
-		
-		
-		// 
+		// TODO Check in any field has excess a characteres limmmit
+	
 		
 		if( item instanceof Tool ) {
 			
@@ -191,9 +204,9 @@ public class ItemServices implements FacadeItem {
 				exeptionMessages.add("Voltage is required (110, 220 or none values are accepted).\n");
 			}
 			
-			// Check if voltage is valid: 110, 220 or none
-			if( ( (Tool) item).getVoltage() != "110" && ( (Tool) item).getVoltage() != "220" 
-					&& ( (Tool) item).getVoltage() != "none" ) {
+			// valid voltages: 110, 220 or none
+			String voltage = ( (Tool) item).getVoltage();
+			if( !voltage.equals("110") && !voltage.equals("220")  && !voltage.equals("none") ) {
 				hasViolations = true;
 				exeptionMessages.add("Voltage is invalid (110, 220 or none values are accepted).\n");				
 			}
@@ -203,12 +216,12 @@ public class ItemServices implements FacadeItem {
 		if( hasViolations ) {
 			throw new BusinessException( exeptionMessages );
 		}
-		
+				
 	}
 
 
 	@Override
-	public void changeAvailability(String code) throws BusinessException, DataException {
+	public String changeAvailability(String code) throws BusinessException, DataException {
 		
 		Item itemAux = itemDatabase.readItem( code );
 		
@@ -217,9 +230,11 @@ public class ItemServices implements FacadeItem {
 		}
 		
 		itemAux.setAvailable( !itemAux.isAvailable() );
-		itemDatabase.updateItem( itemAux );
+		
+		return itemDatabase.updateItem( itemAux );
 
 	}
+
 
 	/*
 	@Override

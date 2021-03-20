@@ -6,9 +6,7 @@ import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
 
 import br.ufrn.imd.pds.exceptions.CommandNotFoundException;
-import br.ufrn.imd.pds.exceptions.UserDatabaseCreationException;
-
-
+import br.ufrn.imd.pds.exceptions.DataException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +47,15 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	public void onUpdateReceived(Update update) {
 		
 		
+		
+		// TODO onde instanciar isso? não é usado mais diretamente, mas precisa ser instanciado em algum lugar pois os commands usam...
 		try {
-			// TODO onde instanciar isso? não é usado mais diretamente, mas precisa ser instanciado em algum lugar pois os commands usam...
 			ysServices = new YouShareBotServices();
-		} catch ( UserDatabaseCreationException e ) {
-			e.printStackTrace();
+		} catch (DataException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
 
 		
 		// Check if the update has a message and the message has text

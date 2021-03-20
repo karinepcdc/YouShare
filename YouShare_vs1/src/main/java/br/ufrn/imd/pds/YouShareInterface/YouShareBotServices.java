@@ -8,15 +8,15 @@ import com.vdurmont.emoji.EmojiParser;
 ** https://www.webfx.com/tools/emoji-cheat-sheet/
 */
 
-//import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
+
+import java.util.List;
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.APIinterface.MessageData;
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIFacade;
 import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
+import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.business.User;
@@ -32,23 +32,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 	public YouShareBotServices() throws DataException {
 		apiServices = new TelegramBotAPIServices();
-		
-		try {
-			userServices = new UserServices();
-		} catch ( DataException e ) {
-			e.printStackTrace();
-		}		
-
-		try {
-			itemServices = new ItemServices();
-		} catch ( DataException  e ) {
-			e.printStackTrace();
-		}
+		userServices = new UserServices();
+		itemServices = new ItemServices();
 		
 		System.out.println( "YouShareBotServices criado!" );
 	}
 	
-		
 	/* BotCommand
 	 * command: Text of the command, 1-32 characters. 
 	 * 			Can contain only lowercase English letters, digits and underscores.
@@ -279,25 +268,60 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 				try {
 				
-					// create item: Tool
+					// create item: Tool					
+					Tool newTool3 = new Tool("Drill", "Drill that do what's expected", "", message.getTelegramUserName(), 0, 0, "", "14", "none", "220");
+					newTool3.setCode(itemServices.createItem( newTool3 ) );
 					
-										
-					Tool newTool3 = new Tool("Electric sander3", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "14", "none", "220");
-					itemServices.createItem( newTool3 );
+					Tool newTool4 = new Tool("Vacuum cleaner", "dam good vacuum cleaner", "", message.getTelegramUserName(), 0, 0, "", "12.4", "dont spoil", "220");
+					newTool4.setCode(itemServices.createItem( newTool4 ));
 					
-					Tool newTool4 = new Tool("Electric sander88", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.4", "dont spoil", "220");
-					itemServices.createItem( newTool4 );
+					Tool newTool5 = new Tool("Electric sander", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.6", "take care", "110");
+					newTool5.setCode(itemServices.createItem( newTool5 ));
 					
-					Tool newTool5 = new Tool("Electric sander77", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.6", "dont spoil", "110");
-					itemServices.createItem( newTool5 );
+					Tool tool1 = (Tool) itemServices.readItem( "2" );
+					printTool(tool1);
 					
+					tool1.setDescription("Damn good vacuum cleaner!");
+					printTool(tool1);
+					itemServices.updateItem(tool1);
+					printTool(tool1);
+					
+					itemServices.changeAvailability( tool1.getCode() );
+					tool1 = (Tool) itemServices.readItem( "2" );
+					printTool(tool1);
+					
+					System.out.println("\nList of items:\n");
+					List<Item> items = itemServices.readAll();
+					for(Item item: items) {
+						System.out.println(item.getCode() + " " + item.getName());
+					}
+					
+					itemServices.deleteItem(newTool3);
+					
+					System.out.println("\nList of items:\n");
+					items = itemServices.readAll();
+					for(Item item: items) {
+						System.out.println(item.getCode() + " " + item.getName());
+					}
+					
+					System.out.println("\nList of " + message.getTelegramUserName() + " items:\n");
+					items = itemServices.readAll(message.getTelegramUserName());
+					for(Item item: items) {
+						System.out.println(item.getCode() + " " + item.getName());
+					}
+					
+					System.out.println("\nList of tools:\n");
+					List<Tool> tools = itemServices.readAllTools();
+					for(Tool tool: tools) {
+						System.out.println(tool.getCode() + " " + tool.getName());
+					}
 					
 				} catch (BusinessException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					e.printStackTrace();
 				} catch (DataException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					e.printStackTrace();
 				}
 				
 				// }
@@ -326,7 +350,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 	}
 
-	public static void myeservations ( MessageData message ) {
+
+	public static void myreservations ( MessageData message ) {
+
 		String botAnswer = ""; // Bot reply
 		
 		try {
@@ -459,6 +485,24 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		return "todo";
 	}
+	
+	/// Utils
+	private static void printTool(Tool tool) {
+		System.out.println("\n**************************\n");
+		System.out.println("Reading Tool " + tool.getCode() + "\n"
+				+ "Name: " + tool.getName() + "\n"
+				+ "Description: " + tool.getDescription() + "\n"
+				+ "Owner: " + tool.getOwner() + "\n"
+				+ "itemGrade: " + tool.getItemGrade() + "\n"
+				+ "itemGradeCount: " + tool.getItemGradeCount() + "\n"
+				+ "lastReview: " + tool.getLastReview() + "\n"
+				+ "isAvailable:" + tool.isAvailable() + "\n"
+				+ "price: " + tool.getPrice() + "\n"
+				+ "TOU: " + tool.getTermsOfUse() + "\n"
+				+ "Voltage: " + tool.getVoltage() + "\n" );
 
+		System.out.println("\n**************************\n");
+
+	}
 	
 }
