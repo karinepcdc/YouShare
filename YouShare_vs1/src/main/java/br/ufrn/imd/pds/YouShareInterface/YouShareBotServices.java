@@ -1,12 +1,16 @@
 package br.ufrn.imd.pds.YouShareInterface;
 
+// parse emojis
+import com.vdurmont.emoji.EmojiParser; 
+/* 
+** check emojis at: 
+** https://emojipedia.org/beaming-face-with-smiling-eyes/
+** https://www.webfx.com/tools/emoji-cheat-sheet/
+*/
+
 //import java.text.DateFormat;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
-import com.vdurmont.emoji.EmojiParser; // to parse emojis
-//check emojis at: 
-//https://emojipedia.org/beaming-face-with-smiling-eyes/
-//https://www.webfx.com/tools/emoji-cheat-sheet/
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.APIinterface.MessageData;
@@ -20,55 +24,45 @@ import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
-
 public class YouShareBotServices implements YouShareBotFacade {
 	
 	private static TelegramBotAPIFacade apiServices;
 	private static FacadeUser userServices;
 	private static FacadeItem itemServices;
 
-	
-	/* Default constructor */	
 	public YouShareBotServices() throws DataException {
 		apiServices = new TelegramBotAPIServices();
 		
 		try {
 			userServices = new UserServices();
-		} catch ( DataException e ) { // TODO é para ser dataexception
+		} catch ( DataException e ) {
 			e.printStackTrace();
 		}		
 
 		try {
 			itemServices = new ItemServices();
-		} catch ( DataException  e ) { // TODO Tem que ser so dataExeption
-			// TODO Auto-generated catch block
+		} catch ( DataException  e ) {
 			e.printStackTrace();
 		}
-
 		
 		System.out.println( "YouShareBotServices criado!" );
 	}
 	
-	/*********************
-	 * BotCommands 
-	 * @return 
-	 * @throws UserNotRegisteredException *
-	 *********************/
-	
+		
 	/* BotCommand
 	 * command: Text of the command, 1-32 characters. 
 	 * 			Can contain only lowercase English letters, digits and underscores.
 	 * description: Description of the command, 3-256 characters.
 	 */
 	public static void start ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
 		
-		// TODO substituir por bussinessExeption
+		// Bot reply
+		String botAnswer = "";
+		
 		try {
-			boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );			
-			if( isUserRegistered ) {	// user already regitered
+			boolean isRegistered = userServices.isRegistered( message.getTelegramUserName() );			
+			if( isRegistered ) {
 				
-				// set bot repply
 		        botAnswer = "Welcome back " + message.getUserFirstName() + EmojiParser.parseToUnicode("! :grin:\n\n")
 		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
 		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
@@ -78,7 +72,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 				
 			} else { // new user
 				
-	    		// set bot repply
 		        botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
 		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
 		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
