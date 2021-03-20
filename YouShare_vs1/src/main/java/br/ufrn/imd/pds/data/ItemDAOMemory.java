@@ -14,7 +14,7 @@ import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
 import br.ufrn.imd.pds.exceptions.DataException;
-import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
+import br.ufrn.imd.pds.util.IdCounter;
 
 public class ItemDAOMemory implements ItemDAO {
 	
@@ -57,21 +57,20 @@ public class ItemDAOMemory implements ItemDAO {
 	@Override
 	public void createItem( Item newItem ) throws DataException {
 
-		boolean isRegistered = itemMap.containsKey( newItem.getCode() );		
-
-		if( !isRegistered ) {
-			// add Item to item map
-			itemMap.put( newItem.getCode() ,  newItem );
+		// set unique code
+		String code = String.valueOf(IdCounter.nextId());
+		// TODO validate Code 
+		newItem.setCode( code );
+		
+		// add Item to item map
+		itemMap.put( newItem.getCode() ,  newItem );
 				
-			// update database
-			try {
-				DBWriter.itemHashMapToCSV( itemMap );
-			} catch ( CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e ) {
-				// TODO detail better exception, trying to tell what exactly have happened
-				throw new DataException( "Problem trying to write new item in the database." );
-			}
-		} else {
-			throw new DataException( "Item is alredy registered in the database." );
+		// update database
+		try {
+			DBWriter.itemHashMapToCSV( itemMap );
+		} catch ( CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e ) {
+			// TODO detail better exception, trying to tell what exactly have happened
+			throw new DataException( "Problem trying to write new item in the database." );
 		}
 		
 	}
@@ -81,12 +80,10 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		boolean isRegistered = itemMap.containsKey( code );		
 		if( isRegistered ) {
-			
 			return itemMap.get( code );
-			
-		} else {
-			throw new DataException("Item cannot be read because it is not register in the database.");
 		}
+		
+		return null;
 		
 	}
 
@@ -94,7 +91,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll() {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put tools from toolMap in a list
+		// put items from toolMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			items.add( pair.getValue() );
 		}
@@ -120,62 +117,55 @@ public class ItemDAOMemory implements ItemDAO {
 	
 	@Override
 	public void updateItem(Item item) throws DataException {
+		
+		/*
+		// Tool item
+		if( item instanceof Tool ) {
+			Tool toolAux = (Tool) itemMap.get( item.getCode() );
 
-		boolean isRegistered = itemMap.containsKey( item.getCode() );		
-		if( isRegistered ) {
-			
-			// Tool item
-			if( item instanceof Tool ) {
-				Tool toolAux = (Tool) itemMap.get( item.getCode() );
-
-				toolAux.setName( 			((Tool) item ).getName() );
-				toolAux.setCode( 			((Tool) item ).getCode() );
-				toolAux.setDescription( 	((Tool) item ).getDescription() );
-				toolAux.setItemGrade( 		((Tool) item ).getItemGrade() );
-				toolAux.setItemGradeCount( 	((Tool) item ).getItemGradeCount() );
-				toolAux.setLastReview( 		((Tool) item ).getLastReview() );
-				toolAux.setAvailable( 		((Tool) item ).isAvailable() );
-				toolAux.setPrice( 			((Tool) item ).getPrice() );
-				toolAux.setTermsOfUse( 		((Tool) item ).getTermsOfUse() );
-				toolAux.setVoltage( 		((Tool) item ).getVoltage() );
+			toolAux.setName( 			((Tool) item ).getName() );
+			toolAux.setCode( 			((Tool) item ).getCode() );
+			toolAux.setDescription( 	((Tool) item ).getDescription() );
+			toolAux.setItemGrade( 		((Tool) item ).getItemGrade() );
+			toolAux.setItemGradeCount( 	((Tool) item ).getItemGradeCount() );
+			toolAux.setLastReview( 		((Tool) item ).getLastReview() );
+			toolAux.setAvailable( 		((Tool) item ).isAvailable() );
+			toolAux.setPrice( 			((Tool) item ).getPrice() );
+			toolAux.setTermsOfUse( 		((Tool) item ).getTermsOfUse() );
+			toolAux.setVoltage( 		((Tool) item ).getVoltage() );
 				
-				// update item hashmap
-				itemMap.put(toolAux.getCode(), toolAux);
-			}
-			
-			// update database
-			try {
-				DBWriter.itemHashMapToCSV( itemMap );
-			} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-				// TODO detail better exeption, trying to tell what exactly have happened
-				throw new DataException("Problem trying to write updated item in the database.");
-			}
-			
-		} else {
-			throw new DataException("Item cannot be updated because it is not register in the database.");
+			// update item hashmap
+			itemMap.put(toolAux.getCode(), toolAux);
 		}
+		*/
+		
+		// update item hashmap
+		itemMap.put(item.getCode(), item);
+			
+		// update database
+		try {
+			DBWriter.itemHashMapToCSV( itemMap );
+		} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
+			// TODO detail better exeption, trying to tell what exactly have happened
+			throw new DataException("Problem trying to write updated item in the database.");
+		}
+			
 	}
 	
 	@Override
 	public void deleteItem(Item item) throws DataException {
 		
-		boolean isRegistered = itemMap.containsKey( item.getCode() );		
-		if( isRegistered ) {
+		// remove item form item map
+		itemMap.remove( item.getCode() );
 			
-			// remove item form item map
-			itemMap.remove( item.getCode() );
-			
-			// update database
-			try {
-				DBWriter.itemHashMapToCSV( itemMap );
-			}  catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-				// TODO detail better exeption, trying to tell what exactly have happened
-				throw new DataException("Problem trying to update database after removing an item.");
-			}
-			
-		} else {
-			throw new DataException("Item cannot be removed because it is not register in the database.");
+		// update database
+		try {
+			DBWriter.itemHashMapToCSV( itemMap );
+		}  catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
+			// TODO detail better exeption, trying to tell what exactly have happened
+			throw new DataException("Problem trying to update database after removing an item.");
 		}
+			
 		
 	}
 

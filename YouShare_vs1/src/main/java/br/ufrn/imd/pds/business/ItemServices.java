@@ -8,7 +8,6 @@ import br.ufrn.imd.pds.data.ItemDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 import br.ufrn.imd.pds.exceptions.ReadItemFromDatabaseException;
-import br.ufrn.imd.pds.util.IdCounter;
 
 public class ItemServices implements FacadeItem {
 
@@ -32,13 +31,14 @@ public class ItemServices implements FacadeItem {
 
 		// validate item
 		validateItem(newItem);
-		
+				
 		if( newItem instanceof Tool ) {
 			Tool toolDb = new Tool();
 
 			// copy fields
 			toolDb.setName( ((Tool) newItem).getName() );
 			toolDb.setDescription( ((Tool) newItem).getDescription() );
+			toolDb.setCode( ((Tool) newItem).getCode() );
 			toolDb.setOwner( ((Tool) newItem).getOwner() );
 			toolDb.setAvailable( ((Tool) newItem).isAvailable() );
 			toolDb.setPrice( ((Tool) newItem).getPrice() );
@@ -54,35 +54,95 @@ public class ItemServices implements FacadeItem {
 			toolDb.setItemGrade(0);
 			toolDb.setItemGradeCount(0);
 			
-			// set unique code
-			String code = String.valueOf(IdCounter.nextId());
-			//validateCode(code);
-			toolDb.setCode( code );
-			
 			// require item registration in the database
 			itemDatabase.createItem( toolDb );
 							
-		} // TODO other items creation
-		
+		} // TODO other items creation		
 		
 	}
 
 	@Override
 	public Item readItem(String code) throws BusinessException, DataException {
-		// TODO Auto-generated method stub
-		return null;
+		Item itemAux = itemDatabase.readItem( code );
+		if( itemAux == null ) {
+			throw new BusinessException("Can't read item because item code doesn't exist!");
+		}
+		return itemAux;
+	}
+	
+
+	@Override
+	public List<Item> readAll() {
+		return itemDatabase.readAll();
+	}
+
+
+	@Override
+	public List<Tool> readAllTools() {
+		return itemDatabase.readAllTools();
+	}
+
+
+	@Override
+	public void updateItem(Item item) throws BusinessException, DataException {
+		// validate item
+		validateItem(item);
+				
+		// check if code is from regitered item
+		Item itemAux = itemDatabase.readItem( item.getCode() );
+
+		if( itemAux == null ) {
+			throw new BusinessException("Item not registered, thus cannot be updated!");
+		}
+		
+		// check if user owns item
+		if( !itemAux.getOwner().equals(item.getOwner()) ) {
+			throw new BusinessException("Item does not belong you, thus cannot be updated!");
+		}
+
+		if( item instanceof Tool ) {
+			Tool toolDb = new Tool();
+
+			// copy fields
+			toolDb.setName( ((Tool) item).getName() );
+			toolDb.setDescription( ((Tool) item).getDescription() );
+			toolDb.setCode( ((Tool) item).getCode() );
+			toolDb.setOwner( ((Tool) item).getOwner() );
+			toolDb.setAvailable( ((Tool) item).isAvailable() );
+			toolDb.setPrice( ((Tool) item).getPrice() );
+			toolDb.setTermsOfUse( ((Tool) item).getTermsOfUse() );
+			toolDb.setVoltage( ((Tool) item).getVoltage() );
+					
+			// TODO copy restricted fields
+			toolDb.setLastReview( ((Tool) itemAux).getLastReview() );
+			toolDb.setItemGrade( ((Tool) itemAux).getItemGrade() );
+			toolDb.setItemGradeCount( ((Tool) itemAux).getItemGradeCount() );
+
+			
+			// require item registration in the database
+			itemDatabase.updateItem( toolDb );
+									
+		} // TODO other items update
+
 	}
 
 	@Override
-	public void updateItem(Item item, String campo, String value) throws BusinessException, DataException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteItem(String code) throws BusinessException, DataException {
-		// TODO Auto-generated method stub
-
+	public void deleteItem(Item item) throws BusinessException, DataException {
+		// check if code is from regitered item
+		Item itemAux = itemDatabase.readItem( item.getCode() );
+		if( itemAux != null ) {
+			throw new BusinessException("Item not registered in the database, thus cannot be removed.");
+		}
+		
+		// check if user owns item
+		if(itemAux.getOwner().equals(item.getOwner()) ) {
+			itemDatabase.deleteItem( itemAux );
+		} else {
+			throw new BusinessException("Item does not belong you! You can't remove it.");
+		}
+			
+		
+		
 	}
 
 	@Override
@@ -144,6 +204,21 @@ public class ItemServices implements FacadeItem {
 			throw new BusinessException( exeptionMessages );
 		}
 		
+	}
+
+
+	@Override
+	public void changeAvailability(String code) throws BusinessException, DataException {
+		
+		Item itemAux = itemDatabase.readItem( code );
+		
+		if( itemAux == null ) {
+			throw new BusinessException("Item not registered, thus cannot change availability!");
+		}
+		
+		itemAux.setAvailable( !itemAux.isAvailable() );
+		itemDatabase.updateItem( itemAux );
+
 	}
 
 	/*

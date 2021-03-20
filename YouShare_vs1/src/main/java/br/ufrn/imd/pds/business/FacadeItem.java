@@ -1,5 +1,7 @@
 package br.ufrn.imd.pds.business;
 
+import java.util.List;
+
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
@@ -15,11 +17,17 @@ public interface FacadeItem {
 	/// Read a YouShare system item and return a string with it's relevant data
 	public Item readItem( String code ) throws BusinessException, DataException;
 	
+	/// Return all items regitered.
+	public List<Item> readAll( );	
+		
+	/// Return all Tools regitered.
+	public List<Tool> readAllTools( );	
+	
 	/// Require that a YouShare item be updated from database
-	public void updateItem( Item item, String campo, String value ) throws BusinessException, DataException;
+	public void updateItem( Item item ) throws BusinessException, DataException;
 	
 	/// Require that a YouShare item be removed from database
-	public void deleteItem( String code ) throws BusinessException, DataException;
+	public void deleteItem( Item item ) throws BusinessException, DataException;
 	
 	/// Validate item.
 	/*
@@ -52,5 +60,7 @@ public interface FacadeItem {
 	 */
 	//public void addItemReview( String code, int grade, String review );
 
+	/// If true, change to false and vice-versa.
+	public void changeAvailability ( String code ) throws BusinessException, DataException;
 	
 }
