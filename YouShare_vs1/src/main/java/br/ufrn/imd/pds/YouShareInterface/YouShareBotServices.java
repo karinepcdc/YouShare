@@ -1,12 +1,15 @@
 package br.ufrn.imd.pds.YouShareInterface;
 
+// parse emojis
+import com.vdurmont.emoji.EmojiParser; 
+/* 
+** check emojis at: 
+** https://emojipedia.org/beaming-face-with-smiling-eyes/
+** https://www.webfx.com/tools/emoji-cheat-sheet/
+*/
+
 
 import java.util.List;
-
-import com.vdurmont.emoji.EmojiParser; // to parse emojis
-//check emojis at: 
-//https://emojipedia.org/beaming-face-with-smiling-eyes/
-//https://www.webfx.com/tools/emoji-cheat-sheet/
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.APIinterface.MessageData;
@@ -21,15 +24,12 @@ import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
-
 public class YouShareBotServices implements YouShareBotFacade {
 	
 	private static TelegramBotAPIFacade apiServices;
 	private static FacadeUser userServices;
 	private static FacadeItem itemServices;
 
-	
-	/* Default constructor */	
 	public YouShareBotServices() throws DataException {
 		apiServices = new TelegramBotAPIServices();
 		userServices = new UserServices();
@@ -38,18 +38,14 @@ public class YouShareBotServices implements YouShareBotFacade {
 		System.out.println( "YouShareBotServices criado!" );
 	}
 	
-	/*********************
-	 * BotCommands 
-	 * @return 
-	 *********************/
-	
 	/* BotCommand
 	 * command: Text of the command, 1-32 characters. 
 	 * 			Can contain only lowercase English letters, digits and underscores.
 	 * description: Description of the command, 3-256 characters.
 	 */
 	public static void start ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
+		// Bot reply
+		String botAnswer = "";
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );			
 		if( isUserRegistered ) {	// user already regitered
@@ -425,7 +421,5 @@ public class YouShareBotServices implements YouShareBotFacade {
 		System.out.println("\n**************************\n");
 
 	}
-
-
 	
 }

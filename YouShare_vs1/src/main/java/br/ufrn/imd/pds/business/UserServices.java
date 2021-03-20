@@ -1,5 +1,8 @@
 package br.ufrn.imd.pds.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
@@ -114,6 +117,16 @@ public class UserServices implements FacadeUser {
 	@Override
 	public boolean isRegistered( String userName ) {
 		return userDatabase.readUser( userName ) != null ;
+	}
+	
+	@Override
+	public void validateUser( User user ) {
+		List<String> exceptionMessages = new ArrayList<String>();
+		
+//		if ( ValidatorUtil.isEmpty(user) ) {
+			
+//		}
+		
 	}
 
 	

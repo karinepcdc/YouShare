@@ -23,4 +23,6 @@ public interface FacadeUser {
 	/// Return true if user is already registered in the database
 	public boolean isRegistered( String userName );
 	
+	public void validateUser( User user );
+	
 }
