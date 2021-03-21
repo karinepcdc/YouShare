@@ -143,15 +143,15 @@ public class ItemServices implements FacadeItem {
 	}
 
 	@Override
-	public String deleteItem(Item item) throws BusinessException, DataException {
-		// check if code is from registered item
+	public String deleteItem( Item item ) throws BusinessException, DataException {
+		// check if code its a from registered item
 		Item itemAux = itemDatabase.readItem( item.getCode() );
 		if( itemAux == null ) {
 			throw new BusinessException("Item not registered in the database, thus cannot be removed.");
 		}
 		
 		// check if user owns item
-		if(!itemAux.getOwner().equals(item.getOwner()) ) {
+		if(!itemAux.getOwner().equals( item.getOwner()) ) {
 			throw new BusinessException("Item does not belong you! You can't remove it.");
 		}
 		
@@ -162,9 +162,7 @@ public class ItemServices implements FacadeItem {
 
 
 	@Override
-	public void deleteItem(String user) throws BusinessException, DataException {
-		// confiro algo???
-		
+	public void deleteItem( String user ) throws BusinessException, DataException {		
 		itemDatabase.deleteItem( user );
 	}
 	

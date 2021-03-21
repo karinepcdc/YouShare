@@ -30,6 +30,8 @@ public class CommandsInvoker {
 		commandsMap.put( "/profile", new ProfileCommand() );
 		commandsMap.put( "/myshare", new MyshareCommand() );
 		commandsMap.put( "/itemdetails", new ItemDetailsCommand() );
+		commandsMap.put( "/changeadstatus", new ChangeAdStatusCommand() );
+		commandsMap.put( "/deleteitem", new DeleteItemCommand() );
 		commandsMap.put( "/myreservations", new MyreservationsCommand() );
 		commandsMap.put( "/search", new SearchCommand() );
 
