@@ -251,15 +251,18 @@ public class YouShareBotServices implements YouShareBotFacade {
 			try {
 				userAds = itemServices.readAll( message.getTelegramUserName() );
 			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// define bot answer			
+				botAnswer = "Problem trying to read items:\n" + e.getMessage();
+				
+				// request APIInterface to send text message to user
+	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			}
 			if( !userAds.isEmpty() ) { 
 				
 			// define bot answer
 			botAnswer = "Here are your Ads:\n\n";
 			
-				// list user ads in inline keyboard \\ TODO include inline keyboard 
+				// list user ads 
 				for( Item it: userAds ) {
 					botAnswer += it.getName() + " (id: " + it.getCode() + ")\n";
 				}
@@ -304,11 +307,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 				} catch (BusinessException e) {
 					
 					// define bot answer			
-					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
+					botAnswer = "Id " +  message.getParameter() + " is not valid:\n"
 							+ e.getMessage()
-							+ "\nThe command /itemdetail require a item id as parameter.\n"
-							+ "Type /itemdetail_id, replacing id by the id number of the item you want to see."
-							+ "For instance, /itemdetail_123.\n\n"
+							+ "\nThe command /itemdetails require a item id as parameter.\n"
+							+ "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n"
+							+ "For instance, /itemdetails_123.\n\n"
 							+ "To check you items id type /myshare.";
 					
 					// request APIInterface to send text message to user
@@ -321,7 +324,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 					// display item ad
 					botAnswer = "Item id #" + message.getParameter() + " Ad:\n\n"
 							+ item.getName() + "\n"
-							+ "Status: " + (item.isAvailable() ? "available" : "not available") + "\n"
+							+ "Status: " + (item.isAvailable() ? "public" : "private") + "\n"
 							+ "Grade: " + item.getItemGrade() + "\n"
 							+ "Most recent review: " + item.getLastReview() + "\n"
 							+ "Price: $" + item.getPrice() + "\n\n";
@@ -335,12 +338,27 @@ public class YouShareBotServices implements YouShareBotFacade {
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 					
+		        	botAnswer = "Do you want to update this item?\n"
+		        			+ "/edit_id - update item\n"
+		        			+ "/delete_id - remove item\n"
+		        			+ "/changeadstatus_id - switch ad status (private/public)\n\n"
+		        			+ EmojiParser.parseToUnicode("(ps: replace id with item's id number :wink:)");
+		        	
+		        	// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
 				} catch (BusinessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					// define bot answer			
+					botAnswer = "Problem trying to read item:\n" + e.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 				} catch (DataException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					// define bot answer			
+					botAnswer = "Problem trying to read item:\n" + e.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 				}
 				
 				
@@ -360,6 +378,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 	}
 
+	public static void  changeAdStatus( MessageData message ) {
+		
+	}
+
+		
 	public static void myreservations ( MessageData message ) {
 
 		String botAnswer = ""; 
