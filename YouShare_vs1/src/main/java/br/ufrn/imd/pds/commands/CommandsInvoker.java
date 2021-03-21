@@ -18,7 +18,8 @@ public class CommandsInvoker {
 		commandsMap.put( "/profile", new ProfileCommand() );
 		
 		commandsMap.put( "/myshare", new MyshareCommand() );
-		commandsMap.put( "/additem", new addItemInterface() );
+		commandsMap.put( "/additem", new AddItemInterface() );
+		commandsMap.put( "/edititem", new EditItemInterface() );
 		commandsMap.put( "/itemdetails", new ItemDetailsCommand() );
 		commandsMap.put( "/changeadstatus", new ChangeAdStatusCommand() );
 		commandsMap.put( "/deleteitem", new DeleteItemCommand() );
@@ -34,7 +35,8 @@ public class CommandsInvoker {
 		commandsMap.put("No_deleteItem", new NoDeleteItemCommand() );
 
 		// Internal commands
-		commandsMap.put( "addItemBackend", new addItemBackend() );
+		commandsMap.put( "AddItemBackend", new AddItemBackend() );
+		commandsMap.put( "EditItemBackend", new EditItemBackend() );
 
 	}
 	

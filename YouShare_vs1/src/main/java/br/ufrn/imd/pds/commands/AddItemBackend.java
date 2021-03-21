@@ -3,7 +3,7 @@ package br.ufrn.imd.pds.commands;
 import br.ufrn.imd.pds.APIinterface.MessageData;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 
-public class addItemBackend implements CommandInterface {
+public class AddItemBackend implements CommandInterface {
 
 	@Override
 	public void execute(MessageData message) {

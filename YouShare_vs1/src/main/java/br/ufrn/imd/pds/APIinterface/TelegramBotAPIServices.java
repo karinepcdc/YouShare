@@ -112,12 +112,9 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 			    		message.setParameter( parameters[1] );
 			    	}
 			    	
-					System.out.println("\nExecutando comando: " + command );
-
 					CommandsInvoker.executeCommand( command, message );
 					
 				} else {
-					System.out.println("\nExecutando comando: " + getCommandCached() );
 					CommandsInvoker.executeCommand( getCommandCached(), message );
 					setWaitingRepply(false);
 				}
