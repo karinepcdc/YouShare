@@ -190,18 +190,46 @@ public class ItemDAOMemory implements ItemDAO {
 	@Override
 	public String deleteItem(Item item) throws DataException {
 		
-		// remove item form item map
+		// remove item from item map
 		itemMap.remove( item.getCode() );
 			
 		// update database
 		try {
 			DBWriter.itemHashMapToCSV( itemMap );
 		}  catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-			// TODO detail better exeption, trying to tell what exactly have happened
-			throw new DataException("Problem trying to update database after removing an item.");
+			throw new DataException("Problem trying to update database after removing item with id " + item.getCode() + ".");
 		}
 			
 		return item.getCode();
+	}
+
+	@Override
+	public void deleteItem(String user) throws DataException {
+		
+		ArrayList<Item> userItems = new ArrayList<Item>();
+		
+		// put user items from toolMap in a list
+		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+			Item item = pair.getValue();
+			if( item.getOwner().equals(user) ) {
+				userItems.add( item );
+			}
+		}
+		
+		// remove items
+		for( Item item: userItems ) {
+			// remove item from item map
+			itemMap.remove( item.getCode() );
+		}
+		
+		// update database
+		try {
+			DBWriter.itemHashMapToCSV( itemMap );
+		}  catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
+			throw new DataException("Problem trying to update database after removing items from user " + user + ".");
+		}
+		
+		
 	}
 
 	

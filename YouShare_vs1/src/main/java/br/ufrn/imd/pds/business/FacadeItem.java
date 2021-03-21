@@ -32,12 +32,18 @@ public interface FacadeItem {
 	 */
 	public String updateItem( Item item ) throws BusinessException, DataException;
 	
-	/// Require that a YouShare item be removed from database
+	/// Require that a YouShare item be removed from the database
 	/*
 	 * @return id of item deleted.
 	 */
 	public String deleteItem( Item item ) throws BusinessException, DataException;
-	
+
+	/// Require that YouShare remove all items from user from the database
+	/*
+	 * @return id of item deleted.
+	 */
+	public void deleteItem( String user ) throws BusinessException, DataException;
+
 	/// Validate item.
 	/*
 	 * Check if all item fields required are non null and not empty;

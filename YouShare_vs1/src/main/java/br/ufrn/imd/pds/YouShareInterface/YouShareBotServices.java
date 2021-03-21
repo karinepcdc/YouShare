@@ -225,14 +225,20 @@ public class YouShareBotServices implements YouShareBotFacade {
 			List<Item> userAds = new ArrayList<Item>();
 			try {
 				userAds = itemServices.readAll( message.getTelegramUserName() );
-			} catch ( BusinessException e ) {
-				e.printStackTrace();
+
+			} catch (BusinessException e) {
+				// define bot answer			
+				botAnswer = "Problem trying to read items:\n" + e.getMessage();
+				
+				// request APIInterface to send text message to user
+	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+
 			}
 			if( !userAds.isEmpty() ) { 
 				
-			botAnswer = "Here are your Ads:\n\n";
+				botAnswer = "Here are your Ads:\n\n";
 			
-				// list user ads
+				// list user ads 
 				for( Item it: userAds ) {
 					botAnswer += it.getName() + " (id: " + it.getCode() + ")\n";
 				}
@@ -274,26 +280,28 @@ public class YouShareBotServices implements YouShareBotFacade {
 			if( message.hasParameter() ) {
 				try {
 					itemServices.validateId(message.getParameter(), message.getTelegramUserName());
+
 				} catch ( BusinessException e ) {
 							
 					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
 							+ e.getMessage()
-							+ "\nThe command /itemdetail require a item id as parameter.\n"
-							+ "Type /itemdetail_id, replacing id by the id number of the item you want to see."
-							+ "For instance, /itemdetail_123.\n\n"
+							+ "\nThe command /itemdetails require a item id as parameter.\n"
+							+ "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n"
+							+ "For instance, /itemdetails_0.\n\n"
 							+ "To check you items id type /myshare.";
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 				}
 				
+				String id = message.getParameter();
 				try {
-					Item item = itemServices.readItem(message.getParameter());
+					Item item = itemServices.readItem(id);
 					
 					// display item ad
-					botAnswer = "Item id #" + message.getParameter() + " Ad:\n\n"
+					botAnswer = "Item id #" + id + " Ad:\n\n"
 							+ item.getName() + "\n"
-							+ "Status: " + (item.isAvailable() ? "available" : "not available") + "\n"
+							+ "Status: " + (item.isAvailable() ? "public" : "private") + "\n"
 							+ "Grade: " + item.getItemGrade() + "\n"
 							+ "Most recent review: " + item.getLastReview() + "\n"
 							+ "Price: $" + item.getPrice() + "\n\n";
@@ -307,12 +315,35 @@ public class YouShareBotServices implements YouShareBotFacade {
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 					
-				} catch ( BusinessException e ) {
-					e.printStackTrace();
-				} catch ( DataException e ) {
-					e.printStackTrace();
-				}		
+		        	botAnswer = "Do you want to update this item?\n"
+		        			+ "/edititem_" + id + " - update item\n"
+		        			+ "/deleteitem_" + id + " - remove item\n"
+		        			+ "/changeadstatus_" + id + " - switch ad status (private/public)\n\n";		        	
+		        	// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
+				} catch (BusinessException e) {
+					botAnswer = "Problem trying to read item:\n" + e.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				} catch (DataException e) {
+					botAnswer = "Problem trying to read item:\n" + e.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				}
 				
+				
+			} else {
+				
+				botAnswer = "\nThe command /itemdetails require a item id as parameter.\n"
+						+ "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n"
+						+ "For instance, /itemdetails_0.\n\n"
+						+ "To check you items id type /myshare.";
+				
+				// request APIInterface to send text message to user
+	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			}
 			
 		} else { // if it's a new user
@@ -326,8 +357,162 @@ public class YouShareBotServices implements YouShareBotFacade {
 					
 		}
 		
+		// YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+		
 	}
 
+	public static void  changeAdStatus( MessageData message ) {
+		String botAnswer = ""; 
+
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		if( isUserRegistered ) {
+			if( message.hasParameter() ) {
+				try {
+					itemServices.validateId(message.getParameter(), message.getTelegramUserName());
+
+				} catch ( BusinessException e ) {
+							
+					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
+							+ e.getMessage()
+							+ "\nThe command /changeadstatus require a item id as parameter.\n"
+							+ "Type /changeadstatus_id, replacing id by the id number of the item you want to see.\n\n"
+							+ "For instance, /changeadstatus_0.\n\n"
+							+ "To check you items id type /myshare.";
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				}
+				
+				// change ad status
+				String id = message.getParameter();
+				try {
+					itemServices.changeAvailability( id );
+					Item item = itemServices.readItem( id );
+					
+					botAnswer = item.getName() + " (id: " + item.getCode() + ") have been set to " + (item.isAvailable() ? "public" : "private");
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		        	
+				} catch (BusinessException e) {
+					botAnswer = "Problem trying to update item availability:\n" + e.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				} catch (DataException e) {
+					botAnswer = "Problem trying to update item:\n" + e.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				}
+				
+				
+
+			} else {
+				
+				botAnswer = "\nThe command /changeadstatus require a item id as parameter.\n"
+						+ "Type /changeadstatus_id, replacing id by the id number of the item you want to see.\n\n"
+						+ "For instance, /changeadstatus_0.\n\n"
+						+ "To check you items id type /myshare.";
+				
+				// request APIInterface to send text message to user
+	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			}
+			
+		} else { // if it's a new user
+    		
+			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+						+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+			// request APIInterface to send text message to user
+	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
+		}
+		
+		// YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	}
+
+	public static void  deleteItem( MessageData message ) {
+		String botAnswer = ""; 
+
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		if( isUserRegistered ) {
+			if( message.hasParameter() ) {
+				try {
+					itemServices.validateId(message.getParameter(), message.getTelegramUserName());
+
+				} catch ( BusinessException e ) {
+							
+					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
+							+ e.getMessage()
+							+ "\nThe command /deleteitem require a item id as parameter.\n"
+							+ "Type /deleteitem_id, replacing id by the id number of the item you want to see.\n\n"
+							+ "For instance, /deleteitem_0.\n\n"
+							+ "To check you items id type /myshare.";
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				}
+				
+				// confirm item deletion
+				String id = message.getParameter();
+				Item delItem;
+				try {
+					delItem = itemServices.readItem(id);
+					botAnswer = "Are you sure you want to remove " + delItem.getName() + "(id: " + delItem.getCode() + ") from our systems?\n\n";
+					botAnswer+= EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
+					
+					// send msg with inline keyboard
+					String[] buttonsLabels = {"Yes", "No"};
+					apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "deleteitem", buttonsLabels , 2, 1);
+					
+				} catch (BusinessException e1) {
+					botAnswer = "Problem trying to read item asked to be deleted:\n" + e1.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				} catch (DataException e1) {
+					botAnswer = "Problem trying to read item asked to be deleted from database:\n" + e1.getMessage();
+					
+					// request APIInterface to send text message to user
+		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				}
+				
+			} else {
+				
+				botAnswer = "\nThe command /deleteitem require a item id as parameter.\n"
+						+ "Type /deleteitem_id, replacing id by the id number of the item you want to see.\n\n"
+						+ "For instance, /deleteitem_0.\n\n"
+						+ "To check you items id type /myshare.";
+				
+				// request APIInterface to send text message to user
+	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			}
+			
+		} else { // if it's a new user
+    		
+			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+						+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+			// request APIInterface to send text message to user
+	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
+		}
+		
+		// YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+		
+	}
+
+	
+	
 	public static void myreservations ( MessageData message ) {
 
 		String botAnswer = ""; 
@@ -342,6 +527,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			botAnswer += "If you would like to cancel a reservation, type /cancelreservation.\n\n";
 			botAnswer += "Type /search to find more items!\n";
 				
+			// TODO if-else....
 			botAnswer = "You don't have any reservation yet!\n";
 			botAnswer += "Type /search to find an items!\n";
 				
@@ -421,6 +607,46 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// YouShare bot callback logins
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
+	
+	public static void yesDeleteItem ( MessageData callbackMessage ) {
+		String botAnswer = "Done! item....!";
+		
+		Item delItem = new Tool("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "");
+		///delItem.setCode( callbackMessage.getParameter() ); // TODO HOW TO do that???
+		
+		
+		try {
+			itemServices.deleteItem(delItem);
+		} catch (BusinessException e) {
+			botAnswer = "Problem trying to delete item:\n" + e.getMessage();
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( callbackMessage.getChatId(), botAnswer );
+		} catch (DataException e) {
+			botAnswer = "Problem trying to delete item from database:\n" + e.getMessage();
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( callbackMessage.getChatId(), botAnswer );
+		}
+		
+		
+		// edit callback message confirming operation and removing buttons
+		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
+		
+		// YouShare bot callback logins
+        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
+	}
+	
+	public static void noDeleteItem ( MessageData callbackMessage ) {
+		String botAnswer = "Okay!";
+
+		// edit callback message confirming operation and removing buttons
+		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
+		
+		// YouShare bot callback logins
+        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
+	}
+
 
 	@Override
 	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {
