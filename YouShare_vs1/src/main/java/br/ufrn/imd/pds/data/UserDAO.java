@@ -4,7 +4,7 @@ import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public interface UserDAO {		
-	public void createUser( User newUser );	
+	public void createUser( User newUser ) throws DataException;	
 
 	public User readUser( String userName );
 

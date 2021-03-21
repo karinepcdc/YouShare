@@ -14,21 +14,17 @@ public class UserDAOMemory implements UserDAO {
 	
 	private static UserDAOMemory uniqueInstance;
 	
-	/* Default constructor */
 	private UserDAOMemory() throws DataException {
 		
-		System.out.println( "UserDAOMemory's constructor \n" );
+		System.out.println( "UserDAOMemory - Constructor \n" );
 				
-		// start user database
 		userMap = DBReader.csvToUserHashMap();
 		
 		for ( Map.Entry<String,User> pair : userMap.entrySet() ) {
 			System.out.println("user: " + pair.getValue().getFirstName() + "\n" );
 		}
-
 	}
 	
-	/* Singleton constructor */
 	public static synchronized UserDAOMemory getInstance() throws DataException {
 		try {
 			if( uniqueInstance == null ) {
@@ -41,7 +37,7 @@ public class UserDAOMemory implements UserDAO {
 	}
 	
 	@Override
-	public void createUser( User newUser ) {
+	public void createUser( User newUser ) throws DataException {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
 		DBWriter.userHashMapToCSV( userMap );				
