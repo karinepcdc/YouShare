@@ -14,8 +14,8 @@ public class BusinessException extends Exception {
 		super( message );
 	}
 
-	public BusinessException( List<String> exeptionMessages ) {
-		for( String e: exeptionMessages ) {
+	public BusinessException( List<String> exceptionMessages ) {
+		for( String e: exceptionMessages ) {
 			System.out.println(e);
 		}		
 	}	
