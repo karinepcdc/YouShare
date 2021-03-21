@@ -94,7 +94,7 @@ public class DBReader {
 		// build hashmap
 		HashMap<String,Item> itemMap = new HashMap<String,Item>();
 		
-		// TODO delete prints latter
+		// TODO delete prints later
 		for ( Item item : itemList ) {
 			itemMap.put( item.getCode(), item );
 			System.out.println("item: " + item.getName() + " R$" + item.getPrice() + " read\n" );

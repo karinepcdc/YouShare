@@ -7,7 +7,7 @@ import br.ufrn.imd.pds.exceptions.DataException;
 
 public interface FacadeItem {
 	
-	/// Criate a YouShare system item and add it to the database
+	/// Create a YouShare system item and add it to the database
 	/*
 	 * By default, new item grade and gradeCount are zero and a default lastreview is setted
 	 * @return id of item created.
@@ -17,13 +17,13 @@ public interface FacadeItem {
 	/// Read a YouShare system item and return a string with it's relevant data
 	public Item readItem( String code ) throws BusinessException, DataException;
 	
-	/// Return all items regitered.
+	/// Return all items registered.
 	public List<Item> readAll( );	
 		
-	/// Return all items regitered by user owner.
+	/// Return all items registered by user owner.
 	public List<Item> readAll( String owner ) throws BusinessException;	
 		
-	/// Return all Tools regitered.
+	/// Return all Tools registered.
 	public List<Tool> readAllTools( );	
 	
 	/// Require that a YouShare item be updated from database
@@ -52,8 +52,8 @@ public interface FacadeItem {
 	 *  - tool: termOfUse, voltage
 	 * Check if price is a double
 	 * TODO Check if already exist in the database.???
-	 * Check if owner is register and already has alredy reach 10 items ads
-	 * Check in any field has excess a characteres limmmit
+	 * Check if owner is register and already has already reach 10 items ads
+	 * Check in any field has excess a characters limit
 	 * Check if voltage is 110, 220 or none
 	 * 
 	 * 

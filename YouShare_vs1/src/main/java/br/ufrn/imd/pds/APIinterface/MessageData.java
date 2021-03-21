@@ -96,10 +96,6 @@ public class MessageData {
 
 	public void setHasParameter(boolean hasParameter) {
 		this.hasParameter = hasParameter;
-	} 
-	
-	
-	
-	
+	} 	
 	
 }

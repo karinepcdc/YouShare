@@ -8,23 +8,21 @@ import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 
 public class YouShareApp {
 
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 
 		System.out.println("Starting Bot");
 		
 		try {
 			
-			// Instantiate Telegram Bots API
-            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            TelegramBotsApi botsApi = new TelegramBotsApi( DefaultBotSession.class );
             
-            // Register YouShareBot
             botsApi.registerBot( new TelegramBotAPIServices() );
             
-        } catch (TelegramApiException e) {
+        } catch ( TelegramApiException e ) {
             e.printStackTrace();
         }
 		
-		System.out.println("YouShareBot successfully started!\n");
+		System.out.println( "YouShareBot successfully started!\n" );
 	}
 
 }

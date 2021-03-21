@@ -12,7 +12,6 @@ public class YesUnregisterCommand implements CommandInterface {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
 
 	}
 

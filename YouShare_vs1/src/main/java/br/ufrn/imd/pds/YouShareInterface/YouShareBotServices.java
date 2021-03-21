@@ -363,7 +363,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 	}
 
-	public static void  changeAdStatus( MessageData message ) {
+	public static void changeAdStatus( MessageData message ) {
 		String botAnswer = ""; 
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
@@ -437,7 +437,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
 	}
 
-	public static void  deleteItem( MessageData message ) {
+	public static void deleteItem( MessageData message ) {
 		String botAnswer = ""; 
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
@@ -510,8 +510,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
 		
 	}
-
-	
 	
 	public static void myreservations ( MessageData message ) {
 
@@ -527,7 +525,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 			botAnswer += "If you would like to cancel a reservation, type /cancelreservation.\n\n";
 			botAnswer += "Type /search to find more items!\n";
 				
-			// TODO if-else....
 			botAnswer = "You don't have any reservation yet!\n";
 			botAnswer += "Type /search to find an items!\n";
 				
@@ -559,7 +556,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 				
 			// list user ads
 				
-			//botAnswer += "Type the item id for more details. \n"; \\ TODO como põe essa msg???
+			// botAnswer += "Type the item id for more details. \n";
 				
 			// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -612,7 +609,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		String botAnswer = "Done! item....!";
 		
 		Item delItem = new Tool("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "");
-		///delItem.setCode( callbackMessage.getParameter() ); // TODO HOW TO do that???
+		/// delItem.setCode( callbackMessage.getParameter() );
 		
 		
 		try {
@@ -646,7 +643,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// YouShare bot callback logins
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
-
 
 	@Override
 	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {

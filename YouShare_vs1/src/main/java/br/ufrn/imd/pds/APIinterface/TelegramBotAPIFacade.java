@@ -3,9 +3,6 @@ package br.ufrn.imd.pds.APIinterface;
 
 public interface TelegramBotAPIFacade {
 	
-	/// Interface of interaction with YouShare Bot (YouShareBotServices)
-
-	
 	/// Send a text message reply to an user
 	public void sendTextMsg( String chatId, String botTxtMsg );
 
@@ -20,6 +17,5 @@ public interface TelegramBotAPIFacade {
 
 	/// Edit a sent text message - double check arguments ??? 
 	public void editTextMsg( String chatId, long messageId, String botTxtMsg ); 
-
 
 }

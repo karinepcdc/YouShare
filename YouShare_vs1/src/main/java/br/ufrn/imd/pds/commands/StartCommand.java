@@ -10,7 +10,7 @@ public class StartCommand implements CommandInterface {
 	}
 	
 	public void undo () {
-		// TODO: ??
+		
 	}
 
 	

@@ -24,13 +24,13 @@ public interface ItemDAO {
 	 */
 	public Item readItem( String code );
 	
-	/// Return all items regitered in the database.
+	/// Return all items registered in the database.
 	public List<Item> readAll( );	
 	
 	/// Return all items from user owner in the database.
 	public List<Item> readAll( String owner );
 		
-	/// Return all Tools regitered in the database.
+	/// Return all Tools registered in the database.
 	public List<Tool> readAllTools( );	
 		
 	/// Update item in database.

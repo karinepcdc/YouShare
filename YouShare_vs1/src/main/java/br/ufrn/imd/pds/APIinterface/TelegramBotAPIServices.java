@@ -22,42 +22,29 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import static java.lang.Math.toIntExact;
 
-/// Class that create the Youshare Bot as a Long Polling Bot. Define the interface with the user.
-/**
- * Class that create YouShare Bot and defines default action when a 
- * update is received. 
- *
- */
 public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
 	
 	private YouShareBot ysBot;
 	private static YouShareBotFacade ysServices;
 		
-	/* Default constructor */	
 	public TelegramBotAPIServices() {		
 
-		// instantiate YouShare Bot
 		ysBot = new YouShareBot();
     
-		System.out.println("TelegramBotAPIServices criado!");
+		System.out.println( "TelegramBotAPIServices criado!" );
 		
 	}
 
-	/// Class that check for updates from the user (coming from Telegram servers), like user text messages, callback queries, images, etc
+	/// Class that checks for updates from the user (coming from Telegram servers), 
+	/// like user text messages, callback queries, etc
 	@Override
-	public void onUpdateReceived(Update update) {
+	public void onUpdateReceived( Update update ) {		
 		
-		
-		
-		// TODO onde instanciar isso? não é usado mais diretamente, mas precisa ser instanciado em algum lugar pois os commands usam...
 		try {
 			ysServices = new YouShareBotServices();
-		} catch (DataException e1) {
-			// TODO Auto-generated catch block
+		} catch ( DataException e1 ) {
 			e1.printStackTrace();
 		}
-		
-
 		
 		// Check if the update has a message and the message has text
 	    if ( update.hasMessage() && update.getMessage().hasText() ) {
@@ -68,39 +55,34 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	// set user variables
 	    	String userFirstName =  update.getMessage().getChat().getFirstName();
 	    	String userLastName = update.getMessage().getChat().getLastName();
-	    	String userUserName = update.getMessage().getChat().getUserName(); // used as key in our systems
-	    	// long userId = update.getMessage().getChat().getId(); // TODO eh util? Se não, apagar...
-	    	
-	    	
-	    	// register Bot reply, for log purposes
-	    	//String botAnswer = "";
+	    	String userUserName = update.getMessage().getChat().getUserName(); // used as key in our systems	    	
 	    	
 	    	// set message data
 	    	MessageData message = new MessageData();
-	    	message.setUserTxtMsg(userMessageText);
-	    	message.setChatId(chatId);
-	    	message.setUserFirstName(userFirstName);
-	    	message.setUserLastName(userLastName);
-	    	message.setTelegramUserName(userUserName);
-	    	message.setCallback(false);
-	    	message.setHasParameter(false);
+	    	message.setUserTxtMsg( userMessageText );
+	    	message.setChatId( chatId );
+	    	message.setUserFirstName( userFirstName );
+	    	message.setUserLastName( userLastName );
+	    	message.setTelegramUserName( userUserName );
+	    	message.setCallback( false );
+	    	message.setHasParameter( false );
 	    	
-	    	// chek if command have a parameter
+	    	// check if command have a parameter
 	    	String REGEX = "_";
-	    	Pattern commandPattern = Pattern.compile(REGEX);
-	    	String[] parameters = commandPattern.split(userMessageText);
+	    	Pattern commandPattern = Pattern.compile( REGEX );
+	    	String[] parameters = commandPattern.split( userMessageText );
 	    	
 	    	String command = parameters[0];
 	    	if( parameters.length > 1 ) {
-	    		message.setHasParameter(true);
-	    		message.setParameter(parameters[1]);
+	    		message.setHasParameter( true );
+	    		message.setParameter( parameters[1] );
 	    	}
 	    		    	
 	    	// process command
 			try {
-				CommandsInvoker.executeCommand(command, message );
-			} catch (UIException e) {
-				sendTextMsg(chatId, "Unknow command... Check what I can do typing /help.");
+				CommandsInvoker.executeCommand( command, message );
+			} catch ( UIException e ) {
+				sendTextMsg(chatId, "Unknown command... Check what I can do typing /help.");
 			}
 	
 	    } else if( update.hasCallbackQuery() ) {
@@ -121,15 +103,13 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
             
             // process callback query
 			try {
-				CommandsInvoker.executeCommand(callData, message );
-			} catch (UIException e) {
+				CommandsInvoker.executeCommand( callData, message );
+			} catch ( UIException e ) {
 				// TODO será que deveria ser separado aqui?
-				sendTextMsg(chatId, "Problem Processing your choice. Contact support.");
+				sendTextMsg( chatId, "Problem Processing your choice. Contact support." );
 			}
 	    	// TODO create messages log
-	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );
-
-	    	
+	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );	    	
 	    }
 	}
 
@@ -143,45 +123,38 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		return ysBot.getTOKEN();
 	}
 
-
 	@Override
 	public void sendTextMsg( String chatId, String botTxtMsg ) {
 		
-		
-		// set Bot reply variables
         SendMessage message = new SendMessage(); 
 		
-		// set message's mandatory fields of the bot's repply
-        message.setChatId(chatId);
-        message.setText(botTxtMsg);
-        //message.setParseMode("MarkdownV2");
+		// set message's mandatory fields of the bot's reply
+        message.setChatId( chatId );
+        message.setText( botTxtMsg );
+        // message.setParseMode("MarkdownV2");
         
         // send message
         try {
             execute(message); // Call method to send the message
-        } catch (TelegramApiException e) {
+        } catch ( TelegramApiException e ) {
             e.printStackTrace();
         }
         		
 	}
-
 
 	@Override
 	public void sendInlineKeyboardWithInlineButtons( String chatId, String botTxtMsg, String[] buttonsLabels ) {
 		// set Bot reply variables
         SendMessage message = new SendMessage(); 
 		
-		// set message's mandatory fields of the bot's repply
+		// set message's mandatory fields of the bot's reply
         message.setChatId(chatId);
-        message.setText(botTxtMsg);
-        
-        // set custom keyboard
-        
+        message.setText(botTxtMsg);        
         
         // send message
         try {
-            execute(message); // Call method to send the message
-        } catch (TelegramApiException e) {
+            execute( message ); // Call method to send the message
+        } catch ( TelegramApiException e ) {
             e.printStackTrace();
         }		
 	}
@@ -211,8 +184,8 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
         SendMessage message = new SendMessage(); 
 		
 		// set message's mandatory fields of the bot's repply
-        message.setChatId(chatId);
-        message.setText(botTxtMsg);
+        message.setChatId( chatId );
+        message.setText( botTxtMsg );
         
         // set Inline keyboard
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup(); // inline keyboard that appears right next to the message it belongs to
@@ -225,8 +198,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	        for( int col = 0; col < columns; col++ ) {
 	        	InlineKeyboardButton button = new InlineKeyboardButton();
 		        button.setText( buttonsLabels[line*columns + col] );
-		        button.setCallbackData( buttonsLabels[line*columns + col] + "_" + callbackLabel);
-		        
+		        button.setCallbackData( buttonsLabels[line*columns + col] + "_" + callbackLabel);		        
 		        
 		        rowInline.add(button); // add button to the the row
 	        }
@@ -248,7 +220,6 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	
 	@Override
 	public void sendImage( String chatId, String caption, String fileId ) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -258,14 +229,14 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		// set Bot reply variables
 		EditMessageText message = new EditMessageText();
 				
-		// set message's mandatory fields of the bot's repply
+		// set message's mandatory fields of the bot's reply
 		message.setChatId(chatId);
 		message.setMessageId(toIntExact(messageId));
 		message.setText(editedBotTxtMsg);
         
 		try {
             execute(message); 
-        } catch (TelegramApiException e) {
+        } catch ( TelegramApiException e ) {
             e.printStackTrace();
         }
         
