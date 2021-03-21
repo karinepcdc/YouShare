@@ -287,11 +287,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
-			botAnswer = "+Name+ \n";
-			botAnswer += "+Description+ \n";
-			botAnswer += "+Price+ \n";
-			botAnswer += "+Terms of use+ \n";
-			botAnswer += "+Voltage+ \n";
+			botAnswer  = "<Name> </Name>\n";
+			botAnswer += "<Description> </Description>\n";
+			botAnswer += "<Price> </Price>\n";
+			botAnswer += "<Terms of use> </Terms of use>\n";
+			botAnswer += "<Voltage> </Voltage>\n";
 			
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -323,11 +323,65 @@ public class YouShareBotServices implements YouShareBotFacade {
 		String itemForm = message.getTxtMessage();
 		
 		// Parse item form
+		//createToolFromForm( itemForm );
+		String REGEX = "<Name>\\s*(.+?)\\s*</Name>.*?\n"
+					 + "<Description>\\s*(.+?)\\s*</Description>.*?\n"
+					 + "<Price>\\s*(.+?)\\s*</Price>.*?\n"
+					 + "<Terms of use>\\s*(.+?)\\s*</Terms of use>.*?\n"
+					 + "<Voltage>\\s*(.+?)\\s*</Voltage>";
+		
+		Pattern idPattern = Pattern.compile(REGEX);
+		Matcher m = idPattern.matcher(itemForm);
+		
+		// if we find a match, get id
+		String itemName = "";
+		String itemDescription = "";
+		String itemPrice = "";
+		String itemTOU = "";
+		String itemVoltage = "";
+		
+		if( m.find() ) {
+			itemName = m.group(1);
+			itemDescription = m.group(2);
+			itemPrice = m.group(3);
+			itemTOU = m.group(4);
+			itemVoltage = m.group(5);
+			
+			System.out.println("Name read: ." + itemName + ".\n");
+			System.out.println("Description read: ." + itemDescription + ".\n");
+			System.out.println("Price read: ." + itemPrice + ".\n");
+			System.out.println("TOU read: ." + itemTOU + ".\n");
+			System.out.println("Voltage read: ." + itemVoltage + ".\n");
+
+		} else {
+			// TODO lançar excessão
+			System.out.println("Pattern not found");
+
+		}
 		
 		
-		botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + ") created! :wink:\n");
-		botAnswer += "Check your item typing /itemdetails_" + ".\n";
-		botAnswer += "To check your items id type /myshare.";
+		// create item: Tool					
+		Tool newTool = new Tool( itemName , itemDescription, "", message.getTelegramUserName(), 0, 0, "", itemPrice, itemTOU, itemVoltage);
+		try {
+			String code = itemServices.createItem( newTool );
+			
+			botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") created! :wink:\n");
+			botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
+			botAnswer += "To check your items id type /myshare.";
+		} catch (BusinessException e) {
+			// define bot answer			
+			botAnswer = "Problem trying to create item:\n" + e.getMessage();
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		} catch (DataException e) {
+			// define bot answer			
+			botAnswer = "Problem trying to create item in the database:\n" + e.getMessage();
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		}		
+		
 
 		// request APIInterface to send text message to user
         apiServices.sendTextMsg( message.getChatId(), botAnswer );
