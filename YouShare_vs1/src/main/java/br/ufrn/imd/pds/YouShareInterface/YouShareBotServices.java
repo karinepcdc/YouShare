@@ -335,10 +335,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) {    		
 			
-			// check if the user have reservations
-			// if( userServices.haveReservations??? ) { \\ TODO methold that check if user have any reservation
-				
-			// define bot answer
 			botAnswer = "Here are the items you have solicited a reservation:\n";
 				
 			// list user ads				
@@ -346,11 +342,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 			botAnswer += "If you would like to cancel a reservation, type /cancelreservation.\n\n";
 			botAnswer += "Type /search to find more items!\n";
 				
-			// } else {
 			botAnswer = "You don't have any reservation yet!\n";
 			botAnswer += "Type /search to find an items!\n";
-	
-			// }
 				
 			// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -376,13 +369,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) { 		
 			
-			// define bot answer
 			botAnswer = "Which item are you interested?\n";
 				
 			// list user ads
-			// such that the person don't need to send the message to do the search
 				
-			//botAnswer += "Type the item id for more details.\n"; \\ TODO como pões essa msg???
+			//botAnswer += "Type the item id for more details. \n"; \\ TODO como põe essa msg???
 				
 			// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -421,7 +412,6 @@ public class YouShareBotServices implements YouShareBotFacade {
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
-
 	public static void noUnregister ( MessageData callbackMessage ) {
 		String botAnswer = "Yay! You're staying!";
 
@@ -432,11 +422,10 @@ public class YouShareBotServices implements YouShareBotFacade {
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 
-
 	@Override
 	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {
 		
-		return "todo";
+		return "ToDo";
 	}
 	
 	/// Utils
