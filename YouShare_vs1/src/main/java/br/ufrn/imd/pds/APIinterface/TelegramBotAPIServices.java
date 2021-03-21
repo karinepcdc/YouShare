@@ -5,7 +5,7 @@ import br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
 
-import br.ufrn.imd.pds.exceptions.CommandNotFoundException;
+import br.ufrn.imd.pds.exceptions.UIException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	// process command
 			try {
 				CommandsInvoker.executeCommand(command, message );
-			} catch (CommandNotFoundException e) {
+			} catch (UIException e) {
 				sendTextMsg(chatId, "Unknow command... Check what I can do typing /help.");
 			}
 	
@@ -122,7 +122,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
             // process callback query
 			try {
 				CommandsInvoker.executeCommand(callData, message );
-			} catch (CommandNotFoundException e) {
+			} catch (UIException e) {
 				// TODO será que deveria ser separado aqui?
 				sendTextMsg(chatId, "Problem Processing your choice. Contact support.");
 			}

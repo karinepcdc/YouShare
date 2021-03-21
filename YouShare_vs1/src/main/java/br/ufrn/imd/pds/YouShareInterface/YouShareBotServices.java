@@ -44,11 +44,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 	 * description: Description of the command, 3-256 characters.
 	 */
 	public static void start ( MessageData message ) {
-		// Bot reply
 		String botAnswer = "";
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );			
-		if( isUserRegistered ) {	// user already registered
+		if( isUserRegistered ) {
 				
 			// set bot reply
 		    botAnswer = "Welcome back " + message.getUserFirstName() + EmojiParser.parseToUnicode("! :grin:\n\n")
@@ -58,9 +57,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 		        			+ "Or, if you want to leave our community, type /unregister.";
 		        
 				
-		} else { // new user
+		} else { // if it's a new user
 				
-	    	// set bot reply
 		    botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
 		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
 		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
@@ -73,16 +71,16 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
 	    // YouShare bot logins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 	}
 	
 	public static void help ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
+		String botAnswer = ""; 
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already registered
+		if( isUserRegistered ) {
 	
-			// define bot answer
 			botAnswer = "Select the desired action:\n\n"
 		        		+ "/search - Search an item of interest.\n"
 		        		+ "/myshare - check your ads.\n"
@@ -90,9 +88,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 		        		+ "/profile - view and edit your user profile.\n"
 		        		+ "/unregister - unsubscribe YouShare system.";
 	        
-		} else { // new user
+		} else { // if it's a new user
 				
-			// define bot answer
 			botAnswer = "Select the desired action:\n\n"
 						+ "/start - welcome menu.\n"
 	        			+ "/register - subscribe in YouShare system.";
@@ -102,23 +99,23 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		
 		// YouShare bot logins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
 	    
 	}
 	
 	public static void register ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
+		String botAnswer = "";
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already registered    		
-		// define bot answer
+		if( isUserRegistered ) {  		
+
 		botAnswer = message.getUserFirstName() + ", you are already registered in our system!"
 					+ "Type /help to see the main menu.\n"
 					+ "Or, if you want to leave our community, type /unregister.";
 			
-	    } else { // new user
+	    } else { // if it's a new user
 	
-			// cadastrar novo usuário
 	    	User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), "0", "0", "No reviews yet!" );
 			try {
 				userServices.createUser( newUser );
@@ -128,7 +125,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 				e.printStackTrace();
 			}
 				
-			// define bot answer
 			botAnswer = message.getUserFirstName() + " " + message.getUserLastName() + ", "
 	    				+ "you've been successfully registered into our system!\n\n"
 	    				+ "Type /help to see the main menu.\n"
@@ -139,17 +135,17 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// request APIInterface to send text message to user
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 
-		// YouShare bot loggins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+		// YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
 		    
-		
 	}
 	
-	
 	public static void unregister ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
+		String botAnswer = "";
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		
 		if( isUserRegistered ) {  		
 				
 			botAnswer = message.getUserFirstName() + ", are you sure you want to unregister?\n"
@@ -160,9 +156,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 			String[] buttonsLabels = {"Yes", "No"};
 			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "unregister", buttonsLabels , 2, 1);	    	    
 				
-    	} else { // new user
-	    		
-	    	// define bot answer
+    	} else { // if it's a new user
+
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
 	    				+ "I didn't find you in our systems!\n\n"
 	    				+ "Type /help to see the main menu.\n";
@@ -178,10 +173,11 @@ public class YouShareBotServices implements YouShareBotFacade {
 	}
 	
 	public static void profile ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
+		String botAnswer = "";
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already registered    		
+		
+		if( isUserRegistered ) { 		
 				
 	    	try {
 				botAnswer = "This is how YouShare users see you: \n\n"
@@ -191,24 +187,18 @@ public class YouShareBotServices implements YouShareBotFacade {
 			} catch ( DataException e ) {
 				e.printStackTrace();
 			}
-	    		
-	   		// TODO: a message with picture could be send here... do ???
 	
 	   		// request APIInterface to send text message to user
 	   		apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	
 	   		botAnswer = "Do you want to change your profile?\n\n"
 	    				+ "/name - change name.\n";
-	    				//+ "/picture - change picture."; // ... do ???
-	    		
-	    	// TODO: fazer mecanismo de continuar navegando num submenu.... do ???
 			
 	   		// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
-	   	} else { // new user
+	   	} else { // if it's a new user
 	    		
-	   		// define bot answer
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
 	    				+ "I didn't find you in our systems!\n\n"
 	    				+ "Type /help to see the main menu.\n";
@@ -218,48 +208,31 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
 		}
 			
-		// YouShare bot loggins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+		// YouShare bot logins
+	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
 			
 	}
 	
-
 	public static void myshare ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
-		
+		String botAnswer = "";		
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already registered
-			/*
-			Tool newTool3 = new Tool("Drill", "Drill that do what's expected", "", message.getTelegramUserName(), 0, 0, "", "14", "none", "220");
-			Tool newTool4 = new Tool("Vacuum cleaner", "dam good vacuum cleaner", "", message.getTelegramUserName(), 0, 0, "", "12.4", "dont spoil", "220");
-			Tool newTool5 = new Tool("Electric sander", "Good electric sander", "", message.getTelegramUserName(), 0, 0, "", "12.6", "take care", "110");
-
-			try {
-				newTool3.setCode(itemServices.createItem( newTool3 ) );
-				newTool4.setCode(itemServices.createItem( newTool4 ));			
-				newTool5.setCode(itemServices.createItem( newTool5 ));
-			} catch (BusinessException | DataException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			*/
+		if( isUserRegistered ) {
 			
 			// check if the user have ads
 			List<Item> userAds = new ArrayList<Item>();
 			try {
 				userAds = itemServices.readAll( message.getTelegramUserName() );
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
+			} catch ( BusinessException e ) {
 				e.printStackTrace();
 			}
 			if( !userAds.isEmpty() ) { 
 				
-			// define bot answer
 			botAnswer = "Here are your Ads:\n\n";
 			
-				// list user ads in inline keyboard \\ TODO include inline keyboard 
+				// list user ads
 				for( Item it: userAds ) {
 					botAnswer += it.getName() + " (id: " + it.getCode() + ")\n";
 				}
@@ -276,9 +249,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
-		}  else { // new user
+		}  else { // if it's a new user
 	    		
-	    	// define bot answer
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
 						+ "I didn't find you in our systems!\n\n"
 	    				+ "Type /help to see the main menu.\n";
@@ -288,8 +260,9 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
 		}
 			
-	    // YouShare bot loggins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	    // YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
 
 	}
 
@@ -301,9 +274,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 			if( message.hasParameter() ) {
 				try {
 					itemServices.validateId(message.getParameter(), message.getTelegramUserName());
-				} catch (BusinessException e) {
-					
-					// define bot answer			
+				} catch ( BusinessException e ) {
+							
 					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
 							+ e.getMessage()
 							+ "\nThe command /itemdetail require a item id as parameter.\n"
@@ -335,20 +307,16 @@ public class YouShareBotServices implements YouShareBotFacade {
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 					
-				} catch (BusinessException e) {
-					// TODO Auto-generated catch block
+				} catch ( BusinessException e ) {
 					e.printStackTrace();
-				} catch (DataException e) {
-					// TODO Auto-generated catch block
+				} catch ( DataException e ) {
 					e.printStackTrace();
-				}
-				
+				}		
 				
 			}
 			
-		} else { // new user
+		} else { // if it's a new user
 	    		
-	    	// define bot answer
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
 						+ "I didn't find you in our systems!\n\n"
 	    				+ "Type /help to see the main menu.\n";
@@ -373,8 +341,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// define bot answer
 			botAnswer = "Here are the items you have solicited a reservation:\n";
 				
-			// list user ads in inline keyboard \\ TODO include inline keyboard 
-				
+			// list user ads				
 			botAnswer += "Type the reservation id for more details.\n";
 			botAnswer += "If you would like to cancel a reservation, type /cancelreservation.\n\n";
 			botAnswer += "Type /search to find more items!\n";
@@ -388,9 +355,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	    	    
-		}  else { // new user
+		}  else { // if it's a new user
 	    		
-	    	// define bot answer
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
 	    				+ "I didn't find you in our systems!\n\n"
 	    				+ "Type /help to see the main menu.\n";
@@ -400,20 +366,20 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
 		}		
 			
-	    // YouShare bot loggins
+	    // YouShare bot logins
         YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 	}
 
 	public static void search ( MessageData message ) {
-		String botAnswer = ""; // Bot reply
+		String botAnswer = "";
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
-		if( isUserRegistered ) {	// user already regitered    		
+		if( isUserRegistered ) { 		
 			
 			// define bot answer
 			botAnswer = "Which item are you interested?\n";
 				
-			// list user ads in inline keyboard \\ TODO include inline keyboard 
+			// list user ads
 			// such that the person don't need to send the message to do the search
 				
 			//botAnswer += "Type the item id for more details.\n"; \\ TODO como pões essa msg???
@@ -423,7 +389,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
 		}  else { // new user
 	    		
-    		// define bot answer
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
 	    				+ "I didn't find you in our systems!\n\n"
 	    				+ "Type /help to see the main menu.\n";
@@ -433,36 +398,26 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    	    
 		}
 
-		// YouShare bot loggins
+		// YouShare bot logins
 		YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
 
 	}
-
-	
-	/*********************
-	 * Callback commands 
-	 * @throws UserNotRegisteredException *
-	 *********************/
 	
 	public static void yesUnregister ( MessageData callbackMessage ) {
 		String botAnswer = "Done! You've been successfully unsubscribed from YouShare!";
 		
-		// unregister user
 		try {
 			userServices.deleteUser( callbackMessage.getTelegramUserName() );
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
+		} catch ( BusinessException e ) {
 			e.printStackTrace();
-		} catch (DataException e) {
-			// TODO Auto-generated catch block
+		} catch ( DataException e ) {
 			e.printStackTrace();
-		}
-		
+		}		
 		
 		// edit callback message confirming operation and removing buttons
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 		
-		// YouShare bot callback loggins
+		// YouShare bot callback logins
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
@@ -473,20 +428,19 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// edit callback message confirming operation and removing buttons
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 		
-		// YouShare bot callback loggins
+		// YouShare bot callback logins
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 
 
 	@Override
 	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {
-		// TODO Auto-generated method stub
 		
 		return "todo";
 	}
 	
 	/// Utils
-	private static void printTool(Tool tool) {
+	/*private static void printTool( Tool tool ) {
 		System.out.println("\n**************************\n");
 		System.out.println("Reading Tool " + tool.getCode() + "\n"
 				+ "Name: " + tool.getName() + "\n"
@@ -502,6 +456,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		System.out.println("\n**************************\n");
 
-	}
+	}*/
 	
 }
