@@ -3,6 +3,7 @@ package br.ufrn.imd.pds.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
@@ -55,7 +56,13 @@ public class UserServices implements FacadeUser {
 	@Override
 	public void updateUser( User user ) throws BusinessException, DataException {
 		
-		userDatabase.updateUser( user );
+		if ( !isRegistered( user.getTelegramUserName() ) ) {			
+			userDatabase.updateUser( user );
+
+		} else {
+
+			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );
+		}
 		
 	}
 
@@ -86,7 +93,7 @@ public class UserServices implements FacadeUser {
 			
 			/*  compute progressive average: M_k = M_(k-1) + (x_k - M_(k-1))/k
 			 */			
-			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade )/totalNumGrades;
+			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade ) / totalNumGrades;
 					
 			userToUpdate.setUserGrade( Float.toString( updatedUserGrade ) );
 			

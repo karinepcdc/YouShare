@@ -22,10 +22,10 @@ public class DBReader {
 		
 		System.out.println( "Convertendo userDatabase.csv para instancias da classe User..." );
 		
-		// check if database file exist, if not, create it
 		File userDatabaseFile = new File( "src/main/csv/userDatabase.csv" );
 		
 		try {
+			// check if database file exist, if not, create it
 			if( userDatabaseFile.createNewFile() ) {				
 				// write header
 				try {

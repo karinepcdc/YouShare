@@ -12,5 +12,4 @@ public interface UserDAO {
 	
 	public void deleteUser( User user ) throws DataException;
 	
-	public void addUserReview( String review, Float rating, User user ) throws DataException;	
 }
