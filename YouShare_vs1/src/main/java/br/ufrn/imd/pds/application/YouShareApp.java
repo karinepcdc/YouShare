@@ -16,7 +16,7 @@ public class YouShareApp {
 			
             TelegramBotsApi botsApi = new TelegramBotsApi( DefaultBotSession.class );
             
-            botsApi.registerBot( new TelegramBotAPIServices() );
+            botsApi.registerBot( TelegramBotAPIServices.getInstance() );
             
         } catch ( TelegramApiException e ) {
             e.printStackTrace();

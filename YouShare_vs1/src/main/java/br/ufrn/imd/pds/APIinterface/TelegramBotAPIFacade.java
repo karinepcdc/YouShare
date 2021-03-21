@@ -18,4 +18,9 @@ public interface TelegramBotAPIFacade {
 	/// Edit a sent text message - double check arguments ??? 
 	public void editTextMsg( String chatId, long messageId, String botTxtMsg ); 
 
+	/// Tell API that a command is asking for an text repply from an user. 
+	/*
+	 * @param nextCommand the command that will process user repply.
+	 */
+	public void requestUserRepply( String nextCommand);
 }

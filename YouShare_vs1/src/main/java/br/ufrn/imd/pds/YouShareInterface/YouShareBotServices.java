@@ -33,7 +33,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	private static FacadeItem itemServices;
 
 	public YouShareBotServices() throws DataException {
-		apiServices = new TelegramBotAPIServices();
+		apiServices = TelegramBotAPIServices.getInstance();
 		userServices = new UserServices();
 		itemServices = new ItemServices();
 		
@@ -273,7 +273,66 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 
 	}
+	
+	public static void addItemInterface ( MessageData message ) {
+		String botAnswer = ""; 
 
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		if( isUserRegistered ) {
+			botAnswer = "Fill the following form (copy and edit message):\n\n";
+			botAnswer += "Ps: All fields are mandatory.\n";
+			botAnswer += "Ps2: Don't use currency symbol in the price field.\n";
+			botAnswer += "Ps3: Voltage can be: 110, 220 or none.\n";
+
+			// request APIInterface to send text message to user
+			apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			
+			botAnswer = "+Name+ \n";
+			botAnswer += "+Description+ \n";
+			botAnswer += "+Price+ \n";
+			botAnswer += "+Terms of use+ \n";
+			botAnswer += "+Voltage+ \n";
+			
+			// request APIInterface to send text message to user
+			apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			
+			// request user repply
+			apiServices.requestUserRepply("addItemBackend");
+        
+		} else { // if it's a new user
+    		
+		botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+					+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+		// request APIInterface to send text message to user
+        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				
+	}
+	
+	// YouShare bot logins
+    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
+	
+	}
+
+	public static void addItemBackend ( MessageData message ) {
+		String botAnswer = "";
+		
+		// Extract item information from user text message
+		String itemForm = message.getTxtMessage();
+		
+		// Parse item form
+		
+		
+		botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + ") created! :wink:\n");
+		botAnswer += "Check your item typing /itemdetails_" + ".\n";
+		botAnswer += "To check your items id type /myshare.";
+
+		// request APIInterface to send text message to user
+        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+	}
+	
 	public static void itemDetails ( MessageData message ) {
 		String botAnswer = ""; 
 
@@ -285,12 +344,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 				} catch ( BusinessException e ) {
 							
-					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
-							+ e.getMessage()
-							+ "\nThe command /itemdetails require a item id as parameter.\n"
-							+ "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n"
-							+ "For instance, /itemdetails_0.\n\n"
-							+ "To check you items id type /myshare.";
+					botAnswer = "Id " +  message.getParameter() + "is not valid:\n";
+					botAnswer += e.getMessage();
+					botAnswer += "\nThe command /itemdetails require a item id as parameter.\n";
+					botAnswer += "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n";
+					botAnswer += "For instance, /itemdetails_0.\n\n";
+					botAnswer += "To check your items id type /myshare.";
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -662,6 +721,8 @@ public class YouShareBotServices implements YouShareBotFacade {
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 
+	
+	
 	@Override
 	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {
 		

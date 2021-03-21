@@ -4,7 +4,6 @@ import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
-
 import br.ufrn.imd.pds.exceptions.UIException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
@@ -25,14 +24,44 @@ import static java.lang.Math.toIntExact;
 public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
 	
 	private YouShareBot ysBot;
+	private boolean waitingRepply = false;
+	private String commandCached;
+	
 	private static YouShareBotFacade ysServices;
-		
+	
+	private static TelegramBotAPIServices uniqueInstance;
+	
+	/* Constructor */
 	public TelegramBotAPIServices() {		
 
 		ysBot = new YouShareBot();
-    
 		System.out.println( "TelegramBotAPIServices criado!" );
 		
+	}
+	
+	/* Singleton constructor */
+	public static synchronized TelegramBotAPIServices getInstance() {
+		if( uniqueInstance == null ) {
+			uniqueInstance = new TelegramBotAPIServices();
+		}
+		return uniqueInstance;
+		
+	}
+
+	public boolean isWaitingRepply() {
+		return waitingRepply;
+	}
+
+	public void setWaitingRepply(boolean waitingReply) {
+		this.waitingRepply = waitingReply;
+	}
+
+	public String getCommandCached() {
+		return commandCached;
+	}
+
+	public void setCommandCached(String commandCached) {
+		this.commandCached = commandCached;
 	}
 
 	/// Class that checks for updates from the user (coming from Telegram servers), 
@@ -66,21 +95,33 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	message.setTelegramUserName( userUserName );
 	    	message.setCallback( false );
 	    	message.setHasParameter( false );
-	    	
-	    	// check if command have a parameter
-	    	String REGEX = "_";
-	    	Pattern commandPattern = Pattern.compile( REGEX );
-	    	String[] parameters = commandPattern.split( userMessageText );
-	    	
-	    	String command = parameters[0];
-	    	if( parameters.length > 1 ) {
-	    		message.setHasParameter( true );
-	    		message.setParameter( parameters[1] );
-	    	}
-	    		    	
+			
 	    	// process command
 			try {
-				CommandsInvoker.executeCommand( command, message );
+				
+				if( !isWaitingRepply() ) {
+
+			    	// check if command have a parameter
+			    	String REGEX = "_";
+			    	Pattern commandPattern = Pattern.compile( REGEX );
+			    	String[] parameters = commandPattern.split( userMessageText );
+			    	
+			    	String command = parameters[0];
+			    	if( parameters.length > 1 ) {
+			    		message.setHasParameter( true );
+			    		message.setParameter( parameters[1] );
+			    	}
+			    	
+					System.out.println("\nExecutando comando: " + command );
+
+					CommandsInvoker.executeCommand( command, message );
+					
+				} else {
+					System.out.println("\nExecutando comando: " + getCommandCached() );
+					CommandsInvoker.executeCommand( getCommandCached(), message );
+					setWaitingRepply(false);
+				}
+				
 			} catch ( UIException e ) {
 				sendTextMsg(chatId, "Unknown command... Check what I can do typing /help.");
 			}
@@ -242,6 +283,16 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
             e.printStackTrace();
         }
         
+	}
+
+	@Override
+	public void requestUserRepply(String nextCommand) {
+		
+		this.setWaitingRepply(true);
+		this.setCommandCached(nextCommand);
+		
+		System.out.println("\n\n *** Solicitando resposta do usuario ***\n"
+				+ "waiting: " + isWaitingRepply() + " comando: " + getCommandCached());
 	}
 	
 }

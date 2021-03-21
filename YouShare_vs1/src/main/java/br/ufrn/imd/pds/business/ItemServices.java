@@ -50,11 +50,7 @@ public class ItemServices implements FacadeItem {
 			toolDb.setPrice( ((Tool) newItem).getPrice() );
 			toolDb.setTermsOfUse( ((Tool) newItem).getTermsOfUse() );
 			toolDb.setVoltage( ((Tool) newItem).getVoltage() );
-			
-			// verificar se item já está cadastrado ???
-			
-			// teremos campos opcionais, faremos algo com eles?
-			
+									
 			// fill default review, grade and grade count
 			toolDb.setLastReview("No reviews yet!");
 			toolDb.setItemGrade(0);
