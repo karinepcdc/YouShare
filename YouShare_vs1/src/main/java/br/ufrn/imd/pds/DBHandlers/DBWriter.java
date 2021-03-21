@@ -8,6 +8,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +29,12 @@ public class DBWriter {
 			userList.add( pair.getValue() );
 		}
 		
-		// transform user objects in a list of strings
 		List<String[]> userStrings = userToStringList ( userList );
 		try {
+			
+			File userDatabaseFile = new File( "src/main/csv/userDatabase.csv" );
+			userDatabaseFile.createNewFile(); // if file already exists will do nothing
+			
 			// write header
 			FileWriter writer = new FileWriter( "src/main/csv/userDatabase.csv");
 			writer.write( "firstName,lastName,telegramUserName,userGrade,userGradeCount,lastReview\n");

@@ -21,12 +21,12 @@ public class DBReader {
 	public static HashMap<String,User> csvToUserHashMap () throws DataException {
 		
 		System.out.println( "Convertendo userDatabase.csv para instancias da classe User..." );
-
+		
 		// check if database file exist, if not, create it
 		File userDatabaseFile = new File( "src/main/csv/userDatabase.csv" );
+		
 		try {
-			if( userDatabaseFile.createNewFile() ) {
-				
+			if( userDatabaseFile.createNewFile() ) {				
 				// write header
 				try {
 					FileWriter writer = new FileWriter( userDatabaseFile );
