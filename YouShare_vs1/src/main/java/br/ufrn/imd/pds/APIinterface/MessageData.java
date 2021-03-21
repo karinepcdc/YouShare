@@ -5,7 +5,7 @@ public class MessageData {
 	private String userFirstName;
 	private String userLastName;
 	private String telegramUserName;
-	private String userTxtMsg;
+	private String txtMessage;
 	private String chatId;
 	private String callbackData;
 	private String parameter;
@@ -42,12 +42,12 @@ public class MessageData {
 		this.telegramUserName = telegramUserName;
 	}
 
-	public String getUserTxtMsg() {
-		return userTxtMsg;
+	public String getTxtMessage() {
+		return txtMessage;
 	}
 
-	public void setUserTxtMsg(String userTxtMsg) {
-		this.userTxtMsg = userTxtMsg;
+	public void setTxtMessage(String userTxtMsg) {
+		this.txtMessage = userTxtMsg;
 	}
 
 	public String getChatId() {

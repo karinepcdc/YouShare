@@ -10,6 +10,8 @@ import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.APIinterface.MessageData;
@@ -72,7 +74,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			
 	    // YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 	}
 	
 	public static void help ( MessageData message ) {
@@ -100,7 +102,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		// YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 	    
 	}
 	
@@ -137,7 +139,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		// YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		    
 	}
 	
@@ -168,7 +170,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 
 		// YouShare bot logins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 	}
 	
@@ -210,7 +212,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			
 		// YouShare bot logins
 	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 			
 	}
@@ -268,7 +270,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			
 	    // YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 
 	}
 
@@ -359,7 +361,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		// YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		
 	}
 
@@ -434,7 +436,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		// YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 	}
 
 	public static void deleteItem( MessageData message ) {
@@ -464,12 +466,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 				Item delItem;
 				try {
 					delItem = itemServices.readItem(id);
-					botAnswer = "Are you sure you want to remove " + delItem.getName() + "(id: " + delItem.getCode() + ") from our systems?\n\n";
+					botAnswer = "Are you sure you want to remove " + delItem.getName() + " (id: " + delItem.getCode() + ") from our systems?\n\n";
 					botAnswer+= EmojiParser.parseToUnicode(":warning: Operation cannot be undone!");
 					
 					// send msg with inline keyboard
 					String[] buttonsLabels = {"Yes", "No"};
-					apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "deleteitem", buttonsLabels , 2, 1);
+					apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "deleteItem", buttonsLabels , 2, 1);
 					
 				} catch (BusinessException e1) {
 					botAnswer = "Problem trying to read item asked to be deleted:\n" + e1.getMessage();
@@ -507,7 +509,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		// YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-	    		message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer );
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		
 	}
 	
@@ -543,7 +545,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}		
 			
 	    // YouShare bot logins
-        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 	}
 
 	public static void search ( MessageData message ) {
@@ -573,7 +575,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 
 		// YouShare bot logins
-		YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getUserTxtMsg(), botAnswer);
+		YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 	}
 	
@@ -606,14 +608,31 @@ public class YouShareBotServices implements YouShareBotFacade {
 	}
 	
 	public static void yesDeleteItem ( MessageData callbackMessage ) {
-		String botAnswer = "Done! item....!";
+		String botAnswer = "";
 		
+		// retrieve code
+		String stringTosearchId = callbackMessage.getTxtMessage();
+		
+		Pattern idPattern = Pattern.compile("\\(id: +(\\S)+\\)");
+		Matcher m = idPattern.matcher(stringTosearchId);
+		
+		// if we find a match, get id
+		String code = "";
+		if( m.find() ) {
+			code = m.group(1);
+		}
+		
+		// build item to be deleted
 		Item delItem = new Tool("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "");
-		/// delItem.setCode( callbackMessage.getParameter() );
+		delItem.setCode( code );		
 		
-		
+		// delete item
 		try {
+			Item toBedeleted = itemServices.readItem(code);
+			botAnswer = "Done! item " + toBedeleted.getName() + " (id: " + code + ") have been deleted!" ;
+
 			itemServices.deleteItem(delItem);
+			
 		} catch (BusinessException e) {
 			botAnswer = "Problem trying to delete item:\n" + e.getMessage();
 			
@@ -625,7 +644,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// request APIInterface to send text message to user
         	apiServices.sendTextMsg( callbackMessage.getChatId(), botAnswer );
 		}
-		
 		
 		// edit callback message confirming operation and removing buttons
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);

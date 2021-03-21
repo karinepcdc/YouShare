@@ -25,6 +25,8 @@ public class CommandsInvoker {
 		// Callback query answers
 		commandsMap.put("Yes_unregister", new YesUnregisterCommand() );
 		commandsMap.put("No_unregister", new NoUnregisterCommand() );
+		commandsMap.put("Yes_deleteItem", new YesDeleteItemCommand() );
+		commandsMap.put("No_deleteItem", new NoDeleteItemCommand() );
 
 	}
 	

@@ -59,7 +59,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	
 	    	// set message data
 	    	MessageData message = new MessageData();
-	    	message.setUserTxtMsg( userMessageText );
+	    	message.setTxtMessage( userMessageText );
 	    	message.setChatId( chatId );
 	    	message.setUserFirstName( userFirstName );
 	    	message.setUserLastName( userLastName );
@@ -92,15 +92,18 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	String userUserName = update.getCallbackQuery().getFrom().getUserName(); // used as key in YouShare systems
             long messageId = update.getCallbackQuery().getMessage().getMessageId(); // to edit callback message and remove buttons
             String chatId = update.getCallbackQuery().getMessage().getChatId().toString();
-            
+	    	String messageText = update.getCallbackQuery().getMessage().getText(); // get text message with callback buttons
+
             // set message data
 	    	MessageData message = new MessageData();
 	    	message.setChatId(chatId);
 	    	message.setTelegramUserName(userUserName);
 	    	message.setMessageId(messageId);
+	    	message.setTxtMessage(messageText); // for retrieving parameters
 	    	message.setCallback(true);
 	    	message.setCallbackData(callData);
-            
+	    	
+	    	
             // process callback query
 			try {
 				CommandsInvoker.executeCommand( callData, message );
@@ -108,8 +111,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 				// TODO será que deveria ser separado aqui?
 				sendTextMsg( chatId, "Problem Processing your choice. Contact support." );
 			}
-	    	// TODO create messages log
-	    	//ysServices.logCallback( userUserName, call_data, message_id, chat_id, botAnswer );	    	
+	    	
 	    }
 	}
 
@@ -131,7 +133,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		// set message's mandatory fields of the bot's reply
         message.setChatId( chatId );
         message.setText( botTxtMsg );
-        // message.setParseMode("MarkdownV2");
+        // TODO message.setParseMode("MarkdownV2");
         
         // send message
         try {
