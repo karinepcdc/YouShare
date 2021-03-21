@@ -48,6 +48,15 @@ public interface ItemDAO {
 	 */
 	public String deleteItem(Item item) throws DataException;
 	
+	/// Remove all user's Items from the database.
+	/*
+	 * @param user username of the user 
+	 * 
+	 */
+	public void deleteItem(String user) throws DataException;
+	
+	
+	
 	/// 
 	//public void addReviewItem( String review, Float rating, Item item );
 }

@@ -160,6 +160,15 @@ public class ItemServices implements FacadeItem {
 		
 	}
 
+
+	@Override
+	public void deleteItem(String user) throws BusinessException, DataException {
+		// confiro algo???
+		
+		itemDatabase.deleteItem( user );
+	}
+	
+	
 	@Override
 	public void validateItem( Item item ) throws BusinessException {
 		boolean hasViolations = false;

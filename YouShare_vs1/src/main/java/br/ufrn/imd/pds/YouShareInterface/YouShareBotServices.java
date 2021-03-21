@@ -236,7 +236,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			}
 			if( !userAds.isEmpty() ) { 
 				
-			botAnswer = "Here are your Ads:\n\n";
+				botAnswer = "Here are your Ads:\n\n";
 			
 				// list user ads 
 				for( Item it: userAds ) {
@@ -354,6 +354,22 @@ public class YouShareBotServices implements YouShareBotFacade {
 	}
 
 	public static void  changeAdStatus( MessageData message ) {
+		String botAnswer = ""; 
+
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		if( isUserRegistered ) {
+
+			
+		} else { // if it's a new user
+    		
+			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+						+ "I didn't find you in our systems!\n\n"
+	    				+ "Type /help to see the main menu.\n";
+				
+			// request APIInterface to send text message to user
+	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+					
+		}
 		
 	}
 
@@ -372,6 +388,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			botAnswer += "If you would like to cancel a reservation, type /cancelreservation.\n\n";
 			botAnswer += "Type /search to find more items!\n";
 				
+			// TODO if-else....
 			botAnswer = "You don't have any reservation yet!\n";
 			botAnswer += "Type /search to find an items!\n";
 				
