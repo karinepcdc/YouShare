@@ -426,32 +426,20 @@ public class YouShareBotServices implements YouShareBotFacade {
 				throw new UIException("Need item if to do edition.");
 			}
 			
+			
 			Item originalTool = itemServices.readItem( itemId );
 			newTool = FormToItem.editFormToTool( message.getTxtMessage(), (Tool) originalTool);
-			try {
-				String code = itemServices.updateItem( newTool );
 				
-				botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") updated! :wink:\n");
-				botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
-				botAnswer += "To check your items id type /myshare.";
+			String code = itemServices.updateItem( newTool );
 				
-				// request APIInterface to send text message to user
-		        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") updated! :wink:\n");
+			botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
+			botAnswer += "To check your items id type /myshare.";
+				
+			// request APIInterface to send text message to user
+		    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		        
-			} catch (BusinessException e) {
-				// define bot answer			
-				botAnswer = "Problem trying to edit item:\n" + e.getMessage() + "\n";
-				botAnswer += "Check if you have folowed all intruction and try again: /additem.";
-				
-				// request APIInterface to send text message to user
-	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
-			} catch (DataException e) {
-				// define bot answer			
-				botAnswer = "Problem trying to edit item in the database:\n" + e.getMessage();
-				
-				// request APIInterface to send text message to user
-	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
-			}		
+		
 		
 		} catch (UIException e1) {
 			// define bot answer			
@@ -459,13 +447,20 @@ public class YouShareBotServices implements YouShareBotFacade {
 						
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
-		} catch (BusinessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (DataException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		} catch (BusinessException e) {
+			// define bot answer			
+			botAnswer = "Problem trying to edit item:\n" + e.getMessage() + "\n";
+			botAnswer += "Check if you have folowed all intruction and try again: /additem.";
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		} catch (DataException e) {
+			// define bot answer			
+			botAnswer = "Problem trying to edit item in the database:\n" + e.getMessage();
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		}		
 		
 	}
 
