@@ -7,7 +7,7 @@ public class EditUserInterfaceCommand implements CommandInterface {
 
 	@Override
 	public void execute( MessageData message ) {
-		YouShareBotServices.editItemInterface( message );
+		YouShareBotServices.editUserInterface( message );
 	}
 
 	@Override
