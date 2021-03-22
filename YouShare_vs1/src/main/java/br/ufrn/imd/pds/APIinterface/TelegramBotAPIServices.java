@@ -24,7 +24,7 @@ import static java.lang.Math.toIntExact;
 public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
 	
 	private YouShareBot ysBot;
-	private boolean waitingRepply = false;
+	private boolean waitingReply = false;
 	private String commandCached;
 	
 	private static YouShareBotFacade ysServices;
@@ -49,11 +49,11 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	}
 
 	public boolean isWaitingReply() {
-		return waitingRepply;
+		return waitingReply;
 	}
 
 	public void setWaitingReply( boolean waitingReply ) {
-		this.waitingRepply = waitingReply;
+		this.waitingReply = waitingReply;
 	}
 
 	public String getCommandCached() {
@@ -222,7 +222,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		// set Bot reply variables
         SendMessage message = new SendMessage(); 
 		
-		// set message's mandatory fields of the bot's repply
+		// set message's mandatory fields of the bot's reply
         message.setChatId( chatId );
         message.setText( botTxtMsg );
         
