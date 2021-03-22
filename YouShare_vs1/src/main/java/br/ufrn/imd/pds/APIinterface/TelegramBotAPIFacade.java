@@ -22,5 +22,5 @@ public interface TelegramBotAPIFacade {
 	/*
 	 * @param nextCommand the command that will process user repply.
 	 */
-	public void requestUserRepply( String nextCommand);
+	public void requestUserReply( String nextCommand);
 }

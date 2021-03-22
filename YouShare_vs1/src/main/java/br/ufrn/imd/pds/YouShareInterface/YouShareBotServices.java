@@ -298,8 +298,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
-			// request user repply
-			apiServices.requestUserRepply("addItemBackend");
+			// request user reply
+			apiServices.requestUserReply("addItemBackend");
         
 		} else { // if it's a new user
     		
@@ -495,8 +495,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
-				}
-				
+				}				
 				
 
 			} else {
@@ -748,8 +747,6 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// YouShare bot callback logins
         YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
-
-	
 	
 	@Override
 	public String registerAdImage(String userFirstName, String userLastName, String telegramUserName, String imageId, String chatId ) {

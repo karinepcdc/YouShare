@@ -48,11 +48,11 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		
 	}
 
-	public boolean isWaitingRepply() {
+	public boolean isWaitingReply() {
 		return waitingRepply;
 	}
 
-	public void setWaitingRepply(boolean waitingReply) {
+	public void setWaitingReply( boolean waitingReply ) {
 		this.waitingRepply = waitingReply;
 	}
 
@@ -60,7 +60,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 		return commandCached;
 	}
 
-	public void setCommandCached(String commandCached) {
+	public void setCommandCached( String commandCached ) {
 		this.commandCached = commandCached;
 	}
 
@@ -99,7 +99,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	    	// process command
 			try {
 				
-				if( !isWaitingRepply() ) {
+				if( !isWaitingReply() ) {
 
 			    	// check if command have a parameter
 			    	String REGEX = "_";
@@ -119,7 +119,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 				} else {
 					System.out.println("\nExecutando comando: " + getCommandCached() );
 					CommandsInvoker.executeCommand( getCommandCached(), message );
-					setWaitingRepply(false);
+					setWaitingReply(false);
 				}
 				
 			} catch ( UIException e ) {
@@ -151,8 +151,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 			} catch ( UIException e ) {
 				// TODO será que deveria ser separado aqui?
 				sendTextMsg( chatId, "Problem Processing your choice. Contact support." );
-			}
-	    	
+			}	    	
 	    }
 	}
 
@@ -178,7 +177,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
         
         // send message
         try {
-            execute(message); // Call method to send the message
+            execute( message ); // Call method to send the message
         } catch ( TelegramApiException e ) {
             e.printStackTrace();
         }
@@ -286,13 +285,13 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	}
 
 	@Override
-	public void requestUserRepply(String nextCommand) {
+	public void requestUserReply(String nextCommand) {
 		
-		this.setWaitingRepply(true);
+		this.setWaitingReply(true);
 		this.setCommandCached(nextCommand);
 		
-		System.out.println("\n\n *** Solicitando resposta do usuario ***\n"
-				+ "waiting: " + isWaitingRepply() + " comando: " + getCommandCached());
+		System.out.println( "\n\n *** Solicitando resposta do usuario ***\n"
+				+ "waiting: " + isWaitingReply() + " comando: " + getCommandCached() );
 	}
 	
 }
