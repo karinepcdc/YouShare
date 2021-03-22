@@ -410,7 +410,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		} catch (UIException e1) {
 			// define bot answer			
-			botAnswer = "Problem trying to read repply:\n" + e1.getMessage();
+			botAnswer = "Problem trying to read reply:\n" + e1.getMessage();
 						
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -500,7 +500,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		
 		} catch (UIException e1) {
 			// define bot answer			
-			botAnswer = "Problem trying to read repply:\n" + e1.getMessage();
+			botAnswer = "Problem trying to read reply:\n" + e1.getMessage();
 						
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
