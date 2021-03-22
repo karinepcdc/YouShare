@@ -124,9 +124,13 @@ public class YouShareBotServices implements YouShareBotFacade {
 			try {
 				userServices.createUser( newUser );
 			} catch ( BusinessException e ) {
-				e.printStackTrace();
+				botAnswer =  "We could not register you into our systems. \n";
+				botAnswer += "Note that you should have a Telegram Username defined to be able to register.";
+				botAnswer += e.getMessage();
 			} catch ( DataException e ) {
-				e.printStackTrace();
+				botAnswer =  "We could not register you into our systems. \n";
+				botAnswer += "Note that you should have a Telegram Username defined to be able to register.";
+				botAnswer += e.getMessage();
 			}
 				
 			botAnswer = message.getUserFirstName() + " " + message.getUserLastName() + ", "
