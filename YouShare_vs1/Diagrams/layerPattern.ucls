@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="br.ufrn.imd.pds.APIinterface" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="257" x="120" y="35"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="br.ufrn.imd.pds.YouShareInterface" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="265" x="121" y="123"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="br.ufrn.imd.pds.business" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="264" x="121" y="203"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="br.ufrn.imd.pds.data" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="59" width="262" x="122" y="287"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

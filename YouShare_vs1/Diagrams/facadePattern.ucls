@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="br.ufrn.imd.pds.APIinterface" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="237" width="673" x="22" y="26"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <interface id="2" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIFacade" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface/TelegramBotAPIFacade.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="179" width="231" x="249" y="76"/>    
+    <display autosize="false" stereotype="true" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <package id="3" language="java" name="br.ufrn.imd.pds.YouShareInterface" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="180" width="681" x="21" y="269"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <interface id="4" language="java" name="br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface/YouShareBotFacade.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="124" width="254" x="240" y="318"/>    
+    <display autosize="false" stereotype="true" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <package id="5" language="java" name="br.ufrn.imd.pds.business" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="283" width="682" x="21" y="454"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <interface id="6" language="java" name="br.ufrn.imd.pds.business.FacadeItem" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/FacadeItem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="575" y="601"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="7" language="java" name="br.ufrn.imd.pds.business.FacadeUser" project="YouShare_vs1" 
+    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/FacadeUser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="132" x="106" y="517"/>    
+    <display autosize="false" stereotype="true" package="false" initial-value="false" signature="false" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

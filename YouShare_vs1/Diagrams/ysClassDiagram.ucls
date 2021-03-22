@@ -4,28 +4,28 @@
   router="FAN">  
   <package id="1" language="java" name="br.ufrn.imd.pds.data" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="262" width="1256" x="45" y="1092"/>    
+    <position height="282" width="1458" x="45" y="1100"/>    
     <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="2" language="java" name="br.ufrn.imd.pds.business" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="404" width="1447" x="46" y="675"/>    
+    <position height="404" width="1447" x="46" y="689"/>    
     <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="3" language="java" name="br.ufrn.imd.pds.YouShareInterface" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/YouShareInterface" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="307" width="1444" x="46" y="360"/>    
+    <position height="307" width="1444" x="46" y="370"/>    
     <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="4" language="java" name="br.ufrn.imd.pds.APIinterface" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="327" width="926" x="45" y="19"/>    
+    <position height="337" width="1444" x="45" y="19"/>    
     <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <interface id="5" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIFacade" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface/TelegramBotAPIFacade.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="145" width="249" x="652" y="125"/>    
+    <position height="145" width="249" x="978" y="105"/>    
     <display autosize="false" stereotype="true" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,13 +48,13 @@
     <position height="-1" width="-1" x="1047" y="514"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="false"/>    
     </display>  
   </class>  
   <interface id="8" language="java" name="br.ufrn.imd.pds.data.ItemDAO" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/ItemDAO.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="520" y="1217"/>    
+    <position height="-1" width="-1" x="560" y="1247"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -63,7 +63,7 @@
   </interface>  
   <interface id="9" language="java" name="br.ufrn.imd.pds.data.UserDAO" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/UserDAO.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1162" y="1225"/>    
+    <position height="-1" width="-1" x="1276" y="1243"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -72,7 +72,7 @@
   </interface>  
   <class id="10" language="java" name="br.ufrn.imd.pds.data.ItemDAOMemory" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/ItemDAOMemory.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="193" y="1222"/>    
+    <position height="-1" width="-1" x="211" y="1236"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -81,7 +81,7 @@
   </class>  
   <class id="11" language="java" name="br.ufrn.imd.pds.data.UserDAOMemory" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/data/UserDAOMemory.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="884" y="1228"/>    
+    <position height="-1" width="-1" x="996" y="1246"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -90,7 +90,7 @@
   </class>  
   <class id="12" language="java" name="br.ufrn.imd.pds.business.ItemServices" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/ItemServices.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="538" y="839"/>    
+    <position height="-1" width="-1" x="540" y="889"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -99,7 +99,7 @@
   </class>  
   <interface id="13" language="java" name="br.ufrn.imd.pds.business.FacadeItem" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/FacadeItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="793" y="828"/>    
+    <position height="-1" width="-1" x="791" y="878"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -108,7 +108,7 @@
   </interface>  
   <class id="14" language="java" name="br.ufrn.imd.pds.business.User" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/User.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="979" y="830"/>    
+    <position height="-1" width="-1" x="979" y="900"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -117,7 +117,7 @@
   </class>  
   <class id="15" language="java" name="br.ufrn.imd.pds.business.UserServices" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/UserServices.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1193" y="827"/>    
+    <position height="-1" width="-1" x="1193" y="889"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -126,7 +126,7 @@
   </class>  
   <interface id="16" language="java" name="br.ufrn.imd.pds.business.FacadeUser" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/FacadeUser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1415" y="817"/>    
+    <position height="-1" width="-1" x="1419" y="873"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -135,7 +135,7 @@
   </interface>  
   <class id="17" language="java" name="br.ufrn.imd.pds.business.Tool" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Tool.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="125" y="742"/>    
+    <position height="-1" width="-1" x="125" y="902"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -144,368 +144,192 @@
   </class>  
   <class id="18" language="java" name="br.ufrn.imd.pds.business.Item" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Item.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="305" y="829"/>    
+    <position height="-1" width="-1" x="307" y="891"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="br.ufrn.imd.pds.business.Appliance" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Appliance.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="130" y="860"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="20" language="java" name="br.ufrn.imd.pds.business.ChildrenToy" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/ChildrenToy.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="318" y="1020"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="21" language="java" name="br.ufrn.imd.pds.business.Costume" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/Costume.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="442" y="996"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="22" language="java" name="br.ufrn.imd.pds.business.PartyCloth" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/business/PartyCloth.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="136" y="1002"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="23" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices" project="YouShare_vs1" 
+  <class id="19" language="java" name="br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/APIinterface/TelegramBotAPIServices.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="329" y="189"/>    
+    <position height="-1" width="-1" x="363" y="195"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true" static="false"/>      
+      <operations public="true" package="true" protected="true" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="br.ufrn.imd.pds.commands.CommandsInvoker" project="YouShare_vs1" 
+  <class id="20" language="java" name="br.ufrn.imd.pds.commands.CommandsInvoker" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/CommandsInvoker.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="718" y="502"/>    
+    <position height="-1" width="-1" x="574" y="524"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="25" language="java" name="br.ufrn.imd.pds.commands.CommandInterface" project="YouShare_vs1" 
+  <interface id="21" language="java" name="br.ufrn.imd.pds.commands.CommandInterface" project="YouShare_vs1" 
     file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/CommandInterface.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="356" y="522"/>    
+    <position height="-1" width="-1" x="264" y="520"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="26" language="java" name="br.ufrn.imd.pds.commands.HelpCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/HelpCommand.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="130" y="402"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="27" language="java" name="br.ufrn.imd.pds.commands.MyreservationsCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/MyreservationsCommand.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="146" y="458"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="28" language="java" name="br.ufrn.imd.pds.commands.MyshareCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/MyshareCommand.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="128" y="516"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="29" language="java" name="br.ufrn.imd.pds.commands.NoUnregisterCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/NoUnregisterCommand.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="142" y="570"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="30" language="java" name="br.ufrn.imd.pds.commands.ProfileCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/ProfileCommand.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="128" y="630"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="31" language="java" name="br.ufrn.imd.pds.commands.RegisterCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/RegisterCommand.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="282" y="642"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="32" language="java" name="br.ufrn.imd.pds.commands.SearchCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/SearchCommand.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="300" y="402"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="33" language="java" name="br.ufrn.imd.pds.commands.StartCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/StartCommand.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="428" y="404"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="34" language="java" name="br.ufrn.imd.pds.commands.YesUnregisterCommand" project="YouShare_vs1" 
-    file="/YouShare_vs1/src/main/java/br/ufrn/imd/pds/commands/YesUnregisterCommand.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="616" y="614"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <association id="35">    
-    <bendpoint x="1052" y="698"/>    
-    <bendpoint x="1408" y="696"/>    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="36" name="userServices">        
-        <position height="0" width="0" x="0" y="0"/>      
+  <realization id="22">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <realization id="23">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <realization id="24">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="25">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="26" name="commandsMap">        
+        <position height="0" width="0" x="-92" y="-2"/>      
       </attribute>      
-      <multiplicity id="37" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-92" y="-2"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
+    <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="38">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <realization id="39">    
-    <end type="SOURCE" refId="32"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <realization id="40">    
-    <end type="SOURCE" refId="27"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <realization id="41">    
+  <association id="28">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="29" name="userDatabase">        
+        <position height="0" width="0" x="114" y="18"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="114" y="18"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="31">    
     <end type="SOURCE" refId="15"/>    
     <end type="TARGET" refId="16"/>  
   </realization>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="19"/>    
+  <generalization id="32">    
+    <end type="SOURCE" refId="17"/>    
     <end type="TARGET" refId="18"/>  
   </generalization>  
-  <association id="43">    
-    <bendpoint x="1050" y="334"/>    
-    <bendpoint x="778" y="326"/>    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="44" name="apiServices">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="45" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="46">    
+  <association id="33">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="47" name="itemMap">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="34" name="itemMap">        
+        <position height="0" width="0" x="2" y="62"/>      
       </attribute>      
-      <multiplicity id="48" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="35" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="2" y="62"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="49">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <generalization id="50">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <realization id="51">    
-    <end type="SOURCE" refId="28"/>    
-    <end type="TARGET" refId="25"/>  
+  <realization id="36">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
   </realization>  
-  <realization id="52">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="25"/>  
+  <realization id="37">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="13"/>  
   </realization>  
-  <association id="53">    
-    <bendpoint x="1050" y="700"/>    
-    <bendpoint x="822" y="746"/>    
+  <association id="38">    
+    <bendpoint x="1408" y="740"/>    
     <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="54" name="itemServices">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="39" name="userServices">        
+        <position height="0" width="0" x="4" y="56"/>      
       </attribute>      
-      <multiplicity id="55" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="4" y="56"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="41">    
+    <bendpoint x="898" y="762"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="42" name="itemServices">        
+        <position height="0" width="0" x="-2" y="50"/>      
+      </attribute>      
+      <multiplicity id="43" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-2" y="50"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="56">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <realization id="57">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="9"/>  
-  </realization>  
-  <association id="58">    
+  <association id="44">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="59" name="uniqueInstance">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="45" name="userMap">        
+        <position height="0" width="0" x="0" y="70"/>      
       </attribute>      
-      <multiplicity id="60" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="61">    
-    <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <realization id="62">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="8"/>  
-  </realization>  
-  <generalization id="63">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <association id="64">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="65" name="itemDatabase">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="66" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="67">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="68" name="uniqueInstance">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="69" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="70">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="71" name="commandsMap">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="72" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="25" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="73">    
-    <end type="SOURCE" refId="34"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <association id="74">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="75" name="userMap">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="76" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="46" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="70"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="77">    
-    <end type="SOURCE" refId="33"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <realization id="78">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="25"/>  
-  </realization>  
-  <realization id="79">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <realization id="80">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="13"/>  
-  </realization>  
-  <realization id="81">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <association id="82">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="83" name="userDatabase">        
-        <position height="0" width="0" x="0" y="0"/>      
+  <association id="47">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="48" name="itemDatabase">        
+        <position height="0" width="0" x="40" y="30"/>      
       </attribute>      
-      <multiplicity id="84" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="40" y="30"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="50">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="51" name="uniqueInstance">        
+        <position height="0" width="0" x="18" y="14"/>      
+      </attribute>      
+      <multiplicity id="52" minimum="0" maximum="1">        
+        <position height="0" width="0" x="18" y="14"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="53">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="54" name="uniqueInstance">        
+        <position height="0" width="0" x="112" y="18"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
+        <position height="0" width="0" x="112" y="18"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="56">    
+    <bendpoint x="1100" y="306"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="57" name="apiServices">        
+        <position height="0" width="0" x="326" y="-20"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="1">        
+        <position height="0" width="0" x="326" y="-20"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
