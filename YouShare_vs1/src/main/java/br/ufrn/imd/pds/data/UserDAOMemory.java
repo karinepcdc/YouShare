@@ -1,6 +1,11 @@
 package br.ufrn.imd.pds.data;
 
 import java.util.Map;
+
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import br.ufrn.imd.pds.DBHandlers.DBReader;
@@ -40,7 +45,11 @@ public class UserDAOMemory implements UserDAO {
 	public void createUser( User newUser ) throws DataException {
 		
 		userMap.put( newUser.getTelegramUserName(), newUser );
-		DBWriter.userHashMapToCSV( userMap );				
+		try {
+			DBWriter.userHashMapToCSV( userMap );
+		} catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+			throw new DataException( "Problem trying to write new user in the database." );
+		}				
 		
 		System.out.println( "Usuário criado! \n" );
 	}
@@ -69,7 +78,11 @@ public class UserDAOMemory implements UserDAO {
 		aux.setUserGradeCount	( user.getUserGradeCount() );			
 		aux.setLastReview		( user.getFirstName() );
 			
-		DBWriter.userHashMapToCSV( userMap );
+		try {
+			DBWriter.userHashMapToCSV( userMap );
+		} catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+			throw new DataException( "Problem trying to write user in the database." );
+		}
 		System.out.println( "Usuário atualizado com sucesso. \n" );		
 	}
 	
@@ -77,7 +90,11 @@ public class UserDAOMemory implements UserDAO {
 	public void deleteUser( User user ) throws DataException {
 		
 		userMap.remove( user.getTelegramUserName() );
-		DBWriter.userHashMapToCSV( userMap );
+		try {
+			DBWriter.userHashMapToCSV( userMap );
+		} catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+			throw new DataException( "Problem trying to write user in the database." );
+		}
 
 	}
 

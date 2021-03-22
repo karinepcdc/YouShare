@@ -114,12 +114,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) {  		
 
-		botAnswer = message.getUserFirstName() + ", you are already registered in our system!"
+			botAnswer = message.getUserFirstName() + ", you are already registered in our system!"
 					+ "Type /help to see the main menu.\n"
 					+ "Or, if you want to leave our community, type /unregister.";
 
-		// request APIInterface to send text message to user
-	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			// request APIInterface to send text message to user
+			apiServices.sendTextMsg( message.getChatId(), botAnswer );
 
 	    } else { // if it's a new user
 	

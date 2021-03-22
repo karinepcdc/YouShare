@@ -76,7 +76,6 @@ public class ItemDAOMemory implements ItemDAO {
 
 		// set unique code
 		String code = String.valueOf(IdCounter.nextId());
-		// TODO validate Code 
 		newItem.setCode( code );
 		
 		// add Item to item map
@@ -86,7 +85,6 @@ public class ItemDAOMemory implements ItemDAO {
 		try {
 			DBWriter.itemHashMapToCSV( itemMap );
 		} catch ( CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e ) {
-			// TODO detail better exception, trying to tell what exactly have happened
 			throw new DataException( "Problem trying to write new item in the database." );
 		}
 		
