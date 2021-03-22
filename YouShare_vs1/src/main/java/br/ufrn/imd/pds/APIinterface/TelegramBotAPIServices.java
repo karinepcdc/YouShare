@@ -115,8 +115,8 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 					CommandsInvoker.executeCommand( command, message );
 					
 				} else {
-					CommandsInvoker.executeCommand( getCommandCached(), message );
 					setWaitingReply(false);
+					CommandsInvoker.executeCommand( getCommandCached(), message );
 				}
 				
 			} catch ( UIException e ) {

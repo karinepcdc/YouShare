@@ -18,5 +18,18 @@ public class BusinessException extends Exception {
 		for( String e: exceptionMessages ) {
 			System.out.println(e);
 		}		
+		
 	}	
+	
+	public String getMessage( List<String> exceptionMessages ) {
+		String errorMsg = "";
+		
+		for( String error: exceptionMessages ) {
+			errorMsg += error + "\n";
+		}
+		
+		return errorMsg;
+	}
+	
+	
 }

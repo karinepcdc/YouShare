@@ -117,32 +117,45 @@ public class YouShareBotServices implements YouShareBotFacade {
 		botAnswer = message.getUserFirstName() + ", you are already registered in our system!"
 					+ "Type /help to see the main menu.\n"
 					+ "Or, if you want to leave our community, type /unregister.";
-			
+
+		// request APIInterface to send text message to user
+	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+
 	    } else { // if it's a new user
 	
 	    	User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), "0", "0", "No reviews yet!" );
 			try {
 				userServices.createUser( newUser );
+				
+				botAnswer = message.getUserFirstName() + " " + message.getUserLastName() + ", "
+	    				+ "you've been successfully registered into our system!\n\n"
+	    				+ "Type /help to see the main menu.\n"
+	    				+ "If you changed your mind, type /unregister. ";
+				
+				// request APIInterface to send text message to user
+			    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+
 			} catch ( BusinessException e ) {
 				botAnswer =  "We could not register you into our systems. \n";
-				botAnswer += "Note that you should have a Telegram Username defined to be able to register.";
+				botAnswer += "Note that you should have a Telegram Username defined to be able to register.\n";
 				botAnswer += e.getMessage();
+				
+				// request APIInterface to send text message to user
+			    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			} catch ( DataException e ) {
 				botAnswer =  "We could not register you into our systems. \n";
 				botAnswer += "Note that you should have a Telegram Username defined to be able to register.";
 				botAnswer += e.getMessage();
+				
+				// request APIInterface to send text message to user
+			    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			}
 				
-			botAnswer = message.getUserFirstName() + " " + message.getUserLastName() + ", "
-	    				+ "you've been successfully registered into our system!\n\n"
-	    				+ "Type /help to see the main menu.\n"
-	    				+ "If you changed your mind, type /unregister. ";
+			
 	    			    
 	    }
 	
-		// request APIInterface to send text message to user
-	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
-
+		
 		// YouShare bot logins
 	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
@@ -356,7 +369,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
 			// request user reply
-			apiServices.requestUserReply("addItemBackend");
+			apiServices.requestUserReply("AddItemBackend");
         
 		} else { // if it's a new user
     		

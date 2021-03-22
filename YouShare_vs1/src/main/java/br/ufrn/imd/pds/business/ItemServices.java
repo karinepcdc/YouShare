@@ -217,7 +217,13 @@ public class ItemServices implements FacadeItem {
 		}
 		
 		if( hasViolations ) {
-			throw new BusinessException( exceptionMessages );
+			String errorMsg = "";
+			
+			for( String error: exceptionMessages ) {
+				errorMsg += error + "\n";
+			}
+			
+			throw new BusinessException( errorMsg );
 		}
 				
 	}

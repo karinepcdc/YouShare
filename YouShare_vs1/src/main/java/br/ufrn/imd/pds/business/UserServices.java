@@ -3,6 +3,8 @@ package br.ufrn.imd.pds.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrn.imd.pds.data.ItemDAO;
+import br.ufrn.imd.pds.data.ItemDAOMemory;
 import br.ufrn.imd.pds.data.UserDAO;
 import br.ufrn.imd.pds.data.UserDAOMemory;
 import br.ufrn.imd.pds.exceptions.BusinessException;
@@ -11,10 +13,13 @@ import br.ufrn.imd.pds.exceptions.DataException;
 public class UserServices implements FacadeUser {	
 
 	UserDAO userDatabase;
+	ItemDAO itemDatabase;
+
 
 	public UserServices() throws DataException {		
 		userDatabase = UserDAOMemory.getInstance();
-		
+		itemDatabase = ItemDAOMemory.getInstance();
+
 		System.out.println( "UserServices created!" );
 	}
 	
@@ -72,6 +77,9 @@ public class UserServices implements FacadeUser {
 		
 		if( userToDelete != null ) {
 			userDatabase.deleteUser( userToDelete );
+			
+			// erase user items from database
+			itemDatabase.deleteItem(userName);
 			
 		} else {
 			throw new BusinessException( "The user you were trying to delete is not registered in the database. \n" );
@@ -137,7 +145,12 @@ public class UserServices implements FacadeUser {
 		}
 		
 		if( hasViolations ) {
-			throw new BusinessException( exceptionMessages );
+			String errorMsg = "";
+			
+			for( String error: exceptionMessages ) {
+				errorMsg += error + "\n";
+			}
+			throw new BusinessException( errorMsg );
 		}	
 	}	
 }
