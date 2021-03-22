@@ -310,12 +310,12 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// request APIInterface to send text message to user
         apiServices.sendTextMsg( message.getChatId(), botAnswer );
 				
-	}
+		}
 	
-	// YouShare bot logins
-    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
-    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
-	
+		// YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
+		
 	}
 
 	public static void addItemBackend ( MessageData message ) {
@@ -325,7 +325,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		// TODO include other type of itens
 		Tool newTool;
 		try {
-			newTool = FormToItem.formToTool( message.getTxtMessage(), message.getTelegramUserName());
+			newTool = FormToItem.createFormToTool( message.getTxtMessage(), message.getTelegramUserName());
 			try {
 				String code = itemServices.createItem( newTool );
 				
@@ -360,7 +360,110 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 		
 	}
+
+	public static void editItemInterface ( MessageData message ) {
+		String botAnswer = ""; 
+
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		if( isUserRegistered ) {
+			botAnswer = "Fill the fields you would like to edit wapping the information using the folling tags:\n\n";
+			botAnswer += "Ps: Don't use currency symbol in the price field.\n";
+			botAnswer += "Ps2: Voltage can be: 110, 220 or none.\n";
+
+			// request APIInterface to send text message to user
+			apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			
+			botAnswer  = "<Id>" + message.getParameter() + "</Id> (item id is mandatory)\n";
+			botAnswer += "<Name> </Name>\n";
+			botAnswer += "<Description> </Description>\n";
+			botAnswer += "<Price> </Price>\n";
+			botAnswer += "<Terms of use> </Terms of use>\n";
+			botAnswer += "<Voltage> </Voltage>\n";
+			
+			// request APIInterface to send text message to user
+			apiServices.sendTextMsg( message.getChatId(), botAnswer );
+			
+			// request user reply
+			apiServices.requestUserReply("EditItemBackend");
+        
+		} else { // if it's a new user
+    		
+		botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+					+ "I didn't find you in our systems!\n\n"
+    				+ "Type /help to see the main menu.\n";
+			
+		// request APIInterface to send text message to user
+        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+				
+		}
 	
+		// YouShare bot logins
+	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
+		
+	}
+
+	public static void editItemBackend ( MessageData message ) {
+		String botAnswer = "";
+		
+		// Extract item information from user text message
+		// TODO include other type of itens
+		Tool newTool;
+		try {
+			String itemId = "";
+			String RegexCode = "<Id>\\s*(.+?)\\s*</Id>.*?\n";
+
+			// check if Id edition where sent
+			Pattern itemPattern = Pattern.compile(RegexCode);
+			Matcher m = itemPattern.matcher(message.getTxtMessage());
+
+			if( m.find() ) {
+				itemId = m.group(1);
+				// log
+				System.out.println("Id read: ." + itemId + ".\n");
+				
+			} else {
+				throw new UIException("Need item if to do edition.");
+			}
+			
+			
+			Item originalTool = itemServices.readItem( itemId );
+			newTool = FormToItem.editFormToTool( message.getTxtMessage(), (Tool) originalTool);
+				
+			String code = itemServices.updateItem( newTool );
+				
+			botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") updated! :wink:\n");
+			botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
+			botAnswer += "To check your items id type /myshare.";
+				
+			// request APIInterface to send text message to user
+		    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		        
+		
+		
+		} catch (UIException e1) {
+			// define bot answer			
+			botAnswer = "Problem trying to read repply:\n" + e1.getMessage();
+						
+			// request APIInterface to send text message to user
+			apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		} catch (BusinessException e) {
+			// define bot answer			
+			botAnswer = "Problem trying to edit item:\n" + e.getMessage() + "\n";
+			botAnswer += "Check if you have folowed all intruction and try again: /additem.";
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		} catch (DataException e) {
+			// define bot answer			
+			botAnswer = "Problem trying to edit item in the database:\n" + e.getMessage();
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
+		}		
+		
+	}
+
 	public static void itemDetails ( MessageData message ) {
 		String botAnswer = ""; 
 
@@ -388,26 +491,28 @@ public class YouShareBotServices implements YouShareBotFacade {
 					Item item = itemServices.readItem(id);
 					
 					// display item ad
-					botAnswer = "Item id #" + id + " Ad:\n\n"
-							+ item.getName() + "\n"
-							+ "Status: " + (item.isAvailable() ? "public" : "private") + "\n"
-							+ "Grade: " + item.getItemGrade() + "\n"
-							+ "Most recent review: " + item.getLastReview() + "\n"
-							+ "Price: $" + item.getPrice() + "\n\n";
+					botAnswer  = "Item id #" + id + " Ad:\n\n";
+					botAnswer += item.getName() + "\n";
+					botAnswer += "Description: " + item.getDescription() + "\n";
+					botAnswer += "Status: " + (item.isAvailable() ? "public" : "private") + "\n";
+					botAnswer += "Grade: " + item.getItemGrade() + "\n";
+					botAnswer += "Most recent review: " + item.getLastReview() + "\n";
+					botAnswer += "Price: $" + item.getPrice() + "\n\n";
 					
 					// item specifics
 					if( item instanceof Tool ) {
-						botAnswer += "Terms of use: " + ((Tool) item).getTermsOfUse() + "\n"
-								+ "Voltage: " + ((Tool) item).getVoltage();
+						botAnswer += "Terms of use: " + ((Tool) item).getTermsOfUse() + "\n";
+						botAnswer += "Voltage: " + ((Tool) item).getVoltage();
 					}
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 					
-		        	botAnswer = "Do you want to update this item?\n"
-		        			+ "/edititem_" + id + " - update item\n"
-		        			+ "/deleteitem_" + id + " - remove item\n"
-		        			+ "/changeadstatus_" + id + " - switch ad status (private/public)\n\n";		        	
+		        	botAnswer = "Do you want to update this item?\n";
+		        	botAnswer += "/edititem_" + id + " - update item\n";
+		        	botAnswer += "/deleteitem_" + id + " - remove item\n";
+		        	botAnswer += "/changeadstatus_" + id + " - switch ad status (private/public)\n\n";
+		        	
 		        	// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 					
