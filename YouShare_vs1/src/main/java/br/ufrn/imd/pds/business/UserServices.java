@@ -34,18 +34,18 @@ public class UserServices implements FacadeUser {
 	}
 	
 	@Override
-	public String readUser( String userName  ) throws BusinessException, DataException {
+	public User readUser( String userName  ) throws BusinessException, DataException {
 		
-		User userToString = userDatabase.readUser( userName );
+		User userToRead = userDatabase.readUser( userName );
 
-		if( userToString != null ) {			
-			String userProfile = "";
+		if( userToRead != null ) {			
+			/*String userProfile = "";
 			
 			userProfile = "Name: " + userToString.getFirstName() + " " + userToString.getLastName() + "\n"
 	    			+ "Grade: " + userToString.getUserGrade() + "\n"
-	    			+ "Last review: \n" + userToString.getLastReview();
+	    			+ "Last review: \n" + userToString.getLastReview();*/
 			
-			return userProfile;
+			return userToRead;
 						
 		} else {
 			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );

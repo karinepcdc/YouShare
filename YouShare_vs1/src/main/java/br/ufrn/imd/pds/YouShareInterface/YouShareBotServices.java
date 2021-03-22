@@ -181,22 +181,28 @@ public class YouShareBotServices implements YouShareBotFacade {
 
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		
-		if( isUserRegistered ) { 		
-				
+		if( isUserRegistered ) { 			
+			
 	    	try {
+	    		User user = userServices.readUser( message.getTelegramUserName() );
+	    		
 				botAnswer = "This is how YouShare users see you: \n\n"
-							 + userServices.readUser( message.getTelegramUserName() );
+							+ "Name: " + user.getFirstName() + " " + user.getLastName() + "\n"
+				    		+ "Grade: " + user.getUserGrade() + "\n"
+				    		+ "Last review: \n" + user.getLastReview();
 			} catch ( BusinessException e ) {
-				e.printStackTrace();
+				botAnswer = "We could not read this profile: ";
+				botAnswer += e.getMessage() ;
 			} catch ( DataException e ) {
-				e.printStackTrace();
+				botAnswer = "We could not read this profile: ";
+				botAnswer += e.getMessage() ;
 			}
 	
 	   		// request APIInterface to send text message to user
 	   		apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	
 	   		botAnswer = "Do you want to change your profile?\n\n"
-	    				+ "/name - change name.\n";
+	    				+ "/edituser - change your name. \n";
 			
 	   		// request APIInterface to send text message to user
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -217,6 +223,53 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 			
+	}
+	
+	public static void editUserInterface ( MessageData message ) {
+		String botAnswer = "";
+		
+		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
+		
+		if( isUserRegistered ) {
+			botAnswer = "How would you like to be called? \n";
+			
+			// request APIInterface to send text message to user
+	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+	        
+		    // request user reply
+		    apiServices.requestUserReply( "EditUserBackend" );
+			
+			
+		} else { // if it's a new user
+    		
+			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
+						+ "I didn't find you in our systems!\n \n"
+	    				+ "Type /help to see the main menu.\n";
+				
+			// request APIInterface to send text message to user
+	        apiServices.sendTextMsg( message.getChatId(), botAnswer );
+    	    
+		}
+	}
+	
+	public static void editUserBackend ( MessageData message ) {
+		
+		String botAnswer = "";
+		
+		try {
+			User user = userServices.readUser( message.getTelegramUserName() );
+			user.setFirstName( message.getTxtMessage() );
+			userServices.updateUser( user );
+		} catch ( BusinessException | DataException e ) {
+			botAnswer = "We could not update your name: ";
+			botAnswer += e.getMessage() ;
+		}		
+		
+		botAnswer = "Your name was updated with success! \n";
+		botAnswer += "If you want to check it, use the command /profile. \n";
+		
+		// request APIInterface to send text message to user
+        apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	}
 	
 	public static void myshare ( MessageData message ) {

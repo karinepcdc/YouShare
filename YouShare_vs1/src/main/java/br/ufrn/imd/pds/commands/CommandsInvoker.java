@@ -16,6 +16,7 @@ public class CommandsInvoker {
 		commandsMap.put( "/register", new RegisterCommand() );
 		commandsMap.put( "/unregister", new UnregisterCommand() );
 		commandsMap.put( "/profile", new ProfileCommand() );
+		commandsMap.put( "/edituser", new EditUserInterfaceCommand() );
 		
 		commandsMap.put( "/myshare", new MyshareCommand() );
 		commandsMap.put( "/additem", new AddItemInterface() );
@@ -37,6 +38,7 @@ public class CommandsInvoker {
 		// Internal commands
 		commandsMap.put( "AddItemBackend", new AddItemBackend() );
 		commandsMap.put( "EditItemBackend", new EditItemBackend() );
+		commandsMap.put( "EditUserBackend", new EditUserBackendCommand() );
 
 	}
 	

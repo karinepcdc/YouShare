@@ -9,7 +9,7 @@ public interface FacadeUser {
 	public void createUser( User newUser ) throws BusinessException, DataException;
 	
 	/// Read a YouShare system user and return a string with it's relevant data
-	public String readUser( String userName ) throws BusinessException, DataException;
+	public User readUser( String userName ) throws BusinessException, DataException;
 	
 	/// Require that a YouShare user be updated from database
 	public void updateUser( User user ) throws BusinessException, DataException;

@@ -255,13 +255,11 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
             e.printStackTrace();
         }	
 	}
-
 	
 	@Override
 	public void sendImage( String chatId, String caption, String fileId ) {
 		
 	}
-
 
 	@Override
 	public void editTextMsg( String chatId, long messageId, String editedBotTxtMsg ) {        
@@ -282,13 +280,11 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	}
 
 	@Override
-	public void requestUserReply(String nextCommand) {
+	public void requestUserReply( String nextCommand ) {
 		
-		this.setWaitingReply(true);
-		this.setCommandCached(nextCommand);
+		this.setWaitingReply( true );
+		this.setCommandCached( nextCommand );
 		
-		System.out.println( "\n\n *** Solicitando resposta do usuario ***\n"
-				+ "waiting: " + isWaitingReply() + " comando: " + getCommandCached() );
 	}
 	
 }
