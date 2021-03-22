@@ -181,6 +181,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
         		
 	}
 
+	/*
 	@Override
 	public void sendInlineKeyboardWithInlineButtons( String chatId, String botTxtMsg, String[] buttonsLabels ) {
 		// set Bot reply variables
@@ -197,6 +198,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
             e.printStackTrace();
         }		
 	}
+	 */
 
 	@Override
 	public void sendInlineKeyboardWithCallbackButtons( String chatId, String botTxtMsg, String callbackLabel, String[] buttonsLabels, int columns, int lines ) {
@@ -256,10 +258,8 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
         }	
 	}
 	
-	@Override
-	public void sendImage( String chatId, String caption, String fileId ) {
-		
-	}
+	//@Override
+	//public void sendImage( String chatId, String caption, String fileId ) {}
 
 	@Override
 	public void editTextMsg( String chatId, long messageId, String editedBotTxtMsg ) {        
