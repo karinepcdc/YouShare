@@ -23,7 +23,7 @@ public class ItemDAOMemory implements ItemDAO {
 	private static ItemDAOMemory uniqueInstance;
 	
 	/* Default constructor */
-	public ItemDAOMemory() throws DataException {
+	private ItemDAOMemory() throws DataException {
 		System.out.println( "ItemDAOMemory's constructor started\n" );
 		
 		startDatabase();
@@ -40,7 +40,7 @@ public class ItemDAOMemory implements ItemDAO {
 
 
 	/*
-	 * TODO Exception in data layer: DAOS concretos lançam exceções de acesso ao banco de dados;
+	 * Exception in data layer: DAOS concretos lançam exceções de acesso ao banco de dados;
 	 */
 	
 	@Override

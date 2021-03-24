@@ -26,7 +26,7 @@ public class ItemServices implements FacadeItem {
 	
 	
 	/*
-	 * TODO Exception in Business layer: 
+	 * Exception in Business layer: 
 	 * - cadastros são responsaveis por fazerem validações de regras de negócio e lançar exceções correspondentes
 	 * - Fachadas lançam excessões relacionadas a delimitações de transações com o banco de dados
 	 * - Todas as excessões lançadas pelas camadas de Business e Data são repassadas para a camada GUI

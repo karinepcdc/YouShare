@@ -32,7 +32,7 @@ public class TelegramBotAPIServices extends TelegramLongPollingBot implements Te
 	private static TelegramBotAPIServices uniqueInstance;
 	
 	/* Constructor */
-	public TelegramBotAPIServices() {		
+	private TelegramBotAPIServices() {		
 
 		ysBot = new YouShareBot();
 		System.out.println( "TelegramBotAPIServices criado!" );
