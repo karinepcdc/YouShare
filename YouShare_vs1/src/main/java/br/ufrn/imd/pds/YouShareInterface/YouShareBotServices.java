@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 import br.ufrn.imd.pds.APIinterface.TelegramBotAPIServices;
 import br.ufrn.imd.pds.APIinterface.MessageData;
-import br.ufrn.imd.pds.APIinterface.TelegramBotAPIFacade;
+import br.ufrn.imd.pds.APIinterface.FacadeTelegramBotAPI;
 import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.Item;
@@ -28,9 +28,9 @@ import br.ufrn.imd.pds.exceptions.DataException;
 import br.ufrn.imd.pds.exceptions.UIException;
 import br.ufrn.imd.pds.formParsers.FormToItem;
 
-public class YouShareBotServices implements YouShareBotFacade {
+public class YouShareBotServices implements FacadeYouShareBot {
 	
-	private static TelegramBotAPIFacade apiServices;
+	private static FacadeTelegramBotAPI apiServices;
 	private static FacadeUser userServices;
 	private static FacadeItem itemServices;
 
@@ -75,7 +75,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 			
 	    // YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 	}
 	
@@ -103,7 +103,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 	    
 	}
@@ -157,7 +157,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 	
 		
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		    
 	}
@@ -189,7 +189,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 
 		// YouShare bot logins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
+	    FacadeYouShareBot.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 	}
 	
@@ -236,7 +236,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 			
 		// YouShare bot logins
-	    YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log(message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 			
@@ -314,11 +314,10 @@ public class YouShareBotServices implements YouShareBotFacade {
 			
 				// list user ads 
 				for( Item it: userAds ) {
-					botAnswer += it.getName() + " (id: " + it.getCode() + ")\n";
+					botAnswer += it.getName() + " /itemdetails_" + it.getCode() + "\n";
 				}
 				
-				botAnswer += "\nType '/itemdetails_' + 'id' for more details.\n";
-				botAnswer += "To include more items type /additem.\n";
+				botAnswer += "\nTo include more items type /additem.\n";
 				
 			 } else {
 				 botAnswer = "You don't have any ad yet!\n";
@@ -341,7 +340,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 			
 	    // YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 
 	}
@@ -385,7 +384,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 	
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		
 	}
@@ -472,7 +471,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 	
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		
 	}
@@ -576,7 +575,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 						botAnswer += "Price: $" + ((Appliance) item).getPrice() + "\n\n";
 						botAnswer += "Terms of use: " + ((Appliance) item).getTermsOfUse() + "\n";
 						botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
-						botAnswer += "Voltage: " + ((Appliance) item).getVoltage() + "\n";
+						botAnswer += "Voltage: " + ((Appliance) item).getVoltage() + "V\n";
 						botAnswer += "Status: " + (((Appliance) item).isAvailable() ? "public" : "private");
 
 					}
@@ -628,7 +627,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 		
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		
 	}
@@ -662,7 +661,8 @@ public class YouShareBotServices implements YouShareBotFacade {
 					itemServices.changeAvailability( id );
 					Item item = itemServices.readItem( id );
 					
-					botAnswer = item.getName() + " (id: " + item.getCode() + ") have been set to " + (((Appliance) item).isAvailable() ? "public" : "private");
+					botAnswer = item.getName() + " have been set to " + (((Appliance) item).isAvailable() ? "public." : "private.")
+							+ " (Check the change at /itemdetails_"  + item.getCode() + ")";
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -703,7 +703,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 		
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 	}
 
@@ -776,7 +776,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 		
 		// YouShare bot logins
-	    YouShareBotFacade.log( message.getUserFirstName(), message.getUserLastName(), 
+	    FacadeYouShareBot.log( message.getUserFirstName(), message.getUserLastName(), 
 	    		message.getTelegramUserName(), message.getTxtMessage(), botAnswer );
 		
 	}
@@ -813,7 +813,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}		
 			
 	    // YouShare bot logins
-        YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
+        FacadeYouShareBot.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 	}
 
 	public static void search ( MessageData message ) {
@@ -866,7 +866,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		}
 
 		// YouShare bot logins
-		YouShareBotFacade.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
+		FacadeYouShareBot.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 
 	}
 	
@@ -885,7 +885,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 		
 		// YouShare bot callback logins
-        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
+        FacadeYouShareBot.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
 	public static void noUnregister ( MessageData callbackMessage ) {
@@ -895,7 +895,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 		
 		// YouShare bot callback logins
-        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
+        FacadeYouShareBot.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
 	public static void yesDeleteItem ( MessageData callbackMessage ) {
@@ -940,7 +940,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 		
 		// YouShare bot callback logins
-        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
+        FacadeYouShareBot.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
 	public static void noDeleteItem ( MessageData callbackMessage ) {
@@ -950,7 +950,7 @@ public class YouShareBotServices implements YouShareBotFacade {
 		apiServices.editTextMsg( callbackMessage.getChatId(), callbackMessage.getMessageId(), botAnswer);
 		
 		// YouShare bot callback logins
-        YouShareBotFacade.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
+        FacadeYouShareBot.logCallback( callbackMessage.getTelegramUserName(), callbackMessage.getChatId(), callbackMessage.getMessageId(), callbackMessage.getCallbackData(), botAnswer);
 	}
 	
 	@Override

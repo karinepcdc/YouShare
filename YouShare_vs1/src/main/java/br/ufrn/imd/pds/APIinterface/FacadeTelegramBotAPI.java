@@ -1,7 +1,7 @@
 package br.ufrn.imd.pds.APIinterface;
 
 
-public interface TelegramBotAPIFacade {
+public interface FacadeTelegramBotAPI {
 	
 	/// Send a text message reply to an user
 	public void sendTextMsg( String chatId, String botTxtMsg );

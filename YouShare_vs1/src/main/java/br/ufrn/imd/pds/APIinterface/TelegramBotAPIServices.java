@@ -1,7 +1,7 @@
 package br.ufrn.imd.pds.APIinterface;
 
 import br.ufrn.imd.pds.YouShareInterface.YouShareBot;
-import br.ufrn.imd.pds.YouShareInterface.YouShareBotFacade;
+import br.ufrn.imd.pds.YouShareInterface.FacadeYouShareBot;
 import br.ufrn.imd.pds.YouShareInterface.YouShareBotServices;
 import br.ufrn.imd.pds.commands.CommandsInvoker;
 import br.ufrn.imd.pds.exceptions.UIException;
@@ -21,13 +21,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import static java.lang.Math.toIntExact;
 
-public class TelegramBotAPIServices extends TelegramLongPollingBot implements TelegramBotAPIFacade {
+public class TelegramBotAPIServices extends TelegramLongPollingBot implements FacadeTelegramBotAPI {
 	
 	private YouShareBot ysBot;
 	private boolean waitingReply = false;
 	private String commandCached;
 	
-	private static YouShareBotFacade ysServices;
+	private static FacadeYouShareBot ysServices;
 	
 	private static TelegramBotAPIServices uniqueInstance;
 	
