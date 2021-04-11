@@ -26,8 +26,8 @@ public interface FacadeItem {
 	/// Return all items registered by name with filters.
 	public List<Item> readAll( String name, String[] filters) throws BusinessException;
 	
-	/// Return all Tools registered.
-	public List<Tool> readAllTools( );	
+	/// Return all Appliances registered.
+	public List<Appliance> readAllAppliances( );	
 	
 	/// Require that a YouShare item be updated from database
 	/*
@@ -52,7 +52,7 @@ public interface FacadeItem {
 	 * Check if all item fields required are non null and not empty;
 	 * Required fields:
 	 *  - item: name, description, price, isAvailable;
-	 *  - tool: termOfUse, voltage
+	 *  - Appliance: termOfUse, voltage
 	 * Check if price is a double
 	 * TODO Check if already exist in the database.???
 	 * Check if owner is register and already has already reach 10 items ads

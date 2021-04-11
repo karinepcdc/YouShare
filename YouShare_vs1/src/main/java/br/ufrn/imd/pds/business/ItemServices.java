@@ -38,26 +38,27 @@ public class ItemServices implements FacadeItem {
 		// validate item
 		validateItem(newItem);
 				
-		if( newItem instanceof Tool ) {
-			Tool toolDb = new Tool();
+		if( newItem instanceof Appliance ) {
+			Appliance applianceDb = new Appliance();
 
 			// copy fields
-			toolDb.setName( ((Tool) newItem).getName() );
-			toolDb.setDescription( ((Tool) newItem).getDescription() );
-			toolDb.setCode( ((Tool) newItem).getCode() );
-			toolDb.setOwner( ((Tool) newItem).getOwner() );
-			toolDb.setAvailable( ((Tool) newItem).isAvailable() );
-			toolDb.setPrice( ((Tool) newItem).getPrice() );
-			toolDb.setTermsOfUse( ((Tool) newItem).getTermsOfUse() );
-			toolDb.setVoltage( ((Tool) newItem).getVoltage() );
+			applianceDb.setName( ((Appliance) newItem).getName() );
+			applianceDb.setDescription( ((Appliance) newItem).getDescription() );
+			applianceDb.setCode( ((Appliance) newItem).getCode() );
+			applianceDb.setOwner( ((Appliance) newItem).getOwner() );
+			applianceDb.setAvailable( ((Appliance) newItem).isAvailable() );
+			applianceDb.setPrice( ((Appliance) newItem).getPrice() );
+			applianceDb.setTermsOfUse( ((Appliance) newItem).getTermsOfUse() );
+			applianceDb.setCondition( ((Appliance) newItem).getCondition() );
+			applianceDb.setVoltage( ((Appliance) newItem).getVoltage() );
 									
 			// fill default review, grade and grade count
-			toolDb.setLastReview("No reviews yet!");
-			toolDb.setItemGrade(0);
-			toolDb.setItemGradeCount(0);
+			applianceDb.setLastReview("No reviews yet!");
+			applianceDb.setItemGrade(0);
+			applianceDb.setItemGradeCount(0);
 			
 			// require item registration in the database
-			return itemDatabase.createItem( toolDb );
+			return itemDatabase.createItem( applianceDb );
 										
 		} // TODO other items creation		
 		
@@ -102,8 +103,8 @@ public class ItemServices implements FacadeItem {
 	}
 	
 	@Override
-	public List<Tool> readAllTools() {
-		return itemDatabase.readAllTools();
+	public List<Appliance> readAllAppliances() {
+		return itemDatabase.readAllAppliances();
 	}
 
 
@@ -124,27 +125,28 @@ public class ItemServices implements FacadeItem {
 			throw new BusinessException("Item does not belong you, thus cannot be updated!");
 		}
 
-		if( item instanceof Tool ) {
-			Tool toolDb = new Tool();
+		if( item instanceof Appliance ) {
+			Appliance applianceDb = new Appliance();
 
 			// copy fields
-			toolDb.setName( ((Tool) item).getName() );
-			toolDb.setDescription( ((Tool) item).getDescription() );
-			toolDb.setCode( ((Tool) item).getCode() );
-			toolDb.setOwner( ((Tool) item).getOwner() );
-			toolDb.setAvailable( ((Tool) item).isAvailable() );
-			toolDb.setPrice( ((Tool) item).getPrice() );
-			toolDb.setTermsOfUse( ((Tool) item).getTermsOfUse() );
-			toolDb.setVoltage( ((Tool) item).getVoltage() );
+			applianceDb.setName( ((Appliance) item).getName() );
+			applianceDb.setDescription( ((Appliance) item).getDescription() );
+			applianceDb.setCode( ((Appliance) item).getCode() );
+			applianceDb.setOwner( ((Appliance) item).getOwner() );
+			applianceDb.setAvailable( ((Appliance) item).isAvailable() );
+			applianceDb.setPrice( ((Appliance) item).getPrice() );
+			applianceDb.setTermsOfUse( ((Appliance) item).getTermsOfUse() );
+			applianceDb.setCondition( ((Appliance) item).getCondition() );
+			applianceDb.setVoltage( ((Appliance) item).getVoltage() );
 					
 			// copy restricted fields
-			toolDb.setLastReview( ((Tool) itemAux).getLastReview() );
-			toolDb.setItemGrade( ((Tool) itemAux).getItemGrade() );
-			toolDb.setItemGradeCount( ((Tool) itemAux).getItemGradeCount() );
+			applianceDb.setLastReview( ((Appliance) itemAux).getLastReview() );
+			applianceDb.setItemGrade( ((Appliance) itemAux).getItemGrade() );
+			applianceDb.setItemGradeCount( ((Appliance) itemAux).getItemGradeCount() );
 
 			
 			// require item registration in the database
-			return itemDatabase.updateItem( toolDb );
+			return itemDatabase.updateItem( applianceDb );
 									
 		} // TODO other items update
 
@@ -191,37 +193,53 @@ public class ItemServices implements FacadeItem {
 			exceptionMessages.add("Description is required.\n");
 		}
 		
-		// check if price is valid
-		try {
-			Double.parseDouble( item.getPrice() );
-		} catch ( NullPointerException e1 ) {
-			hasViolations = true;
-			exceptionMessages.add("Price is required.\n");
-		} catch ( NumberFormatException e2 ) {
-			hasViolations = true;
-			exceptionMessages.add("Price must be a number (don't use currency symbols).\n");
-		}
 		
 		// TODO Check if owner is registered and already has already reached 10 items ads
 		
 		// TODO Check in any field has excess a characters limit
 	
 		
-		if( item instanceof Tool ) {
+		if( item instanceof Appliance ) {
+
+
+			// check if price is valid
+			try {
+				Double.parseDouble( ((Appliance) item).getPrice() );
+			} catch ( NullPointerException e1 ) {
+				hasViolations = true;
+				exceptionMessages.add("Price is required.\n");
+			} catch ( NumberFormatException e2 ) {
+				hasViolations = true;
+				exceptionMessages.add("Price must be a number (don't use currency symbols).\n");
+			}
 			
-			if( ( (Tool) item).getTermsOfUse() == null || ( (Tool) item).getTermsOfUse().isBlank() ) {
+			// validate ermsOfUse
+			if( ( (Appliance) item).getTermsOfUse() == null || ( (Appliance) item).getTermsOfUse().isBlank() ) {
 				hasViolations = true;
 				exceptionMessages.add("Terms of Use are required.\n");
 			}
 			
+			// validate condition
+			if( ( (Appliance) item).getCondition() == null || ( (Appliance) item).getCondition().isBlank() ) {
+				hasViolations = true;
+				exceptionMessages.add("Condition is required (weared, good or new values are accepted).\n");
+			}
 			
-			if( ( (Tool) item).getVoltage() == null || ( (Tool) item).getVoltage().isBlank() ) {
+			// valid conditions: weared, good or new
+			String condition = ( (Appliance) item).getCondition();
+			if( !condition.equals("weared") && !condition.equals("good") && !condition.equals("new") ) {
+				hasViolations = true;
+				exceptionMessages.add("Condition is invalid (weared, good or new values are accepted).\n");				
+			}
+			
+			// validate voltage
+			if( ( (Appliance) item).getVoltage() == null || ( (Appliance) item).getVoltage().isBlank() ) {
 				hasViolations = true;
 				exceptionMessages.add("Voltage is required (110, 220 or none values are accepted).\n");
 			}
 			
 			// valid voltages: 110, 220 or none
-			String voltage = ( (Tool) item).getVoltage();
+			String voltage = ( (Appliance) item).getVoltage();
 			if( !voltage.equals("110") && !voltage.equals("220")  && !voltage.equals("none") ) {
 				hasViolations = true;
 				exceptionMessages.add("Voltage is invalid (110, 220 or none values are accepted).\n");				
@@ -248,10 +266,14 @@ public class ItemServices implements FacadeItem {
 		Item itemAux = itemDatabase.readItem( code );
 		
 		if( itemAux == null ) {
-			throw new BusinessException("Item not registered, thus cannot change availability!");
+			throw new BusinessException("Appliance not registered, thus cannot change availability!");
+		} 
+		
+		if( !(itemAux instanceof Appliance) ) {
+			throw new BusinessException("Trying to edit a Appliance's attribute, but item code if from another type");
 		}
 		
-		itemAux.setAvailable( !itemAux.isAvailable() );
+		((Appliance) itemAux).setAvailable( !((Appliance) itemAux).isAvailable() );
 		
 		return itemDatabase.updateItem( itemAux );
 

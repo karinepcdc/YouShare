@@ -12,7 +12,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import br.ufrn.imd.pds.DBHandlers.DBReader;
 import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Tool;
+import br.ufrn.imd.pds.business.Appliance;
 import br.ufrn.imd.pds.exceptions.DataException;
 import br.ufrn.imd.pds.util.IdCounter;
 
@@ -108,7 +108,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll() {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put items from toolMap in a list
+		// put items from ApplianceMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			items.add( pair.getValue() );
 		}
@@ -120,7 +120,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll(String owner) {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put items from toolMap in a list
+		// put items from ApplianceMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			Item item = pair.getValue();
 			if( item.getOwner().equals(owner) ) {
@@ -164,22 +164,6 @@ public class ItemDAOMemory implements ItemDAO {
 					} else if( filter.equals("grade_4+") ) {
 						isAmatch = isAmatch && ( item.getItemGrade() >= 4.0 );
 						
-					} else if( filter.equals("price_10-") ) {
-						double price = Double.parseDouble(item.getPrice());
-						isAmatch = isAmatch && ( price <= 10.0 );
-						
-					} else if( filter.equals("price_10-20") ) {
-						double price = Double.parseDouble(item.getPrice());
-						isAmatch = isAmatch && ( price >= 10.0 && price < 20.0 );
-						
-					} else if( filter.equals("price_20+") ) {
-						double price = Double.parseDouble(item.getPrice());
-						isAmatch = isAmatch && ( price >= 20.0 );
-						
-					} else if( filter.equals("price_10-") ) {
-						double price = Double.parseDouble(item.getPrice());
-						isAmatch = isAmatch && ( price <= 10.0 );
-						
 					} else if( filter.equals("condition_weared") ) {
 						isAmatch = isAmatch && ( item.getCode().equals("weared") );
 						
@@ -189,6 +173,24 @@ public class ItemDAOMemory implements ItemDAO {
 					} else if( filter.equals("condition_new") ) {
 						isAmatch = isAmatch && ( item.getCode().equals("new") );
 						
+					} else if( filter.equals("price_10-") && item instanceof Appliance ) {
+						double price = Double.parseDouble( ((Appliance) item).getPrice() );
+						isAmatch = isAmatch && ( price <= 10.0 );
+						
+					} else if( filter.equals("price_10-20") && item instanceof Appliance ) {
+						double price = Double.parseDouble(((Appliance) item).getPrice());
+						isAmatch = isAmatch && ( price >= 10.0 && price < 20.0 );
+						
+					} else if( filter.equals("price_20+") && item instanceof Appliance ) {
+						double price = Double.parseDouble(((Appliance) item).getPrice());
+						isAmatch = isAmatch && ( price >= 20.0 );
+						
+					} else if( filter.equals("price_10-") && item instanceof Appliance ) {
+						double price = Double.parseDouble(((Appliance) item).getPrice());
+						isAmatch = isAmatch && ( price <= 10.0 );
+						
+					} else {
+						throw new DataException("Not valid filter");
 					}
 				}
 				
@@ -205,17 +207,17 @@ public class ItemDAOMemory implements ItemDAO {
 
 
 	@Override
-	public List<Tool> readAllTools() {
-		ArrayList<Tool> toolList = new ArrayList<Tool>();
+	public List<Appliance> readAllAppliances() {
+		ArrayList<Appliance> applianceList = new ArrayList<Appliance>();
 		
-		// put tools from toolMap in a list
+		// put Appliances from ApplianceMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
-			if( pair.getValue() instanceof Tool ) {
-				toolList.add( (Tool) pair.getValue() );
+			if( pair.getValue() instanceof Appliance ) {
+				applianceList.add( (Appliance) pair.getValue() );
 			}
 		}
 
-		return toolList; // TODO check if it is fine to return empty list
+		return applianceList; // TODO check if it is fine to return empty list
 	}
 
 	
@@ -223,23 +225,24 @@ public class ItemDAOMemory implements ItemDAO {
 	public String updateItem(Item item) throws DataException {
 		
 		/*
-		// Tool item
-		if( item instanceof Tool ) {
-			Tool toolAux = (Tool) itemMap.get( item.getCode() );
+		// Appliance item
+		if( item instanceof Appliance ) {
+			Appliance applianceAux = (Appliance) itemMap.get( item.getCode() );
 
-			toolAux.setName( 			((Tool) item ).getName() );
-			toolAux.setCode( 			((Tool) item ).getCode() );
-			toolAux.setDescription( 	((Tool) item ).getDescription() );
-			toolAux.setItemGrade( 		((Tool) item ).getItemGrade() );
-			toolAux.setItemGradeCount( 	((Tool) item ).getItemGradeCount() );
-			toolAux.setLastReview( 		((Tool) item ).getLastReview() );
-			toolAux.setAvailable( 		((Tool) item ).isAvailable() );
-			toolAux.setPrice( 			((Tool) item ).getPrice() );
-			toolAux.setTermsOfUse( 		((Tool) item ).getTermsOfUse() );
-			toolAux.setVoltage( 		((Tool) item ).getVoltage() );
+			applianceAux.setName( 			((Appliance) item ).getName() );
+			applianceAux.setCode( 			((Appliance) item ).getCode() );
+			applianceAux.setDescription( 	((Appliance) item ).getDescription() );
+			applianceAux.setItemGrade( 		((Appliance) item ).getItemGrade() );
+			applianceAux.setItemGradeCount( 	((Appliance) item ).getItemGradeCount() );
+			applianceAux.setLastReview( 		((Appliance) item ).getLastReview() );
+			applianceAux.setAvailable( 		((Appliance) item ).isAvailable() );
+			applianceAux.setPrice( 			((Appliance) item ).getPrice() );
+			applianceAux.setTermsOfUse( 		((Appliance) item ).getTermsOfUse() );
+			applianceAux.setCondition( 		((Appliance) item ).getCondition() );
+			applianceAux.setVoltage( 		((Appliance) item ).getVoltage() );
 				
 			// update item hashmap
-			itemMap.put(toolAux.getCode(), toolAux);
+			itemMap.put(applianceAux.getCode(), applianceAux);
 		}
 		*/
 		
@@ -279,7 +282,7 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		ArrayList<Item> userItems = new ArrayList<Item>();
 		
-		// put user items from toolMap in a list
+		// put user items from ApplianceMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			Item item = pair.getValue();
 			if( item.getOwner().equals(user) ) {
