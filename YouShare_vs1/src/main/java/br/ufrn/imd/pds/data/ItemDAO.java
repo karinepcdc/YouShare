@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.Tool;
+import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public interface ItemDAO {
@@ -29,7 +30,11 @@ public interface ItemDAO {
 	
 	/// Return all items from user owner in the database.
 	public List<Item> readAll( String owner );
+	
+	/// Return all items registered by name with filters.
+	public List<Item> readAll( String name, String[] filters) throws DataException;
 		
+	
 	/// Return all Tools registered in the database.
 	public List<Tool> readAllTools( );	
 		

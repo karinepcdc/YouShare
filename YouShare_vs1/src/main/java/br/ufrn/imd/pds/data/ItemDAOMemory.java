@@ -130,6 +130,79 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		return items; // TODO check if it is fine to return empty list
 	}
+	
+	@Override
+	public List<Item> readAll(String name, String[] filters) throws DataException {
+		ArrayList<Item> items = new ArrayList<Item>();
+
+		if( filters == null ) {
+			
+			for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+				Item item = pair.getValue();
+				if( item.getName().equals(name) ) {
+					items.add( item );
+				}
+			}
+			
+		} else {
+			
+			for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
+				Item item = pair.getValue();
+				boolean isAmatch = item.getName().equals(name);
+				for( String filter: filters ) {
+					
+					// check filters
+					if( filter.equals("grade_1+") ) {
+						isAmatch = isAmatch && ( item.getItemGrade() >= 1.0 );
+						
+					} else if( filter.equals("grade_2+") ) {
+						isAmatch = isAmatch && ( item.getItemGrade() >= 2.0 );
+						
+					}  else if( filter.equals("grade_3+") ) {
+						isAmatch = isAmatch && ( item.getItemGrade() >= 3.0 );
+						
+					} else if( filter.equals("grade_4+") ) {
+						isAmatch = isAmatch && ( item.getItemGrade() >= 4.0 );
+						
+					} else if( filter.equals("price_10-") ) {
+						double price = Double.parseDouble(item.getPrice());
+						isAmatch = isAmatch && ( price <= 10.0 );
+						
+					} else if( filter.equals("price_10-20") ) {
+						double price = Double.parseDouble(item.getPrice());
+						isAmatch = isAmatch && ( price >= 10.0 && price < 20.0 );
+						
+					} else if( filter.equals("price_20+") ) {
+						double price = Double.parseDouble(item.getPrice());
+						isAmatch = isAmatch && ( price >= 20.0 );
+						
+					} else if( filter.equals("price_10-") ) {
+						double price = Double.parseDouble(item.getPrice());
+						isAmatch = isAmatch && ( price <= 10.0 );
+						
+					} else if( filter.equals("condition_weared") ) {
+						isAmatch = isAmatch && ( item.getCode().equals("weared") );
+						
+					} else if( filter.equals("condition_good") ) {
+						isAmatch = isAmatch && ( item.getCode().equals("good") );
+						
+					} else if( filter.equals("condition_new") ) {
+						isAmatch = isAmatch && ( item.getCode().equals("new") );
+						
+					}
+				}
+				
+				// if found required item, add it 
+				if( isAmatch ) {
+					items.add( item );
+				}
+			}
+			
+		}
+		
+		return items;
+	}
+
 
 	@Override
 	public List<Tool> readAllTools() {
@@ -229,6 +302,7 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		
 	}
+
 
 	
 }

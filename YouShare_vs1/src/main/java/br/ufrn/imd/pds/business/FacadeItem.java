@@ -22,7 +22,10 @@ public interface FacadeItem {
 		
 	/// Return all items registered by user owner.
 	public List<Item> readAll( String owner ) throws BusinessException;	
-		
+	
+	/// Return all items registered by name with filters.
+	public List<Item> readAll( String name, String[] filters) throws BusinessException;
+	
 	/// Return all Tools registered.
 	public List<Tool> readAllTools( );	
 	

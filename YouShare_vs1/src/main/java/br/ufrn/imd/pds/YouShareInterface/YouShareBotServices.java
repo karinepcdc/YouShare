@@ -815,14 +815,37 @@ public class YouShareBotServices implements YouShareBotFacade {
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) { 		
 			
-			botAnswer = "Which item are you interested?\n";
-				
-			// list user ads
-				
-			// botAnswer += "Type the item id for more details. \n";
-				
-			// request APIInterface to send text message to user
+			botAnswer = "What item is you interested in?\n";
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+
+	   	    // TODO colocar codigo seguinte dentro do comando searchbackend ou fazer um submenu
+	   	    
+			// list of ads
+			botAnswer = "*** " + " availables ***\n";
+
+			//itemServices.
+			
+			
+			botAnswer += "\n\nType the item id for more details. \n";
+			
+			// TODO button page labels builder
+			String[] buttonsLabels = {"<< prev","next >>"}; 
+			
+			// turn page buttons 
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "searchPage", buttonsLabels, 2, 1);
+
+			
+			botAnswer = "Filter your search: \n";			
+	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+	   	    
+			botAnswer = "Grade: ";
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"1+","2+","3+","4+"}, 4, 1);
+			
+			botAnswer = "Price: ";
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"until $10","$10-20","$20+"}, 3, 1);
+			
+			botAnswer = "Condition: ";
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"weared","good","new"}, 3, 1);
 	    	    
 		}  else { // new user
 	    		
