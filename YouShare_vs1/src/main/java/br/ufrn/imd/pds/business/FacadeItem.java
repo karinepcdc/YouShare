@@ -24,7 +24,7 @@ public interface FacadeItem {
 	public List<Item> readAll( String owner ) throws BusinessException;	
 	
 	/// Return all items registered by name with filters.
-	public List<Item> readAll( String name, String[] filters) throws BusinessException;
+	public List<Item> readAll( String name, String[] filters) throws BusinessException, DataException;
 	
 	/// Return all Appliances registered.
 	public List<Appliance> readAllAppliances( );	

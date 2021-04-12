@@ -27,18 +27,20 @@ public class CommandsInvoker {
 		
 		commandsMap.put( "/myreservations", new MyreservationsCommand() );
 		
-		commandsMap.put( "/search", new SearchCommand() );
+		commandsMap.put( "/search", new SearchStep1Command() );
 		
 		// Callback query answers
-		commandsMap.put("Yes_unregister", new YesUnregisterCommand() );
-		commandsMap.put("No_unregister", new NoUnregisterCommand() );
-		commandsMap.put("Yes_deleteItem", new YesDeleteItemCommand() );
-		commandsMap.put("No_deleteItem", new NoDeleteItemCommand() );
+		commandsMap.put( "Yes_unregister", new YesUnregisterCommand() );
+		commandsMap.put( "No_unregister", new NoUnregisterCommand() );
+		commandsMap.put( "Yes_deleteItem", new YesDeleteItemCommand() );
+		commandsMap.put( "No_deleteItem", new NoDeleteItemCommand() );
 
 		// Internal commands
 		commandsMap.put( "AddItemBackend", new AddItemBackend() );
 		commandsMap.put( "EditItemBackend", new EditItemBackend() );
 		commandsMap.put( "EditUserBackend", new EditUserBackendCommand() );
+		commandsMap.put( "SearchStep2", new SearchStep2Command() );
+
 
 	}
 	

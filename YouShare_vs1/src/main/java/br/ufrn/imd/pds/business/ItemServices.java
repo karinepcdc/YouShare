@@ -90,16 +90,14 @@ public class ItemServices implements FacadeItem {
 	}
 
 	@Override
-	public List<Item> readAll(String name, String[] filters) throws BusinessException {
+	public List<Item> readAll(String name, String[] filters) throws BusinessException, DataException {
 		
 		if( name == null || name.isBlank() ) {
-			throw new BusinessException("Search returned no results. Specify what do you want to search.");
+			throw new BusinessException("Search returned no results. Specify the name of what you want to search.");
 
-		} else {
-			
-		}
+		} 
 		
-		return null;
+		return itemDatabase.readAll(name, filters);
 	}
 	
 	@Override

@@ -816,7 +816,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
         FacadeYouShareBot.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
 	}
 
-	public static void search ( MessageData message ) {
+	public static void searchStep1 ( MessageData message ) {
 		String botAnswer = "";
 		
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
@@ -824,36 +824,11 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			
 			botAnswer = "What item is you interested in?\n";
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
-
-	   	    // TODO colocar codigo seguinte dentro do comando searchbackend ou fazer um submenu
 	   	    
-			// list of ads
-			botAnswer = "*** " + " availables ***\n";
-
-			//itemServices.
-			
-			
-			botAnswer += "\n\nType the item id for more details. \n";
-			
-			// TODO button page labels builder
-			String[] buttonsLabels = {"<< prev","next >>"}; 
-			
-			// turn page buttons 
-			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "searchPage", buttonsLabels, 2, 1);
-
-			
-			botAnswer = "Filter your search: \n";			
-	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+	   	    // request user reply
+		    apiServices.requestUserReply( "SearchStep2" );
 	   	    
-			botAnswer = "Grade: ";
-			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"1+","2+","3+","4+"}, 4, 1);
-			
-			botAnswer = "Price: ";
-			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"until $10","$10-20","$20+"}, 3, 1);
-			
-			botAnswer = "Condition: ";
-			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"weared","good","new"}, 3, 1);
-	    	    
+				    	    
 		}  else { // new user
 	    		
 			botAnswer = "Hello " + message.getUserFirstName() + " " + message.getUserLastName() + ", "
@@ -867,6 +842,67 @@ public class YouShareBotServices implements FacadeYouShareBot {
 
 		// YouShare bot logins
 		FacadeYouShareBot.log(message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), message.getTxtMessage(), botAnswer);
+
+	}
+	
+	public static void searchStep2 ( MessageData message ) {
+		String botAnswer = "";
+
+		// list of ads
+   	    List<Item> adsFound = new ArrayList<Item>();
+		try {
+			adsFound = itemServices.readAll(message.getTxtMessage(), null);
+			
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+   	    if( !adsFound.isEmpty() ) {
+	   	    botAnswer = "*** " + message.getTxtMessage() + " availables ***\n";
+			
+	   	    int start = 0; // first ad displayed
+	   	    int end = 3; // last ad displayed
+			for( int i=start; i < Math.min( adsFound.size(), end ); i++ ) {
+				Item item = adsFound.get(i);
+				
+				botAnswer += EmojiParser.parseToUnicode(":hammer_and_wrench:") + " " + item.getName() + "     " + EmojiParser.parseToUnicode(":star: ") + item.getItemGrade() + "\n";
+				botAnswer += item.getDescription().substring(0, Math.min(item.getDescription().length(), 50)) + "...\n";
+				botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
+				botAnswer += "$ " + ((Appliance) item).getPrice() + "\n";
+				botAnswer += "/addetail_" + item.getCode() + "\n\n";
+			}
+	   	    			
+			// TODO button page labels builder
+			String[] buttonsLabels = {"<< prev","next >>"}; 
+			
+			// turn page buttons 
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "searchPage", buttonsLabels, 2, 1);
+	
+			
+			botAnswer = "Filter your search: \n";			
+	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
+	   	    
+			botAnswer = "Grade: ";
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] 
+					{EmojiParser.parseToUnicode(":star:+"),EmojiParser.parseToUnicode(":star::star:+"),EmojiParser.parseToUnicode(":star::star::star:+"),EmojiParser.parseToUnicode(":star::star::star::star:+")}, 4, 1);
+			
+			botAnswer = "Price: ";
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"until $10","$10-20","$20+"}, 3, 1);
+			
+			botAnswer = "Condition: ";
+			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"weared","good","new"}, 3, 1);
+			
+   	    } else {
+   	    	
+   			botAnswer = " No result for the term " + message.getParameter() + " was found. \n";
+   			botAnswer += " Try again /search beeing less specific. \n";
+   			
+   			apiServices.sendTextMsg( message.getChatId(), botAnswer );
+   	    }
 
 	}
 	

@@ -139,7 +139,7 @@ public class ItemDAOMemory implements ItemDAO {
 			
 			for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 				Item item = pair.getValue();
-				if( item.getName().equals(name) ) {
+				if( item.getName().toLowerCase().equals( name.toLowerCase() ) ) {
 					items.add( item );
 				}
 			}
@@ -190,7 +190,7 @@ public class ItemDAOMemory implements ItemDAO {
 						isAmatch = isAmatch && ( price <= 10.0 );
 						
 					} else {
-						throw new DataException("Not valid filter");
+						throw new DataException("Filter not valid.");
 					}
 				}
 				
