@@ -3,6 +3,8 @@ package br.ufrn.imd.pds.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vdurmont.emoji.EmojiParser;
+
 import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.data.ItemDAOMemory;
 import br.ufrn.imd.pds.data.UserDAO;
@@ -15,12 +17,17 @@ public class ItemServices implements FacadeItem {
 
 	ItemDAO itemDatabase; // item database manager class
 	UserDAO userDatabase; // user database manager class
+	ItemValidator validationStrategy; // validation strategy for diferent subclasses of items
+	ItemAvailabilityChanger changeAvailabilityStrategy; // change availability accordantly to the defined strategy
 
 	public ItemServices() throws DataException {		
 		// instantiate database
 		itemDatabase = ItemDAOMemory.getInstance();
 		userDatabase = UserDAOMemory.getInstance();
 		
+		// define strategies
+		validationStrategy = new ApplianceValidator();
+		changeAvailabilityStrategy = new ApplianceAvailabilityChanger();
 
 	}
 	
@@ -54,7 +61,7 @@ public class ItemServices implements FacadeItem {
 									
 			// fill default review, grade and grade count
 			applianceDb.setLastReview("No reviews yet!");
-			applianceDb.setItemGrade(0);
+			applianceDb.setItemGrade(5);
 			applianceDb.setItemGradeCount(0);
 			
 			// require item registration in the database
@@ -183,73 +190,30 @@ public class ItemServices implements FacadeItem {
 		
 		if( item.getName() == null || item.getName().isBlank() ) {
 			hasViolations = true;
-			exceptionMessages.add("Name is required.\n");
+			exceptionMessages.add("Name is required.");
 		}
 		
 		if( item.getDescription() == null || item.getDescription().isBlank() ) {
 			hasViolations = true;
-			exceptionMessages.add("Description is required.\n");
+			exceptionMessages.add("Description is required.");
 		}
 		
 		
 		// TODO Check if owner is registered and already has already reached 10 items ads
 		
 		// TODO Check in any field has excess a characters limit
-	
-		
-		if( item instanceof Appliance ) {
-
-
-			// check if price is valid
-			try {
-				Double.parseDouble( ((Appliance) item).getPrice() );
-			} catch ( NullPointerException e1 ) {
-				hasViolations = true;
-				exceptionMessages.add("Price is required.\n");
-			} catch ( NumberFormatException e2 ) {
-				hasViolations = true;
-				exceptionMessages.add("Price must be a number (don't use currency symbols).\n");
-			}
 			
-			// validate ermsOfUse
-			if( ( (Appliance) item).getTermsOfUse() == null || ( (Appliance) item).getTermsOfUse().isBlank() ) {
-				hasViolations = true;
-				exceptionMessages.add("Terms of Use are required.\n");
-			}
-			
-			// validate condition
-			if( ( (Appliance) item).getCondition() == null || ( (Appliance) item).getCondition().isBlank() ) {
-				hasViolations = true;
-				exceptionMessages.add("Condition is required (weared, good or new values are accepted).\n");
-			}
-			
-			// valid conditions: weared, good or new
-			String condition = ( (Appliance) item).getCondition();
-			if( !condition.equals("weared") && !condition.equals("good") && !condition.equals("new") ) {
-				hasViolations = true;
-				exceptionMessages.add("Condition is invalid (weared, good or new values are accepted).\n");				
-			}
-			
-			// validate voltage
-			if( ( (Appliance) item).getVoltage() == null || ( (Appliance) item).getVoltage().isBlank() ) {
-				hasViolations = true;
-				exceptionMessages.add("Voltage is required (110, 220 or none values are accepted).\n");
-			}
-			
-			// valid voltages: 110, 220 or none
-			String voltage = ( (Appliance) item).getVoltage();
-			if( !voltage.equals("110") && !voltage.equals("220")  && !voltage.equals("none") ) {
-				hasViolations = true;
-				exceptionMessages.add("Voltage is invalid (110, 220 or none values are accepted).\n");				
-			}
-
+		List<String> exceptionMessagesSpecific = this.validationStrategy.itemValidator(item);
+		if( !(exceptionMessagesSpecific.isEmpty()) ) {
+			hasViolations = true;
+			exceptionMessages.addAll( exceptionMessagesSpecific );
 		}
 		
 		if( hasViolations ) {
 			String errorMsg = "";
 			
 			for( String error: exceptionMessages ) {
-				errorMsg += error + "\n";
+				errorMsg += EmojiParser.parseToUnicode(":warning: ") + error + "\n";
 			}
 			
 			throw new BusinessException( errorMsg );
@@ -261,20 +225,15 @@ public class ItemServices implements FacadeItem {
 	@Override
 	public String changeAvailability(String code) throws BusinessException, DataException {
 		
+		
 		Item itemAux = itemDatabase.readItem( code );
 		
 		if( itemAux == null ) {
 			throw new BusinessException("Appliance not registered, thus cannot change availability!");
 		} 
-		
-		if( !(itemAux instanceof Appliance) ) {
-			throw new BusinessException("Trying to edit a Appliance's attribute, but item code if from another type");
-		}
-		
-		((Appliance) itemAux).setAvailable( !((Appliance) itemAux).isAvailable() );
-		
-		return itemDatabase.updateItem( itemAux );
-
+				
+		Item item_ret = changeAvailabilityStrategy.changeAvailability(itemAux);
+		return itemDatabase.updateItem( item_ret );
 	}
 
 

@@ -409,7 +409,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		        
 			} catch (BusinessException e) {
 				// define bot answer			
-				botAnswer = "Problem trying to create item:\n" + e.getMessage() + "\n";
+				botAnswer = "Problem trying to create item:\n\n" + e.getMessage() + "\n";
 				botAnswer += "Check if you have folowed all instructions and try again: /additem.";
 				
 				// request APIInterface to send text message to user
