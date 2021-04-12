@@ -17,7 +17,7 @@ public class ItemServices implements FacadeItem {
 
 	ItemDAO itemDatabase; // item database manager class
 	UserDAO userDatabase; // user database manager class
-	ItemValidator validationStrategy; // validation strategy for diferent subclasses of items
+	ItemValidator itemValidationStrategy; // validation strategy for different subclasses of items
 	ItemAvailabilityChanger changeAvailabilityStrategy; // change availability accordantly to the defined strategy
 
 	public ItemServices() throws DataException {		
@@ -26,7 +26,7 @@ public class ItemServices implements FacadeItem {
 		userDatabase = UserDAOMemory.getInstance();
 		
 		// define strategies
-		validationStrategy = new ApplianceValidator();
+		itemValidationStrategy = new ApplianceValidator();
 		changeAvailabilityStrategy = new ApplianceAvailabilityChanger();
 
 	}
@@ -118,7 +118,7 @@ public class ItemServices implements FacadeItem {
 		// validate item
 		validateItem(item);
 				
-		// check if code is from regitered item
+		// check if code is from registered item
 		Item itemAux = itemDatabase.readItem( item.getCode() );
 
 		if( itemAux == null ) {
@@ -203,7 +203,7 @@ public class ItemServices implements FacadeItem {
 		
 		// TODO Check in any field has excess a characters limit
 			
-		List<String> exceptionMessagesSpecific = this.validationStrategy.itemValidator(item);
+		List<String> exceptionMessagesSpecific = this.itemValidationStrategy.itemValidator(item);
 		if( !(exceptionMessagesSpecific.isEmpty()) ) {
 			hasViolations = true;
 			exceptionMessages.addAll( exceptionMessagesSpecific );

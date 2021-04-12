@@ -3,6 +3,8 @@ package br.ufrn.imd.pds.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vdurmont.emoji.EmojiParser;
+
 import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.data.ItemDAOMemory;
 import br.ufrn.imd.pds.data.UserDAO;
@@ -14,6 +16,8 @@ public class UserServices implements FacadeUser {
 
 	UserDAO userDatabase;
 	ItemDAO itemDatabase;
+	UserValidator userValidationStrategy; // validation strategy for different subclasses of users
+	UserTypeChanger changeUserTypeStrategy; // change user type to the defined strategy
 
 
 	public UserServices() throws DataException {		
@@ -144,13 +148,20 @@ public class UserServices implements FacadeUser {
 			exceptionMessages.add( "TelegramUserName is required. \n" );
 		}
 		
+		List<String> exceptionMessagesSpecific = this.userValidationStrategy.userValidator(user);
+		if( !(exceptionMessagesSpecific.isEmpty()) ) {
+			hasViolations = true;
+			exceptionMessages.addAll( exceptionMessagesSpecific );
+		}
+		
 		if( hasViolations ) {
 			String errorMsg = "";
 			
 			for( String error: exceptionMessages ) {
-				errorMsg += error + "\n";
+				errorMsg += EmojiParser.parseToUnicode(":warning: ") + error + "\n";
 			}
+			
 			throw new BusinessException( errorMsg );
-		}	
+		}
 	}	
 }
