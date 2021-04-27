@@ -11,7 +11,7 @@ import java.util.List;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.SharedService;
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.exceptions.DataException;
 
@@ -75,7 +75,7 @@ public class DBReader {
 	public static HashMap<String,Item> csvToItemHashMap () throws IOException {		
 		// Items database
 		// If items database files does not exist, create them
-		File itemsDatabaseFile = new File("src/main/csv/applianceDatabase.csv");
+		File itemsDatabaseFile = new File("src/main/csv/sharedServiceDatabase.csv");
 		if( itemsDatabaseFile.createNewFile() ) {
 			System.out.println("Items database file created!\n");	
 		}
@@ -87,7 +87,7 @@ public class DBReader {
 		
 		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Appliance> itemList = new CsvToBeanBuilder( csvFile ).withType(Appliance.class).build().parse();
+		List<SharedService> itemList = new CsvToBeanBuilder( csvFile ).withType(SharedService.class).build().parse();
 				
 		// build hashmap
 		HashMap<String,Item> itemMap = new HashMap<String,Item>();

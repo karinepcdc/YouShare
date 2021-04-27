@@ -13,7 +13,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import br.ufrn.imd.pds.DBHandlers.DBReader;
 import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.SharedService;
 import br.ufrn.imd.pds.exceptions.DataException;
 import br.ufrn.imd.pds.util.IdCounter;
 
@@ -183,24 +183,24 @@ public class ItemDAOMemory implements ItemDAO {
 						isAmatch = isAmatch && ( item.getItemGrade() >= 4.0 );
 						
 					} else if( filter.equals("$weared") ) {
-						isAmatch = isAmatch && ( ((Appliance) item).getCondition().equals("weared") );
+						isAmatch = isAmatch && ( ((SharedService) item).getCondition().equals("weared") );
 						
 					} else if( filter.equals("$good") ) {
-						isAmatch = isAmatch && ( ((Appliance) item).getCondition().equals("good") );
+						isAmatch = isAmatch && ( ((SharedService) item).getCondition().equals("good") );
 						
 					} else if( filter.equals("$new") ) {
-						isAmatch = isAmatch && ( ((Appliance) item).getCondition().equals("new") );
+						isAmatch = isAmatch && ( ((SharedService) item).getCondition().equals("new") );
 						
-					} else if( filter.equals("$under10") && item instanceof Appliance ) {
-						double price = Double.parseDouble( ((Appliance) item).getPrice() );
+					} else if( filter.equals("$under10") && item instanceof SharedService ) {
+						double price = Double.parseDouble( ((SharedService) item).getPrice() );
 						isAmatch = isAmatch && ( price <= 10.0 );
 						
-					} else if( filter.equals("10to20") && item instanceof Appliance ) {
-						double price = Double.parseDouble(((Appliance) item).getPrice());
+					} else if( filter.equals("10to20") && item instanceof SharedService ) {
+						double price = Double.parseDouble(((SharedService) item).getPrice());
 						isAmatch = isAmatch && ( price >= 10.0 && price < 20.0 );
 						
-					} else if( filter.equals("over20") && item instanceof Appliance ) {
-						double price = Double.parseDouble(((Appliance) item).getPrice());
+					} else if( filter.equals("over20") && item instanceof SharedService ) {
+						double price = Double.parseDouble(((SharedService) item).getPrice());
 						isAmatch = isAmatch && ( price >= 20.0 );
 						
 					} else {

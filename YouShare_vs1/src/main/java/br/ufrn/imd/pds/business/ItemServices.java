@@ -27,8 +27,8 @@ public class ItemServices implements FacadeItem {
 		userDatabase = UserDAOMemory.getInstance();
 		
 		// define strategies
-		itemValidationStrategy = new ApplianceValidator();
-		changeAvailabilityStrategy = new ApplianceAvailabilityChanger();
+		itemValidationStrategy = new SharedServiceValidator();
+		changeAvailabilityStrategy = new SharedServiceAvailabilityChanger();
 
 	}
 	
@@ -45,27 +45,27 @@ public class ItemServices implements FacadeItem {
 		// validate item
 		validateItem(newItem);
 				
-		if( newItem instanceof Appliance ) {
-			Appliance applianceDb = new Appliance();
+		if( newItem instanceof SharedService ) {
+			SharedService db = new SharedService();
 
 			// copy fields
-			applianceDb.setName( ((Appliance) newItem).getName() );
-			applianceDb.setDescription( ((Appliance) newItem).getDescription() );
-			applianceDb.setCode( ((Appliance) newItem).getCode() );
-			applianceDb.setOwner( ((Appliance) newItem).getOwner() );
-			applianceDb.setAvailable( ((Appliance) newItem).isAvailable() );
-			applianceDb.setPrice( ((Appliance) newItem).getPrice() );
-			applianceDb.setTermsOfUse( ((Appliance) newItem).getTermsOfUse() );
-			applianceDb.setCondition( ((Appliance) newItem).getCondition() );
-			applianceDb.setVoltage( ((Appliance) newItem).getVoltage() );
+			db.setName( ((SharedService) newItem).getName() );
+			db.setDescription( ((SharedService) newItem).getDescription() );
+			db.setCode( ((SharedService) newItem).getCode() );
+			db.setOwner( ((SharedService) newItem).getOwner() );
+			db.setAvailable( ((SharedService) newItem).isAvailable() );
+			db.setPrice( ((SharedService) newItem).getPrice() );
+			db.setTermsOfUse( ((SharedService) newItem).getTermsOfUse() );
+			db.setCondition( ((SharedService) newItem).getCondition() );
+			db.setVoltage( ((SharedService) newItem).getVoltage() );
 									
 			// fill default review, grade and grade count
-			applianceDb.setLastReview("No reviews yet!");
-			applianceDb.setItemGrade(5);
-			applianceDb.setItemGradeCount(0);
+			db.setLastReview("No reviews yet!");
+			db.setItemGrade(5);
+			db.setItemGradeCount(0);
 			
 			// require item registration in the database
-			return itemDatabase.createItem( applianceDb );
+			return itemDatabase.createItem( db );
 										
 		} // TODO other items creation		
 		
@@ -122,28 +122,28 @@ public class ItemServices implements FacadeItem {
 			throw new BusinessException("Item does not belong you, thus cannot be updated!");
 		}
 
-		if( item instanceof Appliance ) {
-			Appliance applianceDb = new Appliance();
+		if( item instanceof SharedService ) {
+			SharedService db = new SharedService();
 
 			// copy fields
-			applianceDb.setName( ((Appliance) item).getName() );
-			applianceDb.setDescription( ((Appliance) item).getDescription() );
-			applianceDb.setCode( ((Appliance) item).getCode() );
-			applianceDb.setOwner( ((Appliance) item).getOwner() );
-			applianceDb.setAvailable( ((Appliance) item).isAvailable() );
-			applianceDb.setPrice( ((Appliance) item).getPrice() );
-			applianceDb.setTermsOfUse( ((Appliance) item).getTermsOfUse() );
-			applianceDb.setCondition( ((Appliance) item).getCondition() );
-			applianceDb.setVoltage( ((Appliance) item).getVoltage() );
+			db.setName( ((SharedService) item).getName() );
+			db.setDescription( ((SharedService) item).getDescription() );
+			db.setCode( ((SharedService) item).getCode() );
+			db.setOwner( ((SharedService) item).getOwner() );
+			db.setAvailable( ((SharedService) item).isAvailable() );
+			db.setPrice( ((SharedService) item).getPrice() );
+			db.setTermsOfUse( ((SharedService) item).getTermsOfUse() );
+			db.setCondition( ((SharedService) item).getCondition() );
+			db.setVoltage( ((SharedService) item).getVoltage() );
 					
 			// copy restricted fields
-			applianceDb.setLastReview( ((Appliance) itemAux).getLastReview() );
-			applianceDb.setItemGrade( ((Appliance) itemAux).getItemGrade() );
-			applianceDb.setItemGradeCount( ((Appliance) itemAux).getItemGradeCount() );
+			db.setLastReview( ((SharedService) itemAux).getLastReview() );
+			db.setItemGrade( ((SharedService) itemAux).getItemGrade() );
+			db.setItemGradeCount( ((SharedService) itemAux).getItemGradeCount() );
 
 			
 			// require item registration in the database
-			return itemDatabase.updateItem( applianceDb );
+			return itemDatabase.updateItem( db );
 									
 		} // TODO other items update
 
@@ -220,7 +220,7 @@ public class ItemServices implements FacadeItem {
 		Item itemAux = itemDatabase.readItem( code );
 		
 		if( itemAux == null ) {
-			throw new BusinessException("Appliance not registered, thus cannot change availability!");
+			throw new BusinessException("Service not registered, thus cannot change availability!");
 		} 
 				
 		Item item_ret = changeAvailabilityStrategy.changeAvailability(itemAux);

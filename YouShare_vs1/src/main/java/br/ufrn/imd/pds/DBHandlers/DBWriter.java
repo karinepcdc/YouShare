@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.SharedService;
 import br.ufrn.imd.pds.business.User;
 
 public class DBWriter {
@@ -41,22 +41,22 @@ public class DBWriter {
 	
 	/// Write current item hashMap in the database.
 	/*
-	 *  Write itemMap, a HashMap of items, into item database files: applianceDatabase.csv; 
+	 *  Write itemMap, a HashMap of items, into item database files: sharedServiceDatabase.csv; 
 	 */
 	public static void itemHashMapToCSV ( HashMap<String, Item> itemMap ) 
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-		ArrayList<Appliance> itemsList = new ArrayList<Appliance>();
+		ArrayList<SharedService> itemsList = new ArrayList<SharedService>();
 		
 		// put items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
-			if( pair.getValue() instanceof Appliance ) {
-				itemsList.add( (Appliance) pair.getValue() );
+			if( pair.getValue() instanceof SharedService ) {
+				itemsList.add( (SharedService) pair.getValue() );
 			}
 		}
 
 		// write database
-		FileWriter writer = new FileWriter( "src/main/csv/applianceDatabase.csv" );
-		StatefulBeanToCsv<Appliance> itemToCsv = new StatefulBeanToCsvBuilder<Appliance>(writer).build();
+		FileWriter writer = new FileWriter( "src/main/csv/sharedServiceDatabase.csv" );
+		StatefulBeanToCsv<SharedService> itemToCsv = new StatefulBeanToCsvBuilder<SharedService>(writer).build();
 		itemToCsv.write( itemsList );
 		
 		writer.close();

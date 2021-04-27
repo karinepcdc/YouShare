@@ -20,7 +20,7 @@ import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.ItemServices;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.SharedService;
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
@@ -393,12 +393,11 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		String botAnswer = "";
 		
 		// Extract item information from user text message
-		// TODO include other type of itens
-		Appliance newAppliance;
+		SharedService newSharedService;
 		try {
-			newAppliance = FormToItem.createFormToAppliance( message.getTxtMessage(), message.getTelegramUserName());
+			newSharedService = FormToItem.createFormToSharedService( message.getTxtMessage(), message.getTelegramUserName());
 			try {
-				String code = itemServices.createItem( newAppliance );
+				String code = itemServices.createItem( newSharedService );
 				
 				botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") created! :wink:\n");
 				botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
@@ -480,8 +479,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		String botAnswer = "";
 		
 		// Extract item information from user text message
-		// TODO include other type of itens
-		Appliance newAppliance;
+		SharedService newSharedService;
 		try {
 			String itemId = "";
 			String RegexCode = "<Id>\\s*(.+?)\\s*</Id>.*?\n";
@@ -500,10 +498,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			}
 			
 			
-			Item originalAppliance = itemServices.readItem( itemId );
-			newAppliance = FormToItem.editFormToAppliance( message.getTxtMessage(), (Appliance) originalAppliance);
+			Item originalSharedService = itemServices.readItem( itemId );
+			newSharedService = FormToItem.editFormToSharedService( message.getTxtMessage(), (SharedService) originalSharedService);
 				
-			String code = itemServices.updateItem( newAppliance );
+			String code = itemServices.updateItem( newSharedService );
 				
 			botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") updated! :wink:\n");
 			botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
@@ -571,13 +569,13 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					botAnswer += "Most recent review: " + item.getLastReview() + "\n";
 					
 					// item specifics
-					if( item instanceof Appliance ) {
-						botAnswer += "Price: $" + ((Appliance) item).getPrice() + "\n\n";
-						botAnswer += "Terms of use: " + ((Appliance) item).getTermsOfUse() + "\n";
-						botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
-						botAnswer += "Voltage: " + ((Appliance) item).getVoltage() 
-								+ ( ((Appliance) item).getVoltage().equals("none") ? "\n": "V\n" );
-						botAnswer += "Status: " + (((Appliance) item).isAvailable() ? "public" : "private");
+					if( item instanceof SharedService ) {
+						botAnswer += "Price: $" + ((SharedService) item).getPrice() + "\n\n";
+						botAnswer += "Terms of use: " + ((SharedService) item).getTermsOfUse() + "\n";
+						botAnswer += "Condition: " + ((SharedService) item).getCondition() + "\n";
+						botAnswer += "Voltage: " + ((SharedService) item).getVoltage() 
+								+ ( ((SharedService) item).getVoltage().equals("none") ? "\n": "V\n" );
+						botAnswer += "Status: " + (((SharedService) item).isAvailable() ? "public" : "private");
 
 					}
 					
@@ -633,7 +631,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		
 	}
 
-	// warning: appliance specific methold
+	// warning: SharedService specific methold
 	public static void changeAdStatus( MessageData message ) {
 		String botAnswer = ""; 
 
@@ -647,10 +645,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 							
 					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
 							+ e.getMessage()
-							+ "\nThe command /changeadstatus require a appliance id as parameter.\n"
+							+ "\nThe command /changeadstatus require a service id as parameter.\n"
 							+ "Type /changeadstatus_id, replacing id by the id number of the item you want to see.\n\n"
 							+ "For instance, /changeadstatus_0.\n\n"
-							+ "To check your appliances ids type /myshare.";
+							+ "To check your services ids type /myshare.";
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -662,7 +660,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					itemServices.changeAvailability( id );
 					Item item = itemServices.readItem( id );
 					
-					botAnswer = item.getName() + " have been set to " + (((Appliance) item).isAvailable() ? "public." : "private.")
+					botAnswer = item.getName() + " have been set to " + (((SharedService) item).isAvailable() ? "public." : "private.")
 							+ " (Check the change at /itemdetails_"  + item.getCode() + ")";
 					
 					// request APIInterface to send text message to user
@@ -915,8 +913,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				
 				botAnswer += EmojiParser.parseToUnicode(":hammer_and_wrench:") + " " + item.getName() + "     " + EmojiParser.parseToUnicode(":star: ") + item.getItemGrade() + "\n";
 				botAnswer += item.getDescription().substring(0, Math.min(item.getDescription().length(), 50)) + "...\n";
-				botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
-				botAnswer += "$ " + ((Appliance) item).getPrice() + "\n";
+				botAnswer += "Condition: " + ((SharedService) item).getCondition() + "\n";
+				botAnswer += "$ " + ((SharedService) item).getPrice() + "\n";
 				botAnswer += "/addetail_" + item.getCode() + "\n\n";
 			}
 	   	    
@@ -999,7 +997,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		System.out.println("user message: " + stringTosearchId);
 		System.out.println("id read: " + code);
 		// build item to be deleted
-		Item delItem = new Appliance("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "", "");
+		Item delItem = new SharedService("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "", "");
 		delItem.setCode( code );		
 		
 		// delete item
@@ -1045,20 +1043,20 @@ public class YouShareBotServices implements FacadeYouShareBot {
 	}
 	
 	/// Utils
-	/*private static void printAppliance( Appliance appliance ) {
+	/*private static void printSharedService( SharedService sharedService ) {
 		System.out.println("\n**************************\n");
-		System.out.println("Reading Appliance " + appliance.getCode() + "\n"
-				+ "Name: " + appliance.getName() + "\n"
-				+ "Description: " + appliance.getDescription() + "\n"
-				+ "Owner: " + appliance.getOwner() + "\n"
-				+ "itemGrade: " + appliance.getItemGrade() + "\n"
-				+ "itemGradeCount: " + appliance.getItemGradeCount() + "\n"
-				+ "lastReview: " + appliance.getLastReview() + "\n"
-				+ "isAvailable:" + appliance.isAvailable() + "\n"
-				+ "price: " + appliance.getPrice() + "\n"
-				+ "TOU: " + appliance.getTermsOfUse() + "\n"
-				+ "Condition: " + appliance.getCondition() + "\n"
-				+ "Voltage: " + appliance.getVoltage() + "\n" );
+		System.out.println("Reading SharedService " + sharedServicence.getCode() + "\n"
+				+ "Name: " + sharedServicence.getName() + "\n"
+				+ "Description: " + sharedServicence.getDescription() + "\n"
+				+ "Owner: " + sharedServicence.getOwner() + "\n"
+				+ "itemGrade: " + sharedServicence.getItemGrade() + "\n"
+				+ "itemGradeCount: " + sharedServicence.getItemGradeCount() + "\n"
+				+ "lastReview: " + sharedServicence.getLastReview() + "\n"
+				+ "isAvailable:" + sharedServicence.isAvailable() + "\n"
+				+ "price: " + sharedServicence.getPrice() + "\n"
+				+ "TOU: " + sharedServicence.getTermsOfUse() + "\n"
+				+ "Condition: " + sharedServicence.getCondition() + "\n"
+				+ "Voltage: " + sharedServicence.getVoltage() + "\n" );
 
 		System.out.println("\n**************************\n");
 

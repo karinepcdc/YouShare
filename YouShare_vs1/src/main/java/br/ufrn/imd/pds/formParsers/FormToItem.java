@@ -3,14 +3,14 @@ package br.ufrn.imd.pds.formParsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.SharedService;
 import br.ufrn.imd.pds.exceptions.UIException;
 
 public class FormToItem {
 	
-	public static Appliance createFormToAppliance( String applianceForm, String owner ) throws UIException {
+	public static SharedService createFormToSharedService( String form, String owner ) throws UIException {
 		
-		// Appliance form pattern
+		// form pattern
 		String REGEX = "<Name>\\s*(.+?)\\s*</Name>.*?\n"
 				 + "<Description>\\s*(.+?)\\s*</Description>.*?\n"
 				 + "<Price>\\s*(.+?)\\s*</Price>.*?\n"
@@ -19,7 +19,7 @@ public class FormToItem {
 				 + "<Voltage>\\s*(.+?)\\s*</Voltage>";
 	
 		Pattern idPattern = Pattern.compile(REGEX);
-		Matcher m = idPattern.matcher(applianceForm);
+		Matcher m = idPattern.matcher(form);
 		
 		// if we find a match, get id
 		String itemName = "";
@@ -46,20 +46,20 @@ public class FormToItem {
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 	
 		} else {
-			throw new UIException("Appliance information could not be read.");
+			throw new UIException("Item information could not be read.");
 		}
 		
-		// create item: Appliance					
-		Appliance newAppliance = new Appliance( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		// create concrete instance of item					
+		SharedService newSharedService = new SharedService( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
 			
-		return newAppliance;
+		return newSharedService;
 	}
 
-public static Appliance editFormToAppliance( String applianceEditForm, Appliance originalAppliance ) throws UIException {
+public static SharedService editFormToSharedService( String editForm, SharedService originalItem ) throws UIException {
 			
 		boolean AnyChange = false;
 		
-		// Appliance form pattern
+		// form pattern
 		String RegexName = "<Name>\\s*(.+?)\\s*</Name>.*?\n?";
 		String RegexDescription = "<Description>\\s*(.+?)\\s*</Description>.*?\n?";
 		String RegexPrice = "<Price>\\s*(.+?)\\s*</Price>.*?\n?";
@@ -80,7 +80,7 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			
 		// check if name edition where requested
 		itemPattern = Pattern.compile(RegexName);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(editForm);
 
 		if( m.find() ) {
 			itemName = m.group(1);
@@ -89,12 +89,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Name read: ." + itemName + ".\n");
 			
 		} else {
-			itemName = originalAppliance.getName();
+			itemName = originalItem.getName();
 		}
 		
 		// check if description edition where requested
 		itemPattern = Pattern.compile(RegexDescription);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(editForm);
 
 		if( m.find() ) {
 			itemDescription = m.group(1);
@@ -104,12 +104,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Description read: ." + itemDescription + ".\n");
 			
 		} else {
-			itemDescription = originalAppliance.getDescription();
+			itemDescription = originalItem.getDescription();
 		}
 		
 		// check if price edition where requested
 		itemPattern = Pattern.compile(RegexPrice);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(editForm);
 
 		if( m.find() ) {
 			itemPrice = m.group(1);
@@ -119,12 +119,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Price read: ." + itemPrice + ".\n");
 			
 		} else {
-			itemPrice = originalAppliance.getPrice();
+			itemPrice = originalItem.getPrice();
 		}
 		
 		// check if TOU edition where requested
 		itemPattern = Pattern.compile(RegexTOU);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(editForm);
 
 		if( m.find() ) {
 			itemTOU = m.group(1);
@@ -133,12 +133,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("TOU read: ." + itemTOU + ".\n");
 			
 		} else {
-			itemTOU = originalAppliance.getTermsOfUse();
+			itemTOU = originalItem.getTermsOfUse();
 		}
 		
 		// check if condition edition where requested
 		itemPattern = Pattern.compile(RegexCondition);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(editForm);
 
 		if( m.find() ) {
 			itemCondition = m.group(1);
@@ -147,12 +147,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Condition read: ." + itemCondition + ".\n");
 			
 		} else {
-			itemCondition = originalAppliance.getCondition();
+			itemCondition = originalItem.getCondition();
 		}
 		
 		// check if voltage edition where requested
 		itemPattern = Pattern.compile(RegexVoltage);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(editForm);
 
 		if( m.find() ) {
 			itemVoltage = m.group(1);
@@ -161,19 +161,19 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 			
 		} else {
-			itemVoltage = originalAppliance.getVoltage();
+			itemVoltage = originalItem.getVoltage();
 		}
 		
 		if( !AnyChange ) {
-			throw new UIException("Appliance update could not be read.\n"
+			throw new UIException("Item update request could not be read.\n"
 					+ "Check instruction and try again.");
 		}
 		
-		// create item: Appliance					
-		Appliance newAppliance = new Appliance( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
-		newAppliance.setAvailable( originalAppliance.isAvailable() );
+		// create item					
+		SharedService newSharedService = new SharedService( itemName , itemDescription, originalItem.getCode(), originalItem.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		newSharedService.setAvailable( originalItem.isAvailable() );
 		
-		return newAppliance;
+		return newSharedService;
 	}
 
 }

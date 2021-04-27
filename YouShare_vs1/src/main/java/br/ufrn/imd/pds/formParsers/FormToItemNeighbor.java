@@ -3,15 +3,15 @@ package br.ufrn.imd.pds.formParsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.ufrn.imd.pds.business.Appliance;
-import br.ufrn.imd.pds.business.ItemNeighbor;
+import br.ufrn.imd.pds.business.SharedService;
+import br.ufrn.imd.pds.business.ShareServiceNeighbor;
 import br.ufrn.imd.pds.exceptions.UIException;
 
 public class FormToItemNeighbor {
 	
-public static ItemNeighbor createFormToItemNeighbor( String itemNeighborForm ) throws UIException {
+public static ShareServiceNeighbor createFormToItemNeighbor( String itemNeighborForm ) throws UIException {
 		
-		// Appliance form pattern
+		// SharedService form pattern
 		String REGEX = "<Condominium>\\s*(.+?)\\s*</Condominium>.*?\n";
 				 
 	
@@ -43,21 +43,21 @@ public static ItemNeighbor createFormToItemNeighbor( String itemNeighborForm ) t
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 	
 		} else {
-			throw new UIException("Appliance information could not be read.");
+			throw new UIException("SharedService information could not be read.");
 		}
 		
-		// create item: Appliance					
-		//Appliance newAppliance = new Appliance( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		// create item: SharedService					
+		//SharedService newAppliance = new SharedService( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
 			
 		//return newAppliance;
 		return null;
 	}
 
-public static Appliance editFormToAppliance( String applianceEditForm, Appliance originalAppliance ) throws UIException {
+public static SharedService editFormToAppliance( String applianceEditForm, SharedService originalAppliance ) throws UIException {
 			
 		boolean AnyChange = false;
 		
-		// Appliance form pattern
+		// SharedService form pattern
 		String RegexName = "<Name>\\s*(.+?)\\s*</Name>.*?\n?";
 		String RegexDescription = "<Description>\\s*(.+?)\\s*</Description>.*?\n?";
 		String RegexPrice = "<Price>\\s*(.+?)\\s*</Price>.*?\n?";
@@ -163,12 +163,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 		}
 		
 		if( !AnyChange ) {
-			throw new UIException("Appliance update could not be read.\n"
+			throw new UIException("SharedService update could not be read.\n"
 					+ "Check instruction and try again.");
 		}
 		
-		// create item: Appliance					
-		Appliance newAppliance = new Appliance( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		// create item: SharedService					
+		SharedService newAppliance = new SharedService( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
 		newAppliance.setAvailable( originalAppliance.isAvailable() );
 		
 		return newAppliance;
