@@ -160,11 +160,16 @@ public class ItemDAOMemory implements ItemDAO {
 				// check name
 				List<String> itemNames = Arrays.asList( item.getName().toLowerCase().split("\\s+"));
 				
-				List<String> sn= new ArrayList<String>();
+				List<String> sn = new ArrayList<String>();
 				names.forEach((n) -> sn.add(n.toLowerCase()));
 				
 				if(itemNames.containsAll(sn)) {
 					isAmatch = true;
+				}
+						
+				// ad is visible?
+				if( !((Appliance) item).isAvailable() ) {
+					isAmatch = false;
 				}
 				
 				for( String filter: filters ) {
@@ -206,9 +211,8 @@ public class ItemDAOMemory implements ItemDAO {
 					} else {
 						throw new DataException("Filter not valid.");
 					}
+					
 				}
-				
-			
 				
 				// if found required item, add it 
 				if( isAmatch ) {

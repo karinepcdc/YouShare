@@ -393,7 +393,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		String botAnswer = "";
 		
 		// Extract item information from user text message
-		// TODO include other type of itens
 		Appliance newAppliance;
 		try {
 			newAppliance = FormToItem.createFormToAppliance( message.getTxtMessage(), message.getTelegramUserName());
