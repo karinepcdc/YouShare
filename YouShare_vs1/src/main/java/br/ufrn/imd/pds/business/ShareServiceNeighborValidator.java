@@ -4,9 +4,9 @@ import java.util.List;
 
 import br.ufrn.imd.pds.exceptions.BusinessException;
 
-public class DepartmentUserValidator extends UserValidator {
+public class ShareServiceNeighborValidator extends UserValidator {
 	
-	public DepartmentUserValidator ( User user ){
+	public ShareServiceNeighborValidator ( User user ){
 		super( );
 	}
 

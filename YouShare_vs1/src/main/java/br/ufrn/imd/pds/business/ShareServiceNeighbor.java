@@ -3,7 +3,7 @@ package br.ufrn.imd.pds.business;
 import com.opencsv.bean.CsvBindByName;
 import java.util.List;
 
-public class ServiceNeighbor extends User {
+public class ShareServiceNeighbor extends User {
 	
 	@CsvBindByName
 	private String condominium;
@@ -11,7 +11,7 @@ public class ServiceNeighbor extends User {
 	@CsvBindByName
 	private List<String> reviewTags;
 	
-	public ServiceNeighbor () {
+	public ShareServiceNeighbor () {
 		super();
 	}
 
