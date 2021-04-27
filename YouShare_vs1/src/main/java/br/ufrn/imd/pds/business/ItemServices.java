@@ -108,9 +108,9 @@ public class ItemServices implements FacadeItem {
 		}
 		
 		// copy restricted fields
-		item.setLastReview( ((OfficeItems) itemAux).getLastReview() );
-		item.setItemGrade( ((OfficeItems) itemAux).getItemGrade() );
-		item.setItemGradeCount( ((OfficeItems) itemAux).getItemGradeCount() );
+		item.setLastReview( itemAux.getLastReview() );
+		item.setItemGrade( itemAux.getItemGrade() );
+		item.setItemGradeCount( itemAux.getItemGradeCount() );
 
 		
 		// require item registration in the database
