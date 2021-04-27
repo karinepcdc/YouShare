@@ -2,7 +2,7 @@ package br.ufrn.imd.pds.business;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class Appliance extends Item {
+public class OfficeItems extends Item {
 
 	@CsvBindByName
 	protected boolean isAvailable = false; /// is item available for rent?
@@ -17,16 +17,16 @@ public class Appliance extends Item {
 	private String condition; /// the usage condition can be: weared, good or new  
 	
 	@CsvBindByName
-	private String voltage; /// eletrical voltage 220 or 110 // TODO check if it is better to use a boolean here 
+	private String voltage; /// eletrical voltage 220 or 110  
 	
 	
 	/* Constructor Default */
-	public Appliance () {
+	public OfficeItems () {
 		super();
 	}
 	
 	/* Constructor full */
-	public Appliance ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p,
+	public OfficeItems ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p,
 			String tOU, String c, String v ) {
 		super( n, desc, cd, owner, iG, iGC, lRev);
 		this.termsOfUse = tOU;

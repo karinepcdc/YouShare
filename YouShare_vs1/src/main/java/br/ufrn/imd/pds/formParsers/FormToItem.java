@@ -3,14 +3,14 @@ package br.ufrn.imd.pds.formParsers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.OfficeItems;
 import br.ufrn.imd.pds.exceptions.UIException;
 
 public class FormToItem {
 	
-	public static Appliance createFormToAppliance( String applianceForm, String owner ) throws UIException {
+	public static OfficeItems createFormToOfficeItems( String officeItemsForm, String owner ) throws UIException {
 		
-		// Appliance form pattern
+		// OfficeItems form pattern
 		String REGEX = "<Name>\\s*(.+?)\\s*</Name>.*?\n"
 				 + "<Description>\\s*(.+?)\\s*</Description>.*?\n"
 				 + "<Price>\\s*(.+?)\\s*</Price>.*?\n"
@@ -19,7 +19,7 @@ public class FormToItem {
 				 + "<Voltage>\\s*(.+?)\\s*</Voltage>";
 	
 		Pattern idPattern = Pattern.compile(REGEX);
-		Matcher m = idPattern.matcher(applianceForm);
+		Matcher m = idPattern.matcher(officeItemsForm);
 		
 		// if we find a match, get id
 		String itemName = "";
@@ -46,20 +46,20 @@ public class FormToItem {
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 	
 		} else {
-			throw new UIException("Appliance information could not be read.");
+			throw new UIException("OfficeItems information could not be read.");
 		}
 		
-		// create item: Appliance					
-		Appliance newAppliance = new Appliance( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		// create item: OfficeItems					
+		OfficeItems newOfficeItems = new OfficeItems( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
 			
-		return newAppliance;
+		return newOfficeItems;
 	}
 
-public static Appliance editFormToAppliance( String applianceEditForm, Appliance originalAppliance ) throws UIException {
+public static OfficeItems editFormToOfficeItems( String officeItemsEditForm, OfficeItems originalOfficeItems ) throws UIException {
 			
 		boolean AnyChange = false;
 		
-		// Appliance form pattern
+		// OfficeItems form pattern
 		String RegexName = "<Name>\\s*(.+?)\\s*</Name>.*?\n?";
 		String RegexDescription = "<Description>\\s*(.+?)\\s*</Description>.*?\n?";
 		String RegexPrice = "<Price>\\s*(.+?)\\s*</Price>.*?\n?";
@@ -80,7 +80,7 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			
 		// check if name edition where requested
 		itemPattern = Pattern.compile(RegexName);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(officeItemsEditForm);
 
 		if( m.find() ) {
 			itemName = m.group(1);
@@ -89,12 +89,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Name read: ." + itemName + ".\n");
 			
 		} else {
-			itemName = originalAppliance.getName();
+			itemName = originalOfficeItems.getName();
 		}
 		
 		// check if description edition where requested
 		itemPattern = Pattern.compile(RegexDescription);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(officeItemsEditForm);
 
 		if( m.find() ) {
 			itemDescription = m.group(1);
@@ -104,12 +104,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Description read: ." + itemDescription + ".\n");
 			
 		} else {
-			itemDescription = originalAppliance.getDescription();
+			itemDescription = originalOfficeItems.getDescription();
 		}
 		
 		// check if price edition where requested
 		itemPattern = Pattern.compile(RegexPrice);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(officeItemsEditForm);
 
 		if( m.find() ) {
 			itemPrice = m.group(1);
@@ -119,12 +119,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Price read: ." + itemPrice + ".\n");
 			
 		} else {
-			itemPrice = originalAppliance.getPrice();
+			itemPrice = originalOfficeItems.getPrice();
 		}
 		
 		// check if TOU edition where requested
 		itemPattern = Pattern.compile(RegexTOU);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(officeItemsEditForm);
 
 		if( m.find() ) {
 			itemTOU = m.group(1);
@@ -133,12 +133,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("TOU read: ." + itemTOU + ".\n");
 			
 		} else {
-			itemTOU = originalAppliance.getTermsOfUse();
+			itemTOU = originalOfficeItems.getTermsOfUse();
 		}
 		
 		// check if condition edition where requested
 		itemPattern = Pattern.compile(RegexCondition);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(officeItemsEditForm);
 
 		if( m.find() ) {
 			itemCondition = m.group(1);
@@ -147,12 +147,12 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Condition read: ." + itemCondition + ".\n");
 			
 		} else {
-			itemCondition = originalAppliance.getCondition();
+			itemCondition = originalOfficeItems.getCondition();
 		}
 		
 		// check if voltage edition where requested
 		itemPattern = Pattern.compile(RegexVoltage);
-		m = itemPattern.matcher(applianceEditForm);
+		m = itemPattern.matcher(officeItemsEditForm);
 
 		if( m.find() ) {
 			itemVoltage = m.group(1);
@@ -161,19 +161,19 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 			
 		} else {
-			itemVoltage = originalAppliance.getVoltage();
+			itemVoltage = originalOfficeItems.getVoltage();
 		}
 		
 		if( !AnyChange ) {
-			throw new UIException("Appliance update could not be read.\n"
+			throw new UIException("OfficeItems update could not be read.\n"
 					+ "Check instruction and try again.");
 		}
 		
-		// create item: Appliance					
-		Appliance newAppliance = new Appliance( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
-		newAppliance.setAvailable( originalAppliance.isAvailable() );
+		// create item: OfficeItems					
+		OfficeItems newOfficeItems = new OfficeItems( itemName , itemDescription, originalOfficeItems.getCode(), originalOfficeItems.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		newOfficeItems.setAvailable( originalOfficeItems.isAvailable() );
 		
-		return newAppliance;
+		return newOfficeItems;
 	}
 
 }

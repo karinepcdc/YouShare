@@ -3,7 +3,7 @@ package br.ufrn.imd.pds.data;
 import java.util.List;
 
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.OfficeItems;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public interface ItemDAO {
@@ -32,11 +32,7 @@ public interface ItemDAO {
 	
 	/// Return all items registered by name with filters.
 	public List<Item> readAll( List<String> name, List<String> filters) throws DataException;
-		
-	
-	/// Return all Appliances registered in the database.
-	public List<Appliance> readAllAppliances( );	
-		
+				
 	/// Update item in database.
 	/*
 	 * @param item item to be updated in the database.

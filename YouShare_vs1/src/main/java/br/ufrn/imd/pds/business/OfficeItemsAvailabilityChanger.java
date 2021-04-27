@@ -4,17 +4,17 @@ import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
-public class ApplianceAvailabilityChanger implements ItemAvailabilityChanger {
+public class OfficeItemsAvailabilityChanger implements ItemAvailabilityChanger {
 
 
 	@Override
 	public Item changeAvailability(Item item) throws BusinessException, DataException { 
 		
-		if( !(item instanceof Appliance) ) {
-			throw new BusinessException("Trying to edit a Appliance's attribute, but item is from another type.");
+		if( !(item instanceof OfficeItems) ) {
+			throw new BusinessException("Trying to edit a OfficeItems's attribute, but item is from another type.");
 		}
 		
-		((Appliance) item).setAvailable( !((Appliance) item).isAvailable() );
+		((OfficeItems) item).setAvailable( !((OfficeItems) item).isAvailable() );
 		
 		return item;
 	}

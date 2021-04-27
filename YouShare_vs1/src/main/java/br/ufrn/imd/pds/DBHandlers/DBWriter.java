@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.OfficeItems;
 import br.ufrn.imd.pds.business.User;
 
 public class DBWriter {
@@ -41,23 +41,23 @@ public class DBWriter {
 	
 	/// Write current item hashMap in the database.
 	/*
-	 *  Write itemMap, a HashMap of items, into four item database files: applianceDatabase.csv; childrenToyDatabase.csv; costumeDatabase.csv; partyClothesDatabase.csv; applianceDatabase.csv (the only one implemented now); 
+	 *  Write itemMap, a HashMap of items, into item database file: officeItemsDatabase.csv; 
 	 */
 	public static void itemHashMapToCSV ( HashMap<String, Item> itemMap ) 
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-		ArrayList<Appliance> applianceList = new ArrayList<Appliance>();
+		ArrayList<OfficeItems> itemlist = new ArrayList<OfficeItems>();
 		
-		// put Appliances from applianceMap in a list
+		// put items from itemsMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
-			if( pair.getValue() instanceof Appliance ) {
-				applianceList.add( (Appliance) pair.getValue() );
+			if( pair.getValue() instanceof OfficeItems ) {
+				itemlist.add( (OfficeItems) pair.getValue() );
 			}
 		}
 
 		// write database
-		FileWriter writer = new FileWriter( "src/main/csv/applianceDatabase.csv" );
-		StatefulBeanToCsv<Appliance> ApplianceToCsv = new StatefulBeanToCsvBuilder<Appliance>(writer).build();
-		ApplianceToCsv.write( applianceList );
+		FileWriter writer = new FileWriter( "src/main/csv/officeItemsDatabase.csv" );
+		StatefulBeanToCsv<OfficeItems> itemsToCsv = new StatefulBeanToCsvBuilder<OfficeItems>(writer).build();
+		itemsToCsv.write( itemlist );
 		
 		writer.close();
 		

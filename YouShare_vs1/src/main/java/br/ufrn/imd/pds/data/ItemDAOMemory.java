@@ -13,7 +13,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import br.ufrn.imd.pds.DBHandlers.DBReader;
 import br.ufrn.imd.pds.DBHandlers.DBWriter;
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.OfficeItems;
 import br.ufrn.imd.pds.exceptions.DataException;
 import br.ufrn.imd.pds.util.IdCounter;
 
@@ -109,7 +109,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll() {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put items from ApplianceMap in a list
+		// put items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			items.add( pair.getValue() );
 		}
@@ -121,7 +121,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll(String owner) {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put items from ApplianceMap in a list
+		// put items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			Item item = pair.getValue();
 			if( item.getOwner().equals(owner) ) {
@@ -182,24 +182,24 @@ public class ItemDAOMemory implements ItemDAO {
 						isAmatch = isAmatch && ( item.getItemGrade() >= 4.0 );
 						
 					} else if( filter.equals("$weared") ) {
-						isAmatch = isAmatch && ( ((Appliance) item).getCondition().equals("weared") );
+						isAmatch = isAmatch && ( ((OfficeItems) item).getCondition().equals("weared") );
 						
 					} else if( filter.equals("$good") ) {
-						isAmatch = isAmatch && ( ((Appliance) item).getCondition().equals("good") );
+						isAmatch = isAmatch && ( ((OfficeItems) item).getCondition().equals("good") );
 						
 					} else if( filter.equals("$new") ) {
-						isAmatch = isAmatch && ( ((Appliance) item).getCondition().equals("new") );
+						isAmatch = isAmatch && ( ((OfficeItems) item).getCondition().equals("new") );
 						
-					} else if( filter.equals("$under10") && item instanceof Appliance ) {
-						double price = Double.parseDouble( ((Appliance) item).getPrice() );
+					} else if( filter.equals("$under10") && item instanceof OfficeItems ) {
+						double price = Double.parseDouble( ((OfficeItems) item).getPrice() );
 						isAmatch = isAmatch && ( price <= 10.0 );
 						
-					} else if( filter.equals("10to20") && item instanceof Appliance ) {
-						double price = Double.parseDouble(((Appliance) item).getPrice());
+					} else if( filter.equals("10to20") && item instanceof OfficeItems ) {
+						double price = Double.parseDouble(((OfficeItems) item).getPrice());
 						isAmatch = isAmatch && ( price >= 10.0 && price < 20.0 );
 						
-					} else if( filter.equals("over20") && item instanceof Appliance ) {
-						double price = Double.parseDouble(((Appliance) item).getPrice());
+					} else if( filter.equals("over20") && item instanceof OfficeItems ) {
+						double price = Double.parseDouble(((OfficeItems) item).getPrice());
 						isAmatch = isAmatch && ( price >= 20.0 );
 						
 					} else {
@@ -219,48 +219,10 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		return items;
 	}
-
-
-	@Override
-	public List<Appliance> readAllAppliances() {
-		ArrayList<Appliance> applianceList = new ArrayList<Appliance>();
-		
-		// put Appliances from ApplianceMap in a list
-		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
-			if( pair.getValue() instanceof Appliance ) {
-				applianceList.add( (Appliance) pair.getValue() );
-			}
-		}
-
-		return applianceList; // TODO check if it is fine to return empty list
-	}
-
 	
 	@Override
 	public String updateItem(Item item) throws DataException {
-		
-		/*
-		// Appliance item
-		if( item instanceof Appliance ) {
-			Appliance applianceAux = (Appliance) itemMap.get( item.getCode() );
-
-			applianceAux.setName( 			((Appliance) item ).getName() );
-			applianceAux.setCode( 			((Appliance) item ).getCode() );
-			applianceAux.setDescription( 	((Appliance) item ).getDescription() );
-			applianceAux.setItemGrade( 		((Appliance) item ).getItemGrade() );
-			applianceAux.setItemGradeCount( 	((Appliance) item ).getItemGradeCount() );
-			applianceAux.setLastReview( 		((Appliance) item ).getLastReview() );
-			applianceAux.setAvailable( 		((Appliance) item ).isAvailable() );
-			applianceAux.setPrice( 			((Appliance) item ).getPrice() );
-			applianceAux.setTermsOfUse( 		((Appliance) item ).getTermsOfUse() );
-			applianceAux.setCondition( 		((Appliance) item ).getCondition() );
-			applianceAux.setVoltage( 		((Appliance) item ).getVoltage() );
 				
-			// update item hashmap
-			itemMap.put(applianceAux.getCode(), applianceAux);
-		}
-		*/
-		
 		// update item hashmap
 		itemMap.put(item.getCode(), item);
 			
@@ -297,7 +259,7 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		ArrayList<Item> userItems = new ArrayList<Item>();
 		
-		// put user items from ApplianceMap in a list
+		// put user items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			Item item = pair.getValue();
 			if( item.getOwner().equals(user) ) {
@@ -307,7 +269,7 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		// remove items
 		for( Item item: userItems ) {
-			// remove item from item map
+			// remove item from itemMap
 			itemMap.remove( item.getCode() );
 		}
 		

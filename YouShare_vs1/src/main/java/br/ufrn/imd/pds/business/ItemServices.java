@@ -27,8 +27,8 @@ public class ItemServices implements FacadeItem {
 		userDatabase = UserDAOMemory.getInstance();
 		
 		// define strategies
-		itemValidationStrategy = new ApplianceValidator();
-		changeAvailabilityStrategy = new ApplianceAvailabilityChanger();
+		itemValidationStrategy = new OfficeItemsValidator();
+		changeAvailabilityStrategy = new OfficeItemsAvailabilityChanger();
 
 	}
 	
@@ -45,29 +45,29 @@ public class ItemServices implements FacadeItem {
 		// validate item
 		validateItem(newItem);
 				
-		if( newItem instanceof Appliance ) {
-			Appliance applianceDb = new Appliance();
+		if( newItem instanceof OfficeItems ) {
+			OfficeItems db = new OfficeItems();
 
 			// copy fields
-			applianceDb.setName( ((Appliance) newItem).getName() );
-			applianceDb.setDescription( ((Appliance) newItem).getDescription() );
-			applianceDb.setCode( ((Appliance) newItem).getCode() );
-			applianceDb.setOwner( ((Appliance) newItem).getOwner() );
-			applianceDb.setAvailable( ((Appliance) newItem).isAvailable() );
-			applianceDb.setPrice( ((Appliance) newItem).getPrice() );
-			applianceDb.setTermsOfUse( ((Appliance) newItem).getTermsOfUse() );
-			applianceDb.setCondition( ((Appliance) newItem).getCondition() );
-			applianceDb.setVoltage( ((Appliance) newItem).getVoltage() );
+			db.setName( ((OfficeItems) newItem).getName() );
+			db.setDescription( ((OfficeItems) newItem).getDescription() );
+			db.setCode( ((OfficeItems) newItem).getCode() );
+			db.setOwner( ((OfficeItems) newItem).getOwner() );
+			db.setAvailable( ((OfficeItems) newItem).isAvailable() );
+			db.setPrice( ((OfficeItems) newItem).getPrice() );
+			db.setTermsOfUse( ((OfficeItems) newItem).getTermsOfUse() );
+			db.setCondition( ((OfficeItems) newItem).getCondition() );
+			db.setVoltage( ((OfficeItems) newItem).getVoltage() );
 									
 			// fill default review, grade and grade count
-			applianceDb.setLastReview("No reviews yet!");
-			applianceDb.setItemGrade(5);
-			applianceDb.setItemGradeCount(0);
+			db.setLastReview("No reviews yet!");
+			db.setItemGrade(5);
+			db.setItemGradeCount(0);
 			
 			// require item registration in the database
-			return itemDatabase.createItem( applianceDb );
+			return itemDatabase.createItem( db );
 										
-		} // TODO other items creation		
+		} 		
 		
 		return null;
 	}
@@ -104,12 +104,6 @@ public class ItemServices implements FacadeItem {
 		
 		return itemDatabase.readAll(name, filters);
 	}
-	
-
-	@Override
-	public List<Appliance> readAllAppliances() {
-		return itemDatabase.readAllAppliances();
-	}
 
 
 	@Override
@@ -129,30 +123,30 @@ public class ItemServices implements FacadeItem {
 			throw new BusinessException("Item does not belong you, thus cannot be updated!");
 		}
 
-		if( item instanceof Appliance ) {
-			Appliance applianceDb = new Appliance();
+		if( item instanceof OfficeItems ) {
+			OfficeItems db = new OfficeItems();
 
 			// copy fields
-			applianceDb.setName( ((Appliance) item).getName() );
-			applianceDb.setDescription( ((Appliance) item).getDescription() );
-			applianceDb.setCode( ((Appliance) item).getCode() );
-			applianceDb.setOwner( ((Appliance) item).getOwner() );
-			applianceDb.setAvailable( ((Appliance) item).isAvailable() );
-			applianceDb.setPrice( ((Appliance) item).getPrice() );
-			applianceDb.setTermsOfUse( ((Appliance) item).getTermsOfUse() );
-			applianceDb.setCondition( ((Appliance) item).getCondition() );
-			applianceDb.setVoltage( ((Appliance) item).getVoltage() );
+			db.setName( ((OfficeItems) item).getName() );
+			db.setDescription( ((OfficeItems) item).getDescription() );
+			db.setCode( ((OfficeItems) item).getCode() );
+			db.setOwner( ((OfficeItems) item).getOwner() );
+			db.setAvailable( ((OfficeItems) item).isAvailable() );
+			db.setPrice( ((OfficeItems) item).getPrice() );
+			db.setTermsOfUse( ((OfficeItems) item).getTermsOfUse() );
+			db.setCondition( ((OfficeItems) item).getCondition() );
+			db.setVoltage( ((OfficeItems) item).getVoltage() );
 					
 			// copy restricted fields
-			applianceDb.setLastReview( ((Appliance) itemAux).getLastReview() );
-			applianceDb.setItemGrade( ((Appliance) itemAux).getItemGrade() );
-			applianceDb.setItemGradeCount( ((Appliance) itemAux).getItemGradeCount() );
+			db.setLastReview( ((OfficeItems) itemAux).getLastReview() );
+			db.setItemGrade( ((OfficeItems) itemAux).getItemGrade() );
+			db.setItemGradeCount( ((OfficeItems) itemAux).getItemGradeCount() );
 
 			
 			// require item registration in the database
-			return itemDatabase.updateItem( applianceDb );
+			return itemDatabase.updateItem( db );
 									
-		} // TODO other items update
+		} 
 
 		return null;
 	}
@@ -223,7 +217,7 @@ public class ItemServices implements FacadeItem {
 		Item itemAux = itemDatabase.readItem( code );
 		
 		if( itemAux == null ) {
-			throw new BusinessException("Appliance not registered, thus cannot change availability!");
+			throw new BusinessException("Register not found, thus cannot change availability!");
 		} 
 				
 		Item item_ret = changeAvailabilityStrategy.changeAvailability(itemAux);

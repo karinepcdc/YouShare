@@ -11,7 +11,7 @@ import java.util.List;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.OfficeItems;
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.exceptions.DataException;
 
@@ -72,33 +72,31 @@ public class DBReader {
 		return userMap;
 	}
 	
-	public static HashMap<String,Item> csvToItemHashMap () throws IOException {
-		// TODO only Tool database inplemented. Do the others
-		
-		// Appliance database
+	public static HashMap<String,Item> csvToItemHashMap () throws IOException {		
+		// Item database
 		// If items database files does not exist, create them
-		File applianceDatabaseFile = new File("src/main/csv/applianceDatabase.csv");
-		if( applianceDatabaseFile.createNewFile() ) {
-			System.out.println("Appliance database file created!\n");	
+		File itemDatabaseFile = new File("src/main/csv/officeItemsDatabase.csv");
+		if( itemDatabaseFile.createNewFile() ) {
+			System.out.println("Items database file created!\n");	
 		}
 		
 		
 		// Prepare to read the file	
 		FileReader csvFile = null; 
-		csvFile = new FileReader( applianceDatabaseFile );  	
+		csvFile = new FileReader( itemDatabaseFile );  	
 		
 		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Appliance> itemList = new CsvToBeanBuilder( csvFile ).withType(Appliance.class).build().parse();
+		List<OfficeItems> itemList = new CsvToBeanBuilder( csvFile ).withType(OfficeItems.class).build().parse();
 				
 		// build hashmap
 		HashMap<String,Item> itemMap = new HashMap<String,Item>();
 		
-		// TODO delete prints later
 		for ( Item item : itemList ) {
 			itemMap.put( item.getCode(), item );
-			System.out.println("item: " + item.getName() + " (id: " + item.getCode() + ") read\n" );
+			//System.out.println("item: " + item.getName() + " R$" + item.getCode() + " read\n" );
 		}
+		
 		
 		return itemMap;		
 	}

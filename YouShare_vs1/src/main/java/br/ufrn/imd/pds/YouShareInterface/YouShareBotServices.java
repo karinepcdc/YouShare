@@ -20,7 +20,7 @@ import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.ItemServices;
-import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.OfficeItems;
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
@@ -393,12 +393,11 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		String botAnswer = "";
 		
 		// Extract item information from user text message
-		// TODO include other type of itens
-		Appliance newAppliance;
+		OfficeItems newOfficeItems;
 		try {
-			newAppliance = FormToItem.createFormToAppliance( message.getTxtMessage(), message.getTelegramUserName());
+			newOfficeItems = FormToItem.createFormToOfficeItems( message.getTxtMessage(), message.getTelegramUserName());
 			try {
-				String code = itemServices.createItem( newAppliance );
+				String code = itemServices.createItem( newOfficeItems );
 				
 				botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") created! :wink:\n");
 				botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
@@ -480,8 +479,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		String botAnswer = "";
 		
 		// Extract item information from user text message
-		// TODO include other type of itens
-		Appliance newAppliance;
+		OfficeItems newOfficeItems;
 		try {
 			String itemId = "";
 			String RegexCode = "<Id>\\s*(.+?)\\s*</Id>.*?\n";
@@ -500,10 +498,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			}
 			
 			
-			Item originalAppliance = itemServices.readItem( itemId );
-			newAppliance = FormToItem.editFormToAppliance( message.getTxtMessage(), (Appliance) originalAppliance);
+			Item originalItem = itemServices.readItem( itemId );
+			newOfficeItems = FormToItem.editFormToOfficeItems( message.getTxtMessage(), (OfficeItems) originalItem);
 				
-			String code = itemServices.updateItem( newAppliance );
+			String code = itemServices.updateItem( newOfficeItems );
 				
 			botAnswer = EmojiParser.parseToUnicode("Item " + "(id: " + code + ") updated! :wink:\n");
 			botAnswer += "Check your item typing /itemdetails_" + code + ".\n";
@@ -548,7 +546,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 
 				} catch ( BusinessException e ) {
 							
-					botAnswer = "Id " +  message.getParameter() + "is not valid:\n";
+					botAnswer = "Id " +  message.getParameter() + " is not valid:\n";
 					botAnswer += e.getMessage();
 					botAnswer += "\nThe command /itemdetails require a item id as parameter.\n";
 					botAnswer += "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n";
@@ -571,12 +569,13 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					botAnswer += "Most recent review: " + item.getLastReview() + "\n";
 					
 					// item specifics
-					if( item instanceof Appliance ) {
-						botAnswer += "Price: $" + ((Appliance) item).getPrice() + "\n\n";
-						botAnswer += "Terms of use: " + ((Appliance) item).getTermsOfUse() + "\n";
-						botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
-						botAnswer += "Voltage: " + ((Appliance) item).getVoltage() + "V\n";
-						botAnswer += "Status: " + (((Appliance) item).isAvailable() ? "public" : "private");
+					if( item instanceof OfficeItems ) {
+						botAnswer += "Price: $" + ((OfficeItems) item).getPrice() + "\n\n";
+						botAnswer += "Terms of use: " + ((OfficeItems) item).getTermsOfUse() + "\n";
+						botAnswer += "Condition: " + ((OfficeItems) item).getCondition() + "\n";
+						botAnswer += "Voltage: " + ((OfficeItems) item).getVoltage() 
+								+ ( ((OfficeItems) item).getVoltage().equals("none") ? "\n": "V\n" );
+						botAnswer += "Status: " + (((OfficeItems) item).isAvailable() ? "public" : "private");
 
 					}
 					
@@ -632,7 +631,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		
 	}
 
-	// warning: appliance specific methold
+	// warning: OfficeItem specific methold
 	public static void changeAdStatus( MessageData message ) {
 		String botAnswer = ""; 
 
@@ -646,10 +645,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 							
 					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
 							+ e.getMessage()
-							+ "\nThe command /changeadstatus require a appliance id as parameter.\n"
+							+ "\nThe command /changeadstatus require a id as parameter.\n"
 							+ "Type /changeadstatus_id, replacing id by the id number of the item you want to see.\n\n"
 							+ "For instance, /changeadstatus_0.\n\n"
-							+ "To check your appliances ids type /myshare.";
+							+ "To check your ads ids type /myshare.";
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -661,7 +660,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					itemServices.changeAvailability( id );
 					Item item = itemServices.readItem( id );
 					
-					botAnswer = item.getName() + " have been set to " + (((Appliance) item).isAvailable() ? "public." : "private.")
+					botAnswer = item.getName() + " have been set to " + (((OfficeItems) item).isAvailable() ? "public." : "private.")
 							+ " (Check the change at /itemdetails_"  + item.getCode() + ")";
 					
 					// request APIInterface to send text message to user
@@ -914,8 +913,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				
 				botAnswer += EmojiParser.parseToUnicode(":hammer_and_wrench:") + " " + item.getName() + "     " + EmojiParser.parseToUnicode(":star: ") + item.getItemGrade() + "\n";
 				botAnswer += item.getDescription().substring(0, Math.min(item.getDescription().length(), 50)) + "...\n";
-				botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
-				botAnswer += "$ " + ((Appliance) item).getPrice() + "\n";
+				botAnswer += "Condition: " + ((OfficeItems) item).getCondition() + "\n";
+				botAnswer += "$ " + ((OfficeItems) item).getPrice() + "\n";
 				botAnswer += "/addetail_" + item.getCode() + "\n\n";
 			}
 	   	    
@@ -996,7 +995,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		}
 		
 		// build item to be deleted
-		Item delItem = new Appliance("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "", "");
+		Item delItem = new OfficeItems("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "", "");
 		delItem.setCode( code );		
 		
 		// delete item
@@ -1042,20 +1041,20 @@ public class YouShareBotServices implements FacadeYouShareBot {
 	}
 	
 	/// Utils
-	/*private static void printAppliance( Appliance appliance ) {
+	/*private static void print( OfficeItems item ) {
 		System.out.println("\n**************************\n");
-		System.out.println("Reading Appliance " + appliance.getCode() + "\n"
-				+ "Name: " + appliance.getName() + "\n"
-				+ "Description: " + appliance.getDescription() + "\n"
-				+ "Owner: " + appliance.getOwner() + "\n"
-				+ "itemGrade: " + appliance.getItemGrade() + "\n"
-				+ "itemGradeCount: " + appliance.getItemGradeCount() + "\n"
-				+ "lastReview: " + appliance.getLastReview() + "\n"
-				+ "isAvailable:" + appliance.isAvailable() + "\n"
-				+ "price: " + appliance.getPrice() + "\n"
-				+ "TOU: " + appliance.getTermsOfUse() + "\n"
-				+ "Condition: " + appliance.getCondition() + "\n"
-				+ "Voltage: " + appliance.getVoltage() + "\n" );
+		System.out.println("Reading OfficeItems " + item.getCode() + "\n"
+				+ "Name: " + item.getName() + "\n"
+				+ "Description: " + item.getDescription() + "\n"
+				+ "Owner: " + item.getOwner() + "\n"
+				+ "itemGrade: " + item.getItemGrade() + "\n"
+				+ "itemGradeCount: " + item.getItemGradeCount() + "\n"
+				+ "lastReview: " + item.getLastReview() + "\n"
+				+ "isAvailable:" + item.isAvailable() + "\n"
+				+ "price: " + item.getPrice() + "\n"
+				+ "TOU: " + item.getTermsOfUse() + "\n"
+				+ "Condition: " + item.getCondition() + "\n"
+				+ "Voltage: " + item.getVoltage() + "\n" );
 
 		System.out.println("\n**************************\n");
 

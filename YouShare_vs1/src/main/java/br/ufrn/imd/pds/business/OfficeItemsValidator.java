@@ -5,20 +5,20 @@ import java.util.List;
 
 import br.ufrn.imd.pds.exceptions.BusinessException;
 
-public class ApplianceValidator implements ItemValidator {
+public class OfficeItemsValidator implements ItemValidator {
 
 	@Override
 	public List<String> itemValidator(Item item) throws BusinessException {
 		
-		if( !(item instanceof Appliance) ) {
-			throw new BusinessException("Trying to validate an Appliance's, but item is from another type.");
+		if( !(item instanceof OfficeItems) ) {
+			throw new BusinessException("Trying to validate an OfficeItems's, but item is from another type.");
 		}
 		
 		List<String> exceptionMessages = new ArrayList<String>();
 
 		// check if price is valid
 		try {
-			Double.parseDouble( ((Appliance) item).getPrice() );
+			Double.parseDouble( ((OfficeItems) item).getPrice() );
 			
 		} catch ( NullPointerException e1 ) {
 			exceptionMessages.add("Price is required.");
@@ -28,28 +28,28 @@ public class ApplianceValidator implements ItemValidator {
 		}
 			
 		// validate TermsOfUse
-		if( ( (Appliance) item).getTermsOfUse() == null || ( (Appliance) item).getTermsOfUse().isBlank() ) {
+		if( ( (OfficeItems) item).getTermsOfUse() == null || ( (OfficeItems) item).getTermsOfUse().isBlank() ) {
 			exceptionMessages.add("Terms of Use are required.");
 		}
 			
 		// validate condition
-		if( ( (Appliance) item).getCondition() == null || ( (Appliance) item).getCondition().isBlank() ) {
+		if( ( (OfficeItems) item).getCondition() == null || ( (OfficeItems) item).getCondition().isBlank() ) {
 			exceptionMessages.add("Condition is required (weared, good or new values are accepted).");
 		}
 			
 		// valid conditions: worn, good or new
-		String condition = ( (Appliance) item).getCondition();
+		String condition = ( (OfficeItems) item).getCondition();
 		if( !condition.equals("weared") && !condition.equals("good") && !condition.equals("new") ) {
 			exceptionMessages.add("Condition is invalid (weared, good or new values are accepted).");				
 		}
 			
 		// validate voltage
-		if( ( (Appliance) item).getVoltage() == null || ( (Appliance) item).getVoltage().isBlank() ) {
+		if( ( (OfficeItems) item).getVoltage() == null || ( (OfficeItems) item).getVoltage().isBlank() ) {
 			exceptionMessages.add("Voltage is required (110, 220 or none values are accepted).");
 		}
 			
 		// valid voltages: 110, 220 or none
-		String voltage = ( (Appliance) item).getVoltage();
+		String voltage = ( (OfficeItems) item).getVoltage();
 		if( !voltage.equals("110") && !voltage.equals("220")  && !voltage.equals("none") ) {
 			exceptionMessages.add("Voltage is invalid (110, 220 or none values are accepted).");				
 		}
