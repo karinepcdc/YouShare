@@ -33,10 +33,6 @@ public interface ItemDAO {
 	/// Return all items registered by name with filters.
 	public List<Item> readAll( List<String> name, List<String> filters) throws DataException;
 		
-	
-	/// Return all Appliances registered in the database.
-	public List<Appliance> readAllAppliances( );	
-		
 	/// Update item in database.
 	/*
 	 * @param item item to be updated in the database.

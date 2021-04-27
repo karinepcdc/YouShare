@@ -104,13 +104,6 @@ public class ItemServices implements FacadeItem {
 		
 		return itemDatabase.readAll(name, filters);
 	}
-	
-
-	@Override
-	public List<Appliance> readAllAppliances() {
-		return itemDatabase.readAllAppliances();
-	}
-
 
 	@Override
 	public String updateItem(Item item) throws BusinessException, DataException {
@@ -165,6 +158,10 @@ public class ItemServices implements FacadeItem {
 			throw new BusinessException("Item not registered in the database, thus cannot be removed.");
 		}
 		
+		System.out.println("item code send to db: " + item.getCode());
+		System.out.println("owner: " + item.getOwner());
+		System.out.println("true owner: " + itemAux.getOwner());
+		System.out.println("equal? " + itemAux.getOwner().equals( item.getOwner()) );
 		// check if user owns item
 		if(!itemAux.getOwner().equals( item.getOwner()) ) {
 			throw new BusinessException("Item does not belong you! You can't remove it.");

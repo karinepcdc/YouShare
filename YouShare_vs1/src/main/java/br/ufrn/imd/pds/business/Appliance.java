@@ -17,7 +17,7 @@ public class Appliance extends Item {
 	private String condition; /// the usage condition can be: weared, good or new  
 	
 	@CsvBindByName
-	private String voltage; /// eletrical voltage 220 or 110 // TODO check if it is better to use a boolean here 
+	private String voltage; /// eletrical voltage 220 or 110  
 	
 	
 	/* Constructor Default */

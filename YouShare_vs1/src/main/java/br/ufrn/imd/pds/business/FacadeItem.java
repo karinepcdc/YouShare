@@ -24,10 +24,7 @@ public interface FacadeItem {
 	public List<Item> readAll( String owner ) throws BusinessException;	
 	
 	/// Return all items registered by name with filters.
-	public List<Item> readAll( List<String> name, List<String> filters) throws BusinessException, DataException;
-	
-	/// Return all Appliances registered.
-	public List<Appliance> readAllAppliances( );	
+	public List<Item> readAll( List<String> name, List<String> filters) throws BusinessException, DataException;	
 	
 	/// Require that a YouShare item be updated from database
 	/*

@@ -96,6 +96,7 @@ public class ItemDAOMemory implements ItemDAO {
 	@Override
 	public Item readItem(String code) {
 
+		System.out.println("item code received to db: " + code);
 		boolean isRegistered = itemMap.containsKey( code );		
 		if( isRegistered ) {
 			return itemMap.get( code );
@@ -109,7 +110,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll() {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put items from ApplianceMap in a list
+		// put items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			items.add( pair.getValue() );
 		}
@@ -121,7 +122,7 @@ public class ItemDAOMemory implements ItemDAO {
 	public List<Item> readAll(String owner) {
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		// put items from ApplianceMap in a list
+		// put items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			Item item = pair.getValue();
 			if( item.getOwner().equals(owner) ) {
@@ -219,48 +220,10 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		return items;
 	}
-
-
-	@Override
-	public List<Appliance> readAllAppliances() {
-		ArrayList<Appliance> applianceList = new ArrayList<Appliance>();
-		
-		// put Appliances from ApplianceMap in a list
-		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
-			if( pair.getValue() instanceof Appliance ) {
-				applianceList.add( (Appliance) pair.getValue() );
-			}
-		}
-
-		return applianceList; // TODO check if it is fine to return empty list
-	}
-
 	
 	@Override
 	public String updateItem(Item item) throws DataException {
-		
-		/*
-		// Appliance item
-		if( item instanceof Appliance ) {
-			Appliance applianceAux = (Appliance) itemMap.get( item.getCode() );
-
-			applianceAux.setName( 			((Appliance) item ).getName() );
-			applianceAux.setCode( 			((Appliance) item ).getCode() );
-			applianceAux.setDescription( 	((Appliance) item ).getDescription() );
-			applianceAux.setItemGrade( 		((Appliance) item ).getItemGrade() );
-			applianceAux.setItemGradeCount( 	((Appliance) item ).getItemGradeCount() );
-			applianceAux.setLastReview( 		((Appliance) item ).getLastReview() );
-			applianceAux.setAvailable( 		((Appliance) item ).isAvailable() );
-			applianceAux.setPrice( 			((Appliance) item ).getPrice() );
-			applianceAux.setTermsOfUse( 		((Appliance) item ).getTermsOfUse() );
-			applianceAux.setCondition( 		((Appliance) item ).getCondition() );
-			applianceAux.setVoltage( 		((Appliance) item ).getVoltage() );
 				
-			// update item hashmap
-			itemMap.put(applianceAux.getCode(), applianceAux);
-		}
-		*/
-		
 		// update item hashmap
 		itemMap.put(item.getCode(), item);
 			
@@ -297,7 +260,7 @@ public class ItemDAOMemory implements ItemDAO {
 		
 		ArrayList<Item> userItems = new ArrayList<Item>();
 		
-		// put user items from ApplianceMap in a list
+		// put user items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			Item item = pair.getValue();
 			if( item.getOwner().equals(user) ) {

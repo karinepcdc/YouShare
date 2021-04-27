@@ -72,20 +72,18 @@ public class DBReader {
 		return userMap;
 	}
 	
-	public static HashMap<String,Item> csvToItemHashMap () throws IOException {
-		// TODO only Tool database inplemented. Do the others
-		
-		// Appliance database
+	public static HashMap<String,Item> csvToItemHashMap () throws IOException {		
+		// Items database
 		// If items database files does not exist, create them
-		File applianceDatabaseFile = new File("src/main/csv/applianceDatabase.csv");
-		if( applianceDatabaseFile.createNewFile() ) {
-			System.out.println("Appliance database file created!\n");	
+		File itemsDatabaseFile = new File("src/main/csv/applianceDatabase.csv");
+		if( itemsDatabaseFile.createNewFile() ) {
+			System.out.println("Items database file created!\n");	
 		}
 		
 		
 		// Prepare to read the file	
 		FileReader csvFile = null; 
-		csvFile = new FileReader( applianceDatabaseFile );  	
+		csvFile = new FileReader( itemsDatabaseFile );  	
 		
 		// read database
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -94,10 +92,9 @@ public class DBReader {
 		// build hashmap
 		HashMap<String,Item> itemMap = new HashMap<String,Item>();
 		
-		// TODO delete prints later
 		for ( Item item : itemList ) {
 			itemMap.put( item.getCode(), item );
-			System.out.println("item: " + item.getName() + " (id: " + item.getCode() + ") read\n" );
+			//System.out.println("item: " + item.getName() + " (id: " + item.getCode() + ") read\n" );
 		}
 		
 		return itemMap;		

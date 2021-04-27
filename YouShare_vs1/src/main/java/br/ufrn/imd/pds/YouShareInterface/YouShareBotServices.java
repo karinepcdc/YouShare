@@ -575,7 +575,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 						botAnswer += "Price: $" + ((Appliance) item).getPrice() + "\n\n";
 						botAnswer += "Terms of use: " + ((Appliance) item).getTermsOfUse() + "\n";
 						botAnswer += "Condition: " + ((Appliance) item).getCondition() + "\n";
-						botAnswer += "Voltage: " + ((Appliance) item).getVoltage() + "V\n";
+						botAnswer += "Voltage: " + ((Appliance) item).getVoltage() 
+								+ ( ((Appliance) item).getVoltage().equals("none") ? "\n": "V\n" );
 						botAnswer += "Status: " + (((Appliance) item).isAvailable() ? "public" : "private");
 
 					}
@@ -986,7 +987,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		// retrieve code
 		String stringTosearchId = callbackMessage.getTxtMessage();
 		
-		Pattern idPattern = Pattern.compile("\\(id: +(\\S)+\\)");
+		Pattern idPattern = Pattern.compile("\\(id: +(\\S+)+\\)");
 		Matcher m = idPattern.matcher(stringTosearchId);
 		
 		// if we find a match, get id
@@ -995,6 +996,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			code = m.group(1);
 		}
 		
+		System.out.println("user message: " + stringTosearchId);
+		System.out.println("id read: " + code);
 		// build item to be deleted
 		Item delItem = new Appliance("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "", "");
 		delItem.setCode( code );		
