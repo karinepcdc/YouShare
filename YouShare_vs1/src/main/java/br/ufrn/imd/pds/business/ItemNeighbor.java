@@ -16,6 +16,7 @@ public class ItemNeighbor extends User {
 	@CsvBindByName
 	private String condominium;
 	
+	
 	public ItemNeighbor () {		
 		super();
 	}

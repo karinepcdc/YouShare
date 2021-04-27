@@ -12,29 +12,45 @@ public class FormToItemNeighbor {
 public static ItemNeighbor createFormToItemNeighbor( String itemNeighborForm ) throws UIException {
 		
 		// Appliance form pattern
-		String REGEX = "<Condominium>\\s*(.+?)\\s*</Condominium>.*?\n";				 
+		String REGEX = "<Condominium>\\s*(.+?)\\s*</Condominium>.*?\n";
+				 
 	
 		Pattern idPattern = Pattern.compile( REGEX );
 		Matcher m = idPattern.matcher( itemNeighborForm );
 		
 		// if we find a match, get id
-		String condominium = "";
+		String itemName = "";
+		String itemDescription = "";
+		String itemPrice = "";
+		String itemTOU = "";
+		String itemCondition = "";
+		String itemVoltage = "";
 		
 		if( m.find() ) {
-			condominium = m.group(1);
+			itemName = m.group(1);
+			itemDescription = m.group(2);
+			itemPrice = m.group(3);
+			itemTOU = m.group(4);
+			itemCondition = m.group(5);
+			itemVoltage = m.group(6);
 			
 			// log
-			System.out.println("Condominium read: ." + condominium + ".\n");
+			System.out.println("Name read: ." + itemName + ".\n");
+			System.out.println("Description read: ." + itemDescription + ".\n");
+			System.out.println("Price read: ." + itemPrice + ".\n");
+			System.out.println("TOU read: ." + itemTOU + ".\n");
+			System.out.println("Condition read: ." + itemCondition + ".\n");
+			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 	
 		} else {
-			throw new UIException("itemNeighborForm information could not be read.");
+			throw new UIException("Appliance information could not be read.");
 		}
 		
 		// create item: Appliance					
-		ItemNeighbor newItemNeighbor = new ItemNeighbor();
-		newItemNeighbor.setCondominium( condominium ); 
+		//Appliance newAppliance = new Appliance( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
 			
-		return newItemNeighbor;
+		//return newAppliance;
+		return null;
 	}
 
 public static Appliance editFormToAppliance( String applianceEditForm, Appliance originalAppliance ) throws UIException {

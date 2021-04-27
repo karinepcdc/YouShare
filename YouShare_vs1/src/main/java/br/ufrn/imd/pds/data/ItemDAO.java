@@ -31,11 +31,7 @@ public interface ItemDAO {
 	public List<Item> readAll( String owner );
 	
 	/// Return all items registered by name with filters.
-	public List<Item> readAll( String name, String[] filters) throws DataException;
-		
-	
-	/// Return all Appliances registered in the database.
-	public List<Appliance> readAllAppliances( );	
+	public List<Item> readAll( List<String> name, List<String> filters) throws DataException;
 		
 	/// Update item in database.
 	/*

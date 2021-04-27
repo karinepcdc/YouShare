@@ -2,7 +2,7 @@ package br.ufrn.imd.pds.business;
 
 import com.opencsv.bean.CsvBindByName;
 
-public abstract class User {
+public class User {
 
 	@CsvBindByName
 	private String firstName;

@@ -41,23 +41,23 @@ public class DBWriter {
 	
 	/// Write current item hashMap in the database.
 	/*
-	 *  Write itemMap, a HashMap of items, into four item database files: applianceDatabase.csv; childrenToyDatabase.csv; costumeDatabase.csv; partyClothesDatabase.csv; applianceDatabase.csv (the only one implemented now); 
+	 *  Write itemMap, a HashMap of items, into item database files: applianceDatabase.csv; 
 	 */
 	public static void itemHashMapToCSV ( HashMap<String, Item> itemMap ) 
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-		ArrayList<Appliance> applianceList = new ArrayList<Appliance>();
+		ArrayList<Appliance> itemsList = new ArrayList<Appliance>();
 		
-		// put Appliances from applianceMap in a list
+		// put items from itemMap in a list
 		for ( Map.Entry<String,Item> pair : itemMap.entrySet() ) {
 			if( pair.getValue() instanceof Appliance ) {
-				applianceList.add( (Appliance) pair.getValue() );
+				itemsList.add( (Appliance) pair.getValue() );
 			}
 		}
 
 		// write database
 		FileWriter writer = new FileWriter( "src/main/csv/applianceDatabase.csv" );
-		StatefulBeanToCsv<Appliance> ApplianceToCsv = new StatefulBeanToCsvBuilder<Appliance>(writer).build();
-		ApplianceToCsv.write( applianceList );
+		StatefulBeanToCsv<Appliance> itemToCsv = new StatefulBeanToCsvBuilder<Appliance>(writer).build();
+		itemToCsv.write( itemsList );
 		
 		writer.close();
 		

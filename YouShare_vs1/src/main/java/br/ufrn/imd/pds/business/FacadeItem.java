@@ -24,10 +24,7 @@ public interface FacadeItem {
 	public List<Item> readAll( String owner ) throws BusinessException;	
 	
 	/// Return all items registered by name with filters.
-	public List<Item> readAll( String name, String[] filters) throws BusinessException, DataException;
-	
-	/// Return all Appliances registered.
-	public List<Appliance> readAllAppliances( );	
+	public List<Item> readAll( List<String> name, List<String> filters) throws BusinessException, DataException;	
 	
 	/// Require that a YouShare item be updated from database
 	/*
@@ -84,6 +81,8 @@ public interface FacadeItem {
 	 */
 	public String changeAvailability ( String code ) throws BusinessException, DataException;
 
+	public void validadeSearch(List<String> name, List<String> filters) throws BusinessException, DataException;
+	
 	/// Check if the item id is valid and if it registered to the user.
 	public void validateId ( String code, String user ) throws BusinessException;
 
