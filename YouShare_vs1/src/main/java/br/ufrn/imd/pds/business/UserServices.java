@@ -17,14 +17,14 @@ public class UserServices implements FacadeUser {
 	UserDAO userDatabase;
 	ItemDAO itemDatabase;
 	UserValidator userValidationStrategy; // validation strategy for different subclasses of users
-	UserTypeChanger changeUserTypeStrategy; // change user type to the defined strategy
 
 
 	public UserServices() throws DataException {		
 		userDatabase = UserDAOMemory.getInstance();
 		itemDatabase = ItemDAOMemory.getInstance();
 
-		System.out.println( "UserServices created!" );
+		// define strategies
+		userValidationStrategy = new ShareItemNeighborValidator();
 	}
 	
 	@Override
@@ -32,12 +32,26 @@ public class UserServices implements FacadeUser {
 		
 		validateUser( newUser );
 		
-		if( !isRegistered( newUser.getTelegramUserName() ) ) {
+		if( newUser instanceof ShareItemNeighbor && !isRegistered( newUser.getTelegramUserName() ) ) {
+			ShareItemNeighbor shareItemNeighborDB = new ShareItemNeighbor();
+
+			// copy fields
+			shareItemNeighborDB.setFirstName( ((ShareItemNeighbor)newUser).getFirstName() );
+			shareItemNeighborDB.setLastName( ((ShareItemNeighbor)newUser).getLastName() );
+			shareItemNeighborDB.setTelegramUserName( ((ShareItemNeighbor)newUser).getTelegramUserName() );
+									
+			// fill default review, grade and grade count
+			shareItemNeighborDB.setLastReview("No reviews yet!");
+			shareItemNeighborDB.setItemGrade(5);
+			shareItemNeighborDB.setItemGradeCount(0);
 			
-			userDatabase.createUser( newUser );
-			
-		} else {
-			throw new BusinessException( "User is already registered. \n" );
+			// require item registration in the database
+			userDatabase.createUser( shareItemNeighborDB );
+										
+		} // TODO other users creation
+		
+		else {
+			throw new BusinessException( "User is already registered or user type isn't right for this instance of the framework. \n" );
 		}
 		
 	}
@@ -47,15 +61,8 @@ public class UserServices implements FacadeUser {
 		
 		User userToRead = userDatabase.readUser( userName );
 
-		if( userToRead != null ) {			
-			/*String userProfile = "";
-			
-			userProfile = "Name: " + userToString.getFirstName() + " " + userToString.getLastName() + "\n"
-	    			+ "Grade: " + userToString.getUserGrade() + "\n"
-	    			+ "Last review: \n" + userToString.getLastReview();*/
-			
-			return userToRead;
-						
+		if( userToRead != null ) {				
+			return userToRead;						
 		} else {
 			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );
 		}
@@ -64,13 +71,31 @@ public class UserServices implements FacadeUser {
 	@Override
 	public void updateUser( User user ) throws BusinessException, DataException {
 		
+		// validate item
+		validateUser( user );
+					
+		// check if user is registered
 		if ( !isRegistered( user.getTelegramUserName() ) ) {			
-			userDatabase.updateUser( user );
-
-		} else {
-
 			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );
-		}
+		} 
+		
+		if( user instanceof ShareItemNeighbor ) {
+			ShareItemNeighbor shareItemNeighborDB = new ShareItemNeighbor();
+
+			// copy fields
+			shareItemNeighborDB.setFirstName( ((ShareItemNeighbor)user).getFirstName() );
+			shareItemNeighborDB.setLastName( ((ShareItemNeighbor)user).getLastName() );
+			shareItemNeighborDB.setTelegramUserName( ((ShareItemNeighbor)user).getTelegramUserName() );
+					
+			// copy restricted fields
+			shareItemNeighborDB.setLastReview( ((ShareItemNeighbor) user).getLastReview() );
+			shareItemNeighborDB.setItemGrade( ((ShareItemNeighbor) user).getItemGrade() );
+			shareItemNeighborDB.setItemGradeCount( ((ShareItemNeighbor) user).getItemGradeCount() );
+					
+			// require item registration in the database
+			userDatabase.updateUser( user );
+											
+		} // TODO other users update		
 		
 	}
 
@@ -95,7 +120,7 @@ public class UserServices implements FacadeUser {
 
 		User userToUpdate = userDatabase.readUser( userName );
 		
-		if( userToUpdate != null ) {
+		if( userToUpdate != null && userToUpdate instanceof ShareItemNeighbor ) {
 			
 			float currentUserGrade = Float.parseFloat( userToUpdate.getUserGrade() );
 			

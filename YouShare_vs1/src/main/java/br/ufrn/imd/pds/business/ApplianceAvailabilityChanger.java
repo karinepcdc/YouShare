@@ -1,6 +1,5 @@
 package br.ufrn.imd.pds.business;
 
-import br.ufrn.imd.pds.data.ItemDAO;
 import br.ufrn.imd.pds.exceptions.BusinessException;
 import br.ufrn.imd.pds.exceptions.DataException;
 
