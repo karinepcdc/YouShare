@@ -44,32 +44,15 @@ public class ItemServices implements FacadeItem {
 
 		// validate item
 		validateItem(newItem);
-				
-		if( newItem instanceof Appliance ) {
-			Appliance applianceDb = new Appliance();
-
-			// copy fields
-			applianceDb.setName( ((Appliance) newItem).getName() );
-			applianceDb.setDescription( ((Appliance) newItem).getDescription() );
-			applianceDb.setCode( ((Appliance) newItem).getCode() );
-			applianceDb.setOwner( ((Appliance) newItem).getOwner() );
-			applianceDb.setAvailable( ((Appliance) newItem).isAvailable() );
-			applianceDb.setPrice( ((Appliance) newItem).getPrice() );
-			applianceDb.setTermsOfUse( ((Appliance) newItem).getTermsOfUse() );
-			applianceDb.setCondition( ((Appliance) newItem).getCondition() );
-			applianceDb.setVoltage( ((Appliance) newItem).getVoltage() );
-									
-			// fill default review, grade and grade count
-			applianceDb.setLastReview("No reviews yet!");
-			applianceDb.setItemGrade(5);
-			applianceDb.setItemGradeCount(0);
-			
-			// require item registration in the database
-			return itemDatabase.createItem( applianceDb );
-										
-		} // TODO other items creation		
 		
-		return null;
+		// fill default review, grade and grade count
+		newItem.setLastReview("No reviews yet!");
+		newItem.setItemGrade(5);
+		newItem.setItemGradeCount(0);
+		
+		// require item registration in the database
+		return itemDatabase.createItem( newItem );
+					
 	}
 
 	@Override
@@ -121,33 +104,16 @@ public class ItemServices implements FacadeItem {
 		if( !itemAux.getOwner().equals(item.getOwner()) ) {
 			throw new BusinessException("Item does not belong you, thus cannot be updated!");
 		}
+		
+		// copy restricted fields
+		item.setLastReview( itemAux.getLastReview() );
+		item.setItemGrade( itemAux.getItemGrade() );
+		item.setItemGradeCount( itemAux.getItemGradeCount() );
 
-		if( item instanceof Appliance ) {
-			Appliance applianceDb = new Appliance();
+		
+		// require item registration in the database
+		return itemDatabase.updateItem( item );
 
-			// copy fields
-			applianceDb.setName( ((Appliance) item).getName() );
-			applianceDb.setDescription( ((Appliance) item).getDescription() );
-			applianceDb.setCode( ((Appliance) item).getCode() );
-			applianceDb.setOwner( ((Appliance) item).getOwner() );
-			applianceDb.setAvailable( ((Appliance) item).isAvailable() );
-			applianceDb.setPrice( ((Appliance) item).getPrice() );
-			applianceDb.setTermsOfUse( ((Appliance) item).getTermsOfUse() );
-			applianceDb.setCondition( ((Appliance) item).getCondition() );
-			applianceDb.setVoltage( ((Appliance) item).getVoltage() );
-					
-			// copy restricted fields
-			applianceDb.setLastReview( ((Appliance) itemAux).getLastReview() );
-			applianceDb.setItemGrade( ((Appliance) itemAux).getItemGrade() );
-			applianceDb.setItemGradeCount( ((Appliance) itemAux).getItemGradeCount() );
-
-			
-			// require item registration in the database
-			return itemDatabase.updateItem( applianceDb );
-									
-		} // TODO other items update
-
-		return null;
 	}
 
 	@Override
@@ -220,7 +186,7 @@ public class ItemServices implements FacadeItem {
 		Item itemAux = itemDatabase.readItem( code );
 		
 		if( itemAux == null ) {
-			throw new BusinessException("Appliance not registered, thus cannot change availability!");
+			throw new BusinessException("Item not registered, thus cannot change availability!");
 		} 
 				
 		Item item_ret = changeAvailabilityStrategy.changeAvailability(itemAux);
