@@ -117,7 +117,7 @@ public static OfficeItems editFormToAppliance( String applianceEditForm, OfficeI
 			System.out.println("Price read: ." + itemPrice + ".\n");
 			
 		} else {
-			itemPrice = originalAppliance.getPrice();
+			//itemPrice = originalAppliance.getPrice();
 		}
 		
 		// check if TOU edition where requested
@@ -131,7 +131,7 @@ public static OfficeItems editFormToAppliance( String applianceEditForm, OfficeI
 			System.out.println("TOU read: ." + itemTOU + ".\n");
 			
 		} else {
-			itemTOU = originalAppliance.getTermsOfUse();
+			//itemTOU = originalAppliance.getTermsOfUse();
 		}
 		
 		// check if condition edition where requested
@@ -168,7 +168,7 @@ public static OfficeItems editFormToAppliance( String applianceEditForm, OfficeI
 		}
 		
 		// create item: OfficeItems					
-		OfficeItems newAppliance = new OfficeItems( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		OfficeItems newAppliance = new OfficeItems( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemCondition, itemVoltage);
 		newAppliance.setAvailable( originalAppliance.isAvailable() );
 		
 		return newAppliance;

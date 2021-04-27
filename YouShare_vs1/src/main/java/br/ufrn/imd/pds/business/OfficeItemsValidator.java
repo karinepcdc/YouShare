@@ -16,21 +16,6 @@ public class OfficeItemsValidator implements ItemValidator {
 		
 		List<String> exceptionMessages = new ArrayList<String>();
 
-		// check if price is valid
-		try {
-			Double.parseDouble( ((OfficeItems) item).getPrice() );
-			
-		} catch ( NullPointerException e1 ) {
-			exceptionMessages.add("Price is required.");
-			
-		} catch ( NumberFormatException e2 ) {
-			exceptionMessages.add("Price must be a number (don't use currency symbols).");
-		}
-			
-		// validate TermsOfUse
-		if( ( (OfficeItems) item).getTermsOfUse() == null || ( (OfficeItems) item).getTermsOfUse().isBlank() ) {
-			exceptionMessages.add("Terms of Use are required.");
-		}
 			
 		// validate condition
 		if( ( (OfficeItems) item).getCondition() == null || ( (OfficeItems) item).getCondition().isBlank() ) {

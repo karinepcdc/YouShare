@@ -54,8 +54,6 @@ public class ItemServices implements FacadeItem {
 			db.setCode( ((OfficeItems) newItem).getCode() );
 			db.setOwner( ((OfficeItems) newItem).getOwner() );
 			db.setAvailable( ((OfficeItems) newItem).isAvailable() );
-			db.setPrice( ((OfficeItems) newItem).getPrice() );
-			db.setTermsOfUse( ((OfficeItems) newItem).getTermsOfUse() );
 			db.setCondition( ((OfficeItems) newItem).getCondition() );
 			db.setVoltage( ((OfficeItems) newItem).getVoltage() );
 									
@@ -132,8 +130,6 @@ public class ItemServices implements FacadeItem {
 			db.setCode( ((OfficeItems) item).getCode() );
 			db.setOwner( ((OfficeItems) item).getOwner() );
 			db.setAvailable( ((OfficeItems) item).isAvailable() );
-			db.setPrice( ((OfficeItems) item).getPrice() );
-			db.setTermsOfUse( ((OfficeItems) item).getTermsOfUse() );
 			db.setCondition( ((OfficeItems) item).getCondition() );
 			db.setVoltage( ((OfficeItems) item).getVoltage() );
 					

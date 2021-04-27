@@ -13,8 +13,6 @@ public class FormToItem {
 		// OfficeItems form pattern
 		String REGEX = "<Name>\\s*(.+?)\\s*</Name>.*?\n"
 				 + "<Description>\\s*(.+?)\\s*</Description>.*?\n"
-				 + "<Price>\\s*(.+?)\\s*</Price>.*?\n"
-				 + "<Terms of use>\\s*(.+?)\\s*</Terms of use>.*?\n"
 				 + "<Condition>\\s*(.+?)\\s*</Condition>.*?\n"
 				 + "<Voltage>\\s*(.+?)\\s*</Voltage>";
 	
@@ -24,24 +22,18 @@ public class FormToItem {
 		// if we find a match, get id
 		String itemName = "";
 		String itemDescription = "";
-		String itemPrice = "";
-		String itemTOU = "";
 		String itemCondition = "";
 		String itemVoltage = "";
 		
 		if( m.find() ) {
 			itemName = m.group(1);
 			itemDescription = m.group(2);
-			itemPrice = m.group(3);
-			itemTOU = m.group(4);
 			itemCondition = m.group(5);
 			itemVoltage = m.group(6);
 			
 			// log
 			System.out.println("Name read: ." + itemName + ".\n");
 			System.out.println("Description read: ." + itemDescription + ".\n");
-			System.out.println("Price read: ." + itemPrice + ".\n");
-			System.out.println("TOU read: ." + itemTOU + ".\n");
 			System.out.println("Condition read: ." + itemCondition + ".\n");
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 	
@@ -50,7 +42,7 @@ public class FormToItem {
 		}
 		
 		// create item: OfficeItems					
-		OfficeItems newOfficeItems = new OfficeItems( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		OfficeItems newOfficeItems = new OfficeItems( itemName , itemDescription, "", owner, 0, 0, "", itemCondition, itemVoltage);
 			
 		return newOfficeItems;
 	}
@@ -62,16 +54,12 @@ public static OfficeItems editFormToOfficeItems( String officeItemsEditForm, Off
 		// OfficeItems form pattern
 		String RegexName = "<Name>\\s*(.+?)\\s*</Name>.*?\n?";
 		String RegexDescription = "<Description>\\s*(.+?)\\s*</Description>.*?\n?";
-		String RegexPrice = "<Price>\\s*(.+?)\\s*</Price>.*?\n?";
-		String RegexTOU = "<Terms of use>\\s*(.+?)\\s*</Terms of use>.*?\n?";
 		String RegexCondition = "<Condition>\\s*(.+?)\\s*</Condition>.*?\n";
 		String RegexVoltage = "<Voltage>\\s*(.+?)\\s*</Voltage>.*?\n?";
 	
 		// variables
 		String itemName = "";
 		String itemDescription = "";
-		String itemPrice = "";
-		String itemTOU = "";
 		String itemCondition = "";
 		String itemVoltage = "";
 	
@@ -106,36 +94,7 @@ public static OfficeItems editFormToOfficeItems( String officeItemsEditForm, Off
 		} else {
 			itemDescription = originalOfficeItems.getDescription();
 		}
-		
-		// check if price edition where requested
-		itemPattern = Pattern.compile(RegexPrice);
-		m = itemPattern.matcher(officeItemsEditForm);
-
-		if( m.find() ) {
-			itemPrice = m.group(1);
-			AnyChange = true;
-			
-			// log
-			System.out.println("Price read: ." + itemPrice + ".\n");
-			
-		} else {
-			itemPrice = originalOfficeItems.getPrice();
-		}
-		
-		// check if TOU edition where requested
-		itemPattern = Pattern.compile(RegexTOU);
-		m = itemPattern.matcher(officeItemsEditForm);
-
-		if( m.find() ) {
-			itemTOU = m.group(1);
-			AnyChange = true;
-			// log
-			System.out.println("TOU read: ." + itemTOU + ".\n");
-			
-		} else {
-			itemTOU = originalOfficeItems.getTermsOfUse();
-		}
-		
+				
 		// check if condition edition where requested
 		itemPattern = Pattern.compile(RegexCondition);
 		m = itemPattern.matcher(officeItemsEditForm);
@@ -170,7 +129,7 @@ public static OfficeItems editFormToOfficeItems( String officeItemsEditForm, Off
 		}
 		
 		// create item: OfficeItems					
-		OfficeItems newOfficeItems = new OfficeItems( itemName , itemDescription, originalOfficeItems.getCode(), originalOfficeItems.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		OfficeItems newOfficeItems = new OfficeItems( itemName , itemDescription, originalOfficeItems.getCode(), originalOfficeItems.getOwner(), 0, 0, "", itemCondition, itemVoltage);
 		newOfficeItems.setAvailable( originalOfficeItems.isAvailable() );
 		
 		return newOfficeItems;

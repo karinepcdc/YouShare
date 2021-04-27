@@ -190,18 +190,6 @@ public class ItemDAOMemory implements ItemDAO {
 					} else if( filter.equals("$new") ) {
 						isAmatch = isAmatch && ( ((OfficeItems) item).getCondition().equals("new") );
 						
-					} else if( filter.equals("$under10") && item instanceof OfficeItems ) {
-						double price = Double.parseDouble( ((OfficeItems) item).getPrice() );
-						isAmatch = isAmatch && ( price <= 10.0 );
-						
-					} else if( filter.equals("10to20") && item instanceof OfficeItems ) {
-						double price = Double.parseDouble(((OfficeItems) item).getPrice());
-						isAmatch = isAmatch && ( price >= 10.0 && price < 20.0 );
-						
-					} else if( filter.equals("over20") && item instanceof OfficeItems ) {
-						double price = Double.parseDouble(((OfficeItems) item).getPrice());
-						isAmatch = isAmatch && ( price >= 20.0 );
-						
 					} else {
 						throw new DataException("Filter not valid.");
 					}
@@ -230,7 +218,6 @@ public class ItemDAOMemory implements ItemDAO {
 		try {
 			DBWriter.itemHashMapToCSV( itemMap );
 		} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-			// TODO detail better exeption, trying to tell what exactly have happened
 			throw new DataException("Problem trying to write updated item in the database.");
 		}
 		
