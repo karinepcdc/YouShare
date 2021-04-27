@@ -21,6 +21,8 @@ import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.ItemServices;
 import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.ApplianceAvailabilityChanger;
+import br.ufrn.imd.pds.business.ApplianceValidator;
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.business.UserServices;
 import br.ufrn.imd.pds.exceptions.BusinessException;
@@ -37,7 +39,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 	public YouShareBotServices() throws DataException {
 		apiServices = TelegramBotAPIServices.getInstance();
 		userServices = new UserServices();
-		itemServices = new ItemServices();
+		itemServices = new ItemServices(new ApplianceValidator(), new ApplianceAvailabilityChanger());
 		
 		System.out.println( "YouShareBotServices criado!" );
 	}
