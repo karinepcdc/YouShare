@@ -14,7 +14,7 @@ public class FormToItem {
 		String REGEX = "<Name>\\s*(.+?)\\s*</Name>.*?\n"
 				 + "<Description>\\s*(.+?)\\s*</Description>.*?\n"
 				 + "<Condition>\\s*(.+?)\\s*</Condition>.*?\n"
-				 + "<Voltage>\\s*(.+?)\\s*</Voltage>";
+				 + "<Voltage>\\s*(.+?)\\s*</Voltage>.*?\n?";
 	
 		Pattern idPattern = Pattern.compile(REGEX);
 		Matcher m = idPattern.matcher(officeItemsForm);
@@ -28,8 +28,8 @@ public class FormToItem {
 		if( m.find() ) {
 			itemName = m.group(1);
 			itemDescription = m.group(2);
-			itemCondition = m.group(5);
-			itemVoltage = m.group(6);
+			itemCondition = m.group(3);
+			itemVoltage = m.group(4);
 			
 			// log
 			System.out.println("Name read: ." + itemName + ".\n");
@@ -54,7 +54,7 @@ public static OfficeItems editFormToOfficeItems( String officeItemsEditForm, Off
 		// OfficeItems form pattern
 		String RegexName = "<Name>\\s*(.+?)\\s*</Name>.*?\n?";
 		String RegexDescription = "<Description>\\s*(.+?)\\s*</Description>.*?\n?";
-		String RegexCondition = "<Condition>\\s*(.+?)\\s*</Condition>.*?\n";
+		String RegexCondition = "<Condition>\\s*(.+?)\\s*</Condition>.*?\n?";
 		String RegexVoltage = "<Voltage>\\s*(.+?)\\s*</Voltage>.*?\n?";
 	
 		// variables
