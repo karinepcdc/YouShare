@@ -985,7 +985,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		// retrieve code
 		String stringTosearchId = callbackMessage.getTxtMessage();
 		
-		Pattern idPattern = Pattern.compile("\\(id: +(\\S)+\\)");
+		Pattern idPattern = Pattern.compile("\\(id: +(\\S+)+\\)");
 		Matcher m = idPattern.matcher(stringTosearchId);
 		
 		// if we find a match, get id
