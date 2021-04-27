@@ -5,12 +5,12 @@ import java.util.List;
 
 import br.ufrn.imd.pds.exceptions.BusinessException;
 
-public class ItemNeighborValidator extends UserValidator {
+public class ShareItemNeighborValidator extends UserValidator {
 	
 	@Override
 	public List<String> userValidator( User user ) throws BusinessException {
 		
-		if( !( user instanceof ItemNeighbor ) ) {
+		if( !( user instanceof ShareItemNeighbor ) ) {
 			throw new BusinessException("Trying to validate an Neighbor, but user is from another type.");
 		}
 		
@@ -18,7 +18,7 @@ public class ItemNeighborValidator extends UserValidator {
 
 		// check if price is valid
 		try {
-			Double.parseDouble( ((ItemNeighbor) user).getCondominium() );
+			Double.parseDouble( ((ShareItemNeighbor) user).getCondominium() );
 			
 		} catch ( NullPointerException e1 ) {
 			exceptionMessages.add("Condominium is required.");

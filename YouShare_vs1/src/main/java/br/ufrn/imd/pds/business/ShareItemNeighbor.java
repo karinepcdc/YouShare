@@ -2,7 +2,7 @@ package br.ufrn.imd.pds.business;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class ItemNeighbor extends User {
+public class ShareItemNeighbor extends User {
 	
 	@CsvBindByName
 	private double itemGrade;
@@ -17,7 +17,7 @@ public class ItemNeighbor extends User {
 	private String condominium;
 	
 	
-	public ItemNeighbor () {		
+	public ShareItemNeighbor () {		
 		super();
 	}
 	

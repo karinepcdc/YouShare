@@ -4,12 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.ufrn.imd.pds.business.Appliance;
-import br.ufrn.imd.pds.business.ItemNeighbor;
+import br.ufrn.imd.pds.business.ShareItemNeighbor;
 import br.ufrn.imd.pds.exceptions.UIException;
 
 public class FormToItemNeighbor {
 	
-public static ItemNeighbor createFormToItemNeighbor( String itemNeighborForm ) throws UIException {
+public static ShareItemNeighbor createFormToItemNeighbor( String itemNeighborForm ) throws UIException {
 		
 		// Appliance form pattern
 		String REGEX = "<Condominium>\\s*(.+?)\\s*</Condominium>.*?\n";
