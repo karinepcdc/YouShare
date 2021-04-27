@@ -21,14 +21,14 @@ public class ItemServices implements FacadeItem {
 	ItemValidator itemValidationStrategy; // validation strategy for different subclasses of items
 	ItemAvailabilityChanger changeAvailabilityStrategy; // change availability accordantly to the defined strategy
 
-	public ItemServices() throws DataException {		
+	public ItemServices(ItemValidator validator, ItemAvailabilityChanger availabilityChanger) throws DataException {		
 		// instantiate database
 		itemDatabase = ItemDAOMemory.getInstance();
 		userDatabase = UserDAOMemory.getInstance();
 		
 		// define strategies
-		itemValidationStrategy = new OfficeItemsValidator();
-		changeAvailabilityStrategy = new OfficeItemsAvailabilityChanger();
+		itemValidationStrategy = validator;
+		changeAvailabilityStrategy = availabilityChanger;
 
 	}
 	
