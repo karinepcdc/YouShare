@@ -44,29 +44,15 @@ public class ItemServices implements FacadeItem {
 
 		// validate item
 		validateItem(newItem);
-				
-		if( newItem instanceof SharedService ) {
-			SharedService db = new SharedService();
-
-			// copy fields
-			db.setName( ((SharedService) newItem).getName() );
-			db.setDescription( ((SharedService) newItem).getDescription() );
-			db.setCode( ((SharedService) newItem).getCode() );
-			db.setOwner( ((SharedService) newItem).getOwner() );
-			db.setAvailable( ((SharedService) newItem).isAvailable() );
-			db.setPrice( ((SharedService) newItem).getPrice() );
-									
-			// fill default review, grade and grade count
-			db.setLastReview("No reviews yet!");
-			db.setItemGrade(5);
-			db.setItemGradeCount(0);
-			
-			// require item registration in the database
-			return itemDatabase.createItem( db );
-										
-		} // TODO other items creation		
 		
-		return null;
+		// fill default review, grade and grade count
+		newItem.setLastReview("No reviews yet!");
+		newItem.setItemGrade(5);
+		newItem.setItemGradeCount(0);
+		
+		// require item registration in the database
+		return itemDatabase.createItem( newItem );
+				
 	}
 
 	@Override
@@ -119,29 +105,15 @@ public class ItemServices implements FacadeItem {
 			throw new BusinessException("Item does not belong you, thus cannot be updated!");
 		}
 
-		if( item instanceof SharedService ) {
-			SharedService db = new SharedService();
+		// copy restricted fields
+		item.setLastReview( ((SharedService) itemAux).getLastReview() );
+		item.setItemGrade( ((SharedService) itemAux).getItemGrade() );
+		item.setItemGradeCount( ((SharedService) itemAux).getItemGradeCount() );
 
-			// copy fields
-			db.setName( ((SharedService) item).getName() );
-			db.setDescription( ((SharedService) item).getDescription() );
-			db.setCode( ((SharedService) item).getCode() );
-			db.setOwner( ((SharedService) item).getOwner() );
-			db.setAvailable( ((SharedService) item).isAvailable() );
-			db.setPrice( ((SharedService) item).getPrice() );
-					
-			// copy restricted fields
-			db.setLastReview( ((SharedService) itemAux).getLastReview() );
-			db.setItemGrade( ((SharedService) itemAux).getItemGrade() );
-			db.setItemGradeCount( ((SharedService) itemAux).getItemGradeCount() );
+		
+		// require item registration in the database
+		return itemDatabase.updateItem( item );
 
-			
-			// require item registration in the database
-			return itemDatabase.updateItem( db );
-									
-		} // TODO other items update
-
-		return null;
 	}
 
 	@Override
