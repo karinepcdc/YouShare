@@ -37,7 +37,7 @@ public class ApplianceValidator implements ItemValidator {
 			exceptionMessages.add("Condition is required (weared, good or new values are accepted).");
 		}
 			
-		// valid conditions: weared, good or new
+		// valid conditions: worn, good or new
 		String condition = ( (Appliance) item).getCondition();
 		if( !condition.equals("weared") && !condition.equals("good") && !condition.equals("new") ) {
 			exceptionMessages.add("Condition is invalid (weared, good or new values are accepted).");				
