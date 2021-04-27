@@ -5,10 +5,10 @@ import com.opencsv.bean.CsvBindByName;
 public class ShareItemNeighbor extends User {
 	
 	@CsvBindByName
-	private double itemGrade;
+	private double userGrade;
 
 	@CsvBindByName
-	private int itemGradeCount;
+	private int userGradeCount;
 	
 	@CsvBindByName
 	private String lastReview;
@@ -21,20 +21,20 @@ public class ShareItemNeighbor extends User {
 		super();
 	}
 	
-	public double getItemGrade() {
-		return itemGrade;
+	public double getUserGrade() {
+		return userGrade;
 	}
 
-	public void setItemGrade(double itemGrade) {
-		this.itemGrade = itemGrade;
+	public void setUserGrade(double itemGrade) {
+		this.userGrade = itemGrade;
 	}
 
-	public int getItemGradeCount() {
-		return itemGradeCount;
+	public int getUserGradeCount() {
+		return userGradeCount;
 	}
 
-	public void setItemGradeCount(int itemGradeCount) {
-		this.itemGradeCount = itemGradeCount;
+	public void setUserGradeCount(int itemGradeCount) {
+		this.userGradeCount = itemGradeCount;
 	}
 
 	public String getLastReview() {
@@ -51,5 +51,9 @@ public class ShareItemNeighbor extends User {
 
 	public void setCondominium(String condominium) {
 		this.condominium = condominium;
+	}
+	
+	public void incrementUserGradeCount() {
+		userGradeCount++;
 	}
 }

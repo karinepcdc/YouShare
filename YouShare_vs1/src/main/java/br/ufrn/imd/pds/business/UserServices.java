@@ -42,8 +42,8 @@ public class UserServices implements FacadeUser {
 									
 			// fill default review, grade and grade count
 			shareItemNeighborDB.setLastReview("No reviews yet!");
-			shareItemNeighborDB.setItemGrade(5);
-			shareItemNeighborDB.setItemGradeCount(0);
+			shareItemNeighborDB.setUserGrade(5);
+			shareItemNeighborDB.setUserGradeCount(0);
 			
 			// require item registration in the database
 			userDatabase.createUser( shareItemNeighborDB );
@@ -89,13 +89,16 @@ public class UserServices implements FacadeUser {
 					
 			// copy restricted fields
 			shareItemNeighborDB.setLastReview( ((ShareItemNeighbor) user).getLastReview() );
-			shareItemNeighborDB.setItemGrade( ((ShareItemNeighbor) user).getItemGrade() );
-			shareItemNeighborDB.setItemGradeCount( ((ShareItemNeighbor) user).getItemGradeCount() );
+			shareItemNeighborDB.setUserGrade( ((ShareItemNeighbor) user).getUserGrade() );
+			shareItemNeighborDB.setUserGradeCount( ((ShareItemNeighbor) user).getUserGradeCount() );
 					
 			// require item registration in the database
-			userDatabase.updateUser( user );
-											
-		} // TODO other users update		
+			userDatabase.updateUser( shareItemNeighborDB );											
+		}
+		
+		else {
+			throw new BusinessException( "User type isn't right for this instance of the framework. \n" );
+		}
 		
 	}
 
@@ -122,22 +125,22 @@ public class UserServices implements FacadeUser {
 		
 		if( userToUpdate != null && userToUpdate instanceof ShareItemNeighbor ) {
 			
-			float currentUserGrade = Float.parseFloat( userToUpdate.getUserGrade() );
+			double currentUserGrade = ( (ShareItemNeighbor)userToUpdate ).getUserGrade();
 			
-			userToUpdate.incrementUserGradeCount(); 
-			float totalNumGrades = Float.parseFloat( userToUpdate.getUserGradeCount() );
+			( (ShareItemNeighbor)userToUpdate ).incrementUserGradeCount(); 
+			double totalNumGrades = ( (ShareItemNeighbor)userToUpdate ).getUserGradeCount();
 			
 			/*  compute progressive average: M_k = M_(k-1) + (x_k - M_(k-1))/k
 			 */			
-			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade ) / totalNumGrades;
+			double updatedUserGrade = currentUserGrade + ( grade - currentUserGrade ) / totalNumGrades;
 					
-			userToUpdate.setUserGrade( Float.toString( updatedUserGrade ) );
+			( (ShareItemNeighbor)userToUpdate ).setUserGrade( updatedUserGrade );
 			
 			if ( review == null || review.isBlank() ) {
 				throw new BusinessException( "A written review is required. \n" );
 			}
 			else {
-				userToUpdate.setLastReview( review );
+				( (ShareItemNeighbor)userToUpdate ).setLastReview( review );
 			}
 			
 			userDatabase.updateUser( userToUpdate );
