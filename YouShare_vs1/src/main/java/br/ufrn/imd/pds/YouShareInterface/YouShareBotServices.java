@@ -496,7 +496,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				System.out.println("Id read: ." + itemId + ".\n");
 				
 			} else {
-				throw new UIException("Need item if to do edition.");
+				throw new UIException("Need item id to do edition.");
 			}
 			
 			
@@ -825,6 +825,11 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			botAnswer = "What item is you interested in?\n";
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	   	    
+	   	    botAnswer = "You can filtre your search including tags:\n"
+	   	    		+ "- Grade tags: $grade1+ $grade2+ $grade3+ $grade4+\n"
+	   	    		+ "- price tags: $under10 $10to20 $over20\n"
+	   	    		+ "- condition tags: $weared $good $new\n";
+	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	   	    // request user reply
 		    apiServices.requestUserReply( "SearchStep2" );
 	   	    
@@ -846,26 +851,60 @@ public class YouShareBotServices implements FacadeYouShareBot {
 	}
 	
 	public static void searchStep2 ( MessageData message ) {
-		String botAnswer = "";
+		String botAnswer = "hello";
 
-		// list of ads
+		// process user message
+		List<String> filters = new ArrayList<String>();
+		List<String> itemName = new ArrayList<String>();
+		
+		String userMsg = message.getTxtMessage();
+		String[] parameters = userMsg.split("\\s+");
+		
+		// get name
+		for (String par: parameters) {
+			if(par.charAt(0) == '$') {
+				filters.add(par);
+			} else {
+				itemName.add(par);
+			};
+		}
+				
+		// get filters
+		
+		
+		// build list of ads
+		Boolean noErrors = true;
    	    List<Item> adsFound = new ArrayList<Item>();
 		try {
-			adsFound = itemServices.readAll(message.getTxtMessage(), null);
+			adsFound = itemServices.readAll(itemName, filters);
 			
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			noErrors = false;
+			
+			// define bot answer			
+			botAnswer = "Problem trying to search item:\n\n" + e.getMessage() + "\n";
+			botAnswer += "Check if you have folowed all instructions and try again: /search.";
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		} catch (DataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			noErrors = false;
+
+			// define bot answer			
+			botAnswer = "Problem in database  when trying to search item:\n\n" + e.getMessage() + "\n";
+			
+			// request APIInterface to send text message to user
+        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		}
 		
+		
+		
+		// send results
    	    if( !adsFound.isEmpty() ) {
-	   	    botAnswer = "*** " + message.getTxtMessage() + " availables ***\n";
+	   	    botAnswer = "*** " + message.getTxtMessage() + " available ***\n";
 			
 	   	    int start = 0; // first ad displayed
-	   	    int end = 3; // last ad displayed
+	   	    int end = 5; // last ad displayed
 			for( int i=start; i < Math.min( adsFound.size(), end ); i++ ) {
 				Item item = adsFound.get(i);
 				
@@ -875,14 +914,15 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				botAnswer += "$ " + ((Appliance) item).getPrice() + "\n";
 				botAnswer += "/addetail_" + item.getCode() + "\n\n";
 			}
-	   	    			
+	   	    
+		
 			// TODO button page labels builder
 			String[] buttonsLabels = {"<< prev","next >>"}; 
 			
 			// turn page buttons 
 			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "searchPage", buttonsLabels, 2, 1);
 	
-			
+			/* filter with buttons
 			botAnswer = "Filter your search: \n";			
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	   	    
@@ -895,15 +935,17 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			
 			botAnswer = "Condition: ";
 			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"weared","good","new"}, 3, 1);
+			*/
 			
-   	    } else {
+			
+   	    } else if ( noErrors ){
    	    	
-   			botAnswer = " No result for the term " + message.getParameter() + " was found. \n";
-   			botAnswer += " Try again /search beeing less specific. \n";
+   			botAnswer = " No result for the search '" + message.getTxtMessage() + "' was found. \n";
+   			botAnswer += " Try /search again with less parameters. \n";
    			
    			apiServices.sendTextMsg( message.getChatId(), botAnswer );
    	    }
-
+		
 	}
 	
 	public static void yesUnregister ( MessageData callbackMessage ) {

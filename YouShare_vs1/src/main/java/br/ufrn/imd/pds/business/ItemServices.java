@@ -1,6 +1,7 @@
 package br.ufrn.imd.pds.business;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.vdurmont.emoji.EmojiParser;
@@ -38,7 +39,6 @@ public class ItemServices implements FacadeItem {
 	 * - Fachadas lançam excessões relacionadas a delimitações de transações com o banco de dados
 	 * - Todas as excessões lançadas pelas camadas de Business e Data são repassadas para a camada GUI
 	 */
-	
 	@Override
 	public String createItem( Item newItem ) throws BusinessException, DataException {
 
@@ -97,16 +97,15 @@ public class ItemServices implements FacadeItem {
 	}
 
 	@Override
-	public List<Item> readAll(String name, String[] filters) throws BusinessException, DataException {
+	public List<Item> readAll(List<String> name, List<String> filters) throws BusinessException, DataException {
 		
-		if( name == null || name.isBlank() ) {
-			throw new BusinessException("Search returned no results. Specify the name of what you want to search.");
-
-		} 
+		// validate search
+		validadeSearch(name, filters);
 		
 		return itemDatabase.readAll(name, filters);
 	}
 	
+
 	@Override
 	public List<Appliance> readAllAppliances() {
 		return itemDatabase.readAllAppliances();
@@ -197,11 +196,6 @@ public class ItemServices implements FacadeItem {
 			hasViolations = true;
 			exceptionMessages.add("Description is required.");
 		}
-		
-		
-		// TODO Check if owner is registered and already has already reached 10 items ads
-		
-		// TODO Check in any field has excess a characters limit
 			
 		List<String> exceptionMessagesSpecific = this.validationStrategy.itemValidator(item);
 		if( !(exceptionMessagesSpecific.isEmpty()) ) {
@@ -233,10 +227,39 @@ public class ItemServices implements FacadeItem {
 		} 
 				
 		Item item_ret = changeAvailabilityStrategy.changeAvailability(itemAux);
+		
 		return itemDatabase.updateItem( item_ret );
 	}
 
+	public void validadeSearch(List<String> name, List<String> filters) throws BusinessException, DataException  {
+		boolean hasViolations = false;
+		List<String> exceptionMessages = new ArrayList<String>();
 
+		if( name == null || name.isEmpty() ) {
+			hasViolations = true;
+			exceptionMessages.add("Search returned no results. Specify the name of what you want to search.");
+		} 
+		
+		List<String> validFilters = new ArrayList<String>(Arrays.asList("$grade1+","$grade2+","$grade3+","$grade4+",
+				"$weared","$good","$new","$under10","10to20","over20"));
+		if(filters != null && !validFilters.containsAll(filters)) {
+			hasViolations = true;
+			exceptionMessages.add("Filters are not valid.");
+		}
+		
+		if( hasViolations ) {
+			String errorMsg = "";
+			
+			for( String error: exceptionMessages ) {
+				errorMsg += EmojiParser.parseToUnicode(":warning: ") + error + "\n";
+			}
+			
+			throw new BusinessException( errorMsg );
+		}
+		
+	}
+
+	
 	@Override
 	public void validateId(String code, String user) throws BusinessException {
 
