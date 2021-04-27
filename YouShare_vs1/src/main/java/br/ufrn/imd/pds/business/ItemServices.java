@@ -241,7 +241,7 @@ public class ItemServices implements FacadeItem {
 		} 
 		
 		List<String> validFilters = new ArrayList<String>(Arrays.asList("$grade1+","$grade2+","$grade3+","$grade4+",
-				"$weared","$good","$new","$under10","10to20","over20"));
+				"$weared","$good","$new","$under10","$10to20","$over20"));
 		if(filters != null && !validFilters.containsAll(filters)) {
 			hasViolations = true;
 			exceptionMessages.add("Filters are not valid.");

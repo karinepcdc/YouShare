@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.ufrn.imd.pds.business.Appliance;
+import br.ufrn.imd.pds.business.ItemNeighbor;
 import br.ufrn.imd.pds.exceptions.UIException;
 
 public class FormToItemNeighbor {
@@ -46,9 +47,10 @@ public static ItemNeighbor createFormToItemNeighbor( String itemNeighborForm ) t
 		}
 		
 		// create item: Appliance					
-		Appliance newAppliance = new Appliance( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		//Appliance newAppliance = new Appliance( itemName , itemDescription, "", owner, 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
 			
-		return newAppliance;
+		//return newAppliance;
+		return null;
 	}
 
 public static Appliance editFormToAppliance( String applianceEditForm, Appliance originalAppliance ) throws UIException {

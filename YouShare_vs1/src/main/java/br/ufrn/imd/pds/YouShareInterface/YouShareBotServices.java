@@ -901,7 +901,11 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		
 		// send results
    	    if( !adsFound.isEmpty() ) {
-	   	    botAnswer = "*** " + message.getTxtMessage() + " available ***\n";
+	   	    botAnswer = "*** available" + itemName.toString().replaceAll("[\\[\\],]", " ") + "***\n";
+	   	    
+	   	    if( filters != null && !filters.isEmpty() ) {
+	   	    	botAnswer += "Filters: " + filters.toString().replaceAll("[\\[\\],]", " ") + "\n\n";
+	   	    }
 			
 	   	    int start = 0; // first ad displayed
 	   	    int end = 5; // last ad displayed
