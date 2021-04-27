@@ -13,7 +13,7 @@ public class FormToItem {
 		// form pattern
 		String REGEX = "<Name>\\s*(.+?)\\s*</Name>.*?\n"
 				 + "<Description>\\s*(.+?)\\s*</Description>.*?\n"
-				 + "<Price>\\s*(.+?)\\s*</Price>.*?\n";
+				 + "<Price>\\s*(.+?)\\s*</Price>.*?\n?";
 	
 		Pattern idPattern = Pattern.compile(REGEX);
 		Matcher m = idPattern.matcher(form);
