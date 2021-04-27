@@ -17,7 +17,6 @@ public class UserServices implements FacadeUser {
 	UserDAO userDatabase;
 	ItemDAO itemDatabase;
 	UserValidator userValidationStrategy; // validation strategy for different subclasses of users
-	UserTypeChanger changeUserTypeStrategy; // change user type to the defined strategy
 
 
 	public UserServices() throws DataException {		
@@ -32,30 +31,34 @@ public class UserServices implements FacadeUser {
 		
 		validateUser( newUser );
 		
-		if( !isRegistered( newUser.getTelegramUserName() ) ) {
+		if( newUser instanceof DepartmentUser && !isRegistered( newUser.getTelegramUserName() ) ) {
+			DepartmentUser departmentUserDB = new DepartmentUser();
+
+			// copy fields
+			departmentUserDB.setFirstName( ((DepartmentUser)newUser).getFirstName() );
+			departmentUserDB.setLastName( ((DepartmentUser)newUser).getLastName() );
+			departmentUserDB.setTelegramUserName( ((DepartmentUser)newUser).getTelegramUserName() );
+									
+			// restricted field
+			departmentUserDB.setDepartment( ( (DepartmentUser)newUser).getDepartment() );
 			
-			userDatabase.createUser( newUser );
-			
-		} else {
-			throw new BusinessException( "User is already registered. \n" );
+			// require item registration in the database
+			userDatabase.createUser( departmentUserDB );										
+		} 
+		
+		else {
+			throw new BusinessException( "User is already registered or user type isn't right for this instance of the framework. \n" );
 		}
 		
 	}
 	
 	@Override
 	public User readUser( String userName  ) throws BusinessException, DataException {
-		
+
 		User userToRead = userDatabase.readUser( userName );
 
-		if( userToRead != null ) {			
-			/*String userProfile = "";
-			
-			userProfile = "Name: " + userToString.getFirstName() + " " + userToString.getLastName() + "\n"
-	    			+ "Grade: " + userToString.getUserGrade() + "\n"
-	    			+ "Last review: \n" + userToString.getLastReview();*/
-			
-			return userToRead;
-						
+		if( userToRead != null ) {				
+			return userToRead;						
 		} else {
 			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );
 		}
@@ -64,12 +67,31 @@ public class UserServices implements FacadeUser {
 	@Override
 	public void updateUser( User user ) throws BusinessException, DataException {
 		
+		// validate item
+		validateUser( user );
+					
+		// check if user is registered
 		if ( !isRegistered( user.getTelegramUserName() ) ) {			
-			userDatabase.updateUser( user );
-
-		} else {
-
 			throw new BusinessException( "The user you were trying to access is not registered in the database. \n" );
+		} 
+		
+		if( user instanceof DepartmentUser ) {
+			DepartmentUser departmentUserDB = new DepartmentUser();
+
+			// copy fields
+			departmentUserDB.setFirstName( ((DepartmentUser)user).getFirstName() );
+			departmentUserDB.setLastName( ((DepartmentUser)user).getLastName() );
+			departmentUserDB.setTelegramUserName( ((DepartmentUser)user).getTelegramUserName() );
+			
+			// restricted field
+			departmentUserDB.setDepartment( ( (DepartmentUser)user).getDepartment() );
+					
+			// require item registration in the database
+			userDatabase.updateUser( departmentUserDB );											
+		}
+		
+		else {
+			throw new BusinessException( "User type isn't right for this instance of the framework. \n" );
 		}
 		
 	}
@@ -93,33 +115,33 @@ public class UserServices implements FacadeUser {
 	@Override
 	public void addUserReview( String userName, int grade, String review ) throws BusinessException, DataException  {
 
-		User userToUpdate = userDatabase.readUser( userName );
+		/*User userToUpdate = userDatabase.readUser( userName );
 		
-		if( userToUpdate != null ) {
+		if( userToUpdate != null && userToUpdate instanceof ShareItemNeighbor ) {
 			
-			float currentUserGrade = Float.parseFloat( userToUpdate.getUserGrade() );
+			double currentUserGrade = ( (ShareItemNeighbor)userToUpdate ).getUserGrade();
 			
-			userToUpdate.incrementUserGradeCount(); 
-			float totalNumGrades = Float.parseFloat( userToUpdate.getUserGradeCount() );
+			( (ShareItemNeighbor)userToUpdate ).incrementUserGradeCount(); 
+			double totalNumGrades = ( (ShareItemNeighbor)userToUpdate ).getUserGradeCount();
 			
 			/*  compute progressive average: M_k = M_(k-1) + (x_k - M_(k-1))/k
 			 */			
-			float updatedUserGrade = currentUserGrade + ( grade - currentUserGrade ) / totalNumGrades;
+			/* double updatedUserGrade = currentUserGrade + ( grade - currentUserGrade ) / totalNumGrades;
 					
-			userToUpdate.setUserGrade( Float.toString( updatedUserGrade ) );
+			( (ShareItemNeighbor)userToUpdate ).setUserGrade( updatedUserGrade );
 			
 			if ( review == null || review.isBlank() ) {
 				throw new BusinessException( "A written review is required. \n" );
 			}
 			else {
-				userToUpdate.setLastReview( review );
+				( (ShareItemNeighbor)userToUpdate ).setLastReview( review );
 			}
 			
 			userDatabase.updateUser( userToUpdate );
 			
-		} else {
-			throw new BusinessException ( "The user you were trying to review is not registered in the database. \n" );
-		}
+		} else {*/
+			throw new BusinessException ( "This method is not available in this instance of the framework. \n" );
+		//}
 	
 	}
 	
