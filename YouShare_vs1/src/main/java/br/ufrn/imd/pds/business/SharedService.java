@@ -10,28 +10,14 @@ public class SharedService extends Item {
 	@CsvBindByName
 	protected String price; /// rent price, set zero is it is borroed
 	
-	@CsvBindByName
-	private String termsOfUse; /// terms of use of the item
-	
-	@CsvBindByName
-	private String condition; /// the usage condition can be: weared, good or new  
-	
-	@CsvBindByName
-	private String voltage; /// eletrical voltage 220 or 110  
-	
-	
 	/* Constructor Default */
 	public SharedService () {
 		super();
 	}
 	
 	/* Constructor full */
-	public SharedService ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p,
-			String tOU, String c, String v ) {
+	public SharedService ( String n, String desc, String cd, String owner, double iG, int iGC, String lRev, String p ) {
 		super( n, desc, cd, owner, iG, iGC, lRev);
-		this.termsOfUse = tOU;
-		this.condition = c;
-		this.voltage = v;
 		this.price = p;
 	}
 	
@@ -51,28 +37,5 @@ public class SharedService extends Item {
 		this.price = price;
 	}
 
-	public String getTermsOfUse() {
-		return termsOfUse;
-	}
-
-	public void setTermsOfUse(String termsOfUse) {
-		this.termsOfUse = termsOfUse;
-	}
-
-	public String getCondition() {
-		return condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
-
-	public String getVoltage() {
-		return voltage;
-	}
-
-	public void setVoltage(String voltage) {
-		this.voltage = voltage;
-	}
 		
 }

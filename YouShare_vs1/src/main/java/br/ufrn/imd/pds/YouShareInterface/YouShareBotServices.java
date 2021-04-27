@@ -353,8 +353,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			botAnswer = "Fill the following form (copy and edit message):\n\n";
 			botAnswer += "Ps: All fields are mandatory.\n";
 			botAnswer += "Ps2: Don't use currency symbol in the price field.\n";
-			botAnswer += "Ps3: Condition can be: weared, good or new.\n";
-			botAnswer += "Ps4: Voltage can be: 110, 220 or none.\n";
 
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -362,9 +360,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			botAnswer  = "<Name> </Name>\n";
 			botAnswer += "<Description> </Description>\n";
 			botAnswer += "<Price> </Price>\n";
-			botAnswer += "<Terms of use> </Terms of use>\n";
-			botAnswer += "<Condition> </Condition>\n";
-			botAnswer += "<Voltage> </Voltage>\n";
 			
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -438,8 +433,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		if( isUserRegistered ) {
 			botAnswer = "Fill the fields you would like to edit wapping the information using the folling tags:\n\n";
 			botAnswer += "Ps: Don't use currency symbol in the price field.\n";
-			botAnswer += "Ps2: Condition can be: weared, good or new.\n";
-			botAnswer += "Ps3: Voltage can be: 110, 220 or none.\n";
 
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -448,9 +441,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			botAnswer += "<Name> </Name>\n";
 			botAnswer += "<Description> </Description>\n";
 			botAnswer += "<Price> </Price>\n";
-			botAnswer += "<Terms of use> </Terms of use>\n";
-			botAnswer += "<Condition> </Condition>\n";
-			botAnswer += "<Voltage> </Voltage>\n";
 			
 			// request APIInterface to send text message to user
 			apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -571,10 +561,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					// item specifics
 					if( item instanceof SharedService ) {
 						botAnswer += "Price: $" + ((SharedService) item).getPrice() + "\n\n";
-						botAnswer += "Terms of use: " + ((SharedService) item).getTermsOfUse() + "\n";
-						botAnswer += "Condition: " + ((SharedService) item).getCondition() + "\n";
-						botAnswer += "Voltage: " + ((SharedService) item).getVoltage() 
-								+ ( ((SharedService) item).getVoltage().equals("none") ? "\n": "V\n" );
 						botAnswer += "Status: " + (((SharedService) item).isAvailable() ? "public" : "private");
 
 					}
@@ -826,8 +812,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 	   	    
 	   	    botAnswer = "You can filtre your search including tags:\n"
 	   	    		+ "- Grade tags: $grade1+ $grade2+ $grade3+ $grade4+\n"
-	   	    		+ "- price tags: $under10 $10to20 $over20\n"
-	   	    		+ "- condition tags: $weared $good $new\n";
+	   	    		+ "- price tags: $under10 $10to20 $over20\n";
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	   	    // request user reply
 		    apiServices.requestUserReply( "SearchStep2" );
@@ -913,7 +898,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				
 				botAnswer += EmojiParser.parseToUnicode(":hammer_and_wrench:") + " " + item.getName() + "     " + EmojiParser.parseToUnicode(":star: ") + item.getItemGrade() + "\n";
 				botAnswer += item.getDescription().substring(0, Math.min(item.getDescription().length(), 50)) + "...\n";
-				botAnswer += "Condition: " + ((SharedService) item).getCondition() + "\n";
 				botAnswer += "$ " + ((SharedService) item).getPrice() + "\n";
 				botAnswer += "/addetail_" + item.getCode() + "\n\n";
 			}
@@ -936,8 +920,6 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			botAnswer = "Price: ";
 			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"until $10","$10-20","$20+"}, 3, 1);
 			
-			botAnswer = "Condition: ";
-			apiServices.sendInlineKeyboardWithCallbackButtons( message.getChatId(), botAnswer, "filter#" + message.getMessageId(), new String[] {"weared","good","new"}, 3, 1);
 			*/
 			
 			
@@ -997,7 +979,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		System.out.println("user message: " + stringTosearchId);
 		System.out.println("id read: " + code);
 		// build item to be deleted
-		Item delItem = new SharedService("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "", "", "", "");
+		Item delItem = new SharedService("", "", "", callbackMessage.getTelegramUserName(), 0, 0, "", "");
 		delItem.setCode( code );		
 		
 		// delete item
@@ -1053,10 +1035,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				+ "itemGradeCount: " + sharedServicence.getItemGradeCount() + "\n"
 				+ "lastReview: " + sharedServicence.getLastReview() + "\n"
 				+ "isAvailable:" + sharedServicence.isAvailable() + "\n"
-				+ "price: " + sharedServicence.getPrice() + "\n"
-				+ "TOU: " + sharedServicence.getTermsOfUse() + "\n"
-				+ "Condition: " + sharedServicence.getCondition() + "\n"
-				+ "Voltage: " + sharedServicence.getVoltage() + "\n" );
+				+ "price: " + sharedServicence.getPrice() + "\n";
 
 		System.out.println("\n**************************\n");
 

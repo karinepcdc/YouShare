@@ -131,7 +131,7 @@ public static SharedService editFormToAppliance( String applianceEditForm, Share
 			System.out.println("TOU read: ." + itemTOU + ".\n");
 			
 		} else {
-			itemTOU = originalAppliance.getTermsOfUse();
+			//itemTOU = originalAppliance.getTermsOfUse();
 		}
 		
 		// check if condition edition where requested
@@ -145,7 +145,7 @@ public static SharedService editFormToAppliance( String applianceEditForm, Share
 			System.out.println("Condition read: ." + itemCondition + ".\n");
 			
 		} else {
-			itemCondition = originalAppliance.getCondition();
+			//itemCondition = originalAppliance.getCondition();
 		}
 		
 		// check if voltage edition where requested
@@ -159,7 +159,7 @@ public static SharedService editFormToAppliance( String applianceEditForm, Share
 			System.out.println("Voltage read: ." + itemVoltage + ".\n");
 			
 		} else {
-			itemVoltage = originalAppliance.getVoltage();
+			//itemVoltage = originalAppliance.getVoltage();
 		}
 		
 		if( !AnyChange ) {
@@ -168,7 +168,7 @@ public static SharedService editFormToAppliance( String applianceEditForm, Share
 		}
 		
 		// create item: SharedService					
-		SharedService newAppliance = new SharedService( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice, itemTOU, itemCondition, itemVoltage);
+		SharedService newAppliance = new SharedService( itemName , itemDescription, originalAppliance.getCode(), originalAppliance.getOwner(), 0, 0, "", itemPrice);
 		newAppliance.setAvailable( originalAppliance.isAvailable() );
 		
 		return newAppliance;

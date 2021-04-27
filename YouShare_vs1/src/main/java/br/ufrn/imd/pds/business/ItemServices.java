@@ -55,9 +55,6 @@ public class ItemServices implements FacadeItem {
 			db.setOwner( ((SharedService) newItem).getOwner() );
 			db.setAvailable( ((SharedService) newItem).isAvailable() );
 			db.setPrice( ((SharedService) newItem).getPrice() );
-			db.setTermsOfUse( ((SharedService) newItem).getTermsOfUse() );
-			db.setCondition( ((SharedService) newItem).getCondition() );
-			db.setVoltage( ((SharedService) newItem).getVoltage() );
 									
 			// fill default review, grade and grade count
 			db.setLastReview("No reviews yet!");
@@ -132,9 +129,6 @@ public class ItemServices implements FacadeItem {
 			db.setOwner( ((SharedService) item).getOwner() );
 			db.setAvailable( ((SharedService) item).isAvailable() );
 			db.setPrice( ((SharedService) item).getPrice() );
-			db.setTermsOfUse( ((SharedService) item).getTermsOfUse() );
-			db.setCondition( ((SharedService) item).getCondition() );
-			db.setVoltage( ((SharedService) item).getVoltage() );
 					
 			// copy restricted fields
 			db.setLastReview( ((SharedService) itemAux).getLastReview() );

@@ -182,15 +182,6 @@ public class ItemDAOMemory implements ItemDAO {
 					} else if( filter.equals("$grade4+") ) {
 						isAmatch = isAmatch && ( item.getItemGrade() >= 4.0 );
 						
-					} else if( filter.equals("$weared") ) {
-						isAmatch = isAmatch && ( ((SharedService) item).getCondition().equals("weared") );
-						
-					} else if( filter.equals("$good") ) {
-						isAmatch = isAmatch && ( ((SharedService) item).getCondition().equals("good") );
-						
-					} else if( filter.equals("$new") ) {
-						isAmatch = isAmatch && ( ((SharedService) item).getCondition().equals("new") );
-						
 					} else if( filter.equals("$under10") && item instanceof SharedService ) {
 						double price = Double.parseDouble( ((SharedService) item).getPrice() );
 						isAmatch = isAmatch && ( price <= 10.0 );
