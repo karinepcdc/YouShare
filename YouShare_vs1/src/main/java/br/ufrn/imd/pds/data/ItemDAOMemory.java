@@ -166,6 +166,11 @@ public class ItemDAOMemory implements ItemDAO {
 					isAmatch = true;
 				}
 				
+				if( !((OfficeItems) item).isAvailable() ) {
+					isAmatch = false;
+
+				}
+				
 				for( String filter: filters ) {
 					
 					// check filters

@@ -44,30 +44,16 @@ public class ItemServices implements FacadeItem {
 
 		// validate item
 		validateItem(newItem);
-				
-		if( newItem instanceof OfficeItems ) {
-			OfficeItems db = new OfficeItems();
-
-			// copy fields
-			db.setName( ((OfficeItems) newItem).getName() );
-			db.setDescription( ((OfficeItems) newItem).getDescription() );
-			db.setCode( ((OfficeItems) newItem).getCode() );
-			db.setOwner( ((OfficeItems) newItem).getOwner() );
-			db.setAvailable( ((OfficeItems) newItem).isAvailable() );
-			db.setCondition( ((OfficeItems) newItem).getCondition() );
-			db.setVoltage( ((OfficeItems) newItem).getVoltage() );
-									
-			// fill default review, grade and grade count
-			db.setLastReview("No reviews yet!");
-			db.setItemGrade(5);
-			db.setItemGradeCount(0);
-			
-			// require item registration in the database
-			return itemDatabase.createItem( db );
-										
-		} 		
 		
-		return null;
+		// fill default review, grade and grade count
+		newItem.setLastReview("No reviews yet!");
+		newItem.setItemGrade(5);
+		newItem.setItemGradeCount(0);
+		
+		// require item registration in the database
+		return itemDatabase.createItem( newItem );
+			
+		
 	}
 
 	@Override
@@ -120,31 +106,17 @@ public class ItemServices implements FacadeItem {
 		if( !itemAux.getOwner().equals(item.getOwner()) ) {
 			throw new BusinessException("Item does not belong you, thus cannot be updated!");
 		}
+		
+		// copy restricted fields
+		item.setLastReview( ((OfficeItems) itemAux).getLastReview() );
+		item.setItemGrade( ((OfficeItems) itemAux).getItemGrade() );
+		item.setItemGradeCount( ((OfficeItems) itemAux).getItemGradeCount() );
 
-		if( item instanceof OfficeItems ) {
-			OfficeItems db = new OfficeItems();
+		
+		// require item registration in the database
+		return itemDatabase.updateItem( item );
 
-			// copy fields
-			db.setName( ((OfficeItems) item).getName() );
-			db.setDescription( ((OfficeItems) item).getDescription() );
-			db.setCode( ((OfficeItems) item).getCode() );
-			db.setOwner( ((OfficeItems) item).getOwner() );
-			db.setAvailable( ((OfficeItems) item).isAvailable() );
-			db.setCondition( ((OfficeItems) item).getCondition() );
-			db.setVoltage( ((OfficeItems) item).getVoltage() );
-					
-			// copy restricted fields
-			db.setLastReview( ((OfficeItems) itemAux).getLastReview() );
-			db.setItemGrade( ((OfficeItems) itemAux).getItemGrade() );
-			db.setItemGradeCount( ((OfficeItems) itemAux).getItemGradeCount() );
-
-			
-			// require item registration in the database
-			return itemDatabase.updateItem( db );
-									
-		} 
-
-		return null;
+		
 	}
 
 	@Override
