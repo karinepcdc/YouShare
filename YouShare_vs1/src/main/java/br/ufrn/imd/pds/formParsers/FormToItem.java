@@ -16,7 +16,7 @@ public class FormToItem {
 				 + "<Price>\\s*(.+?)\\s*</Price>.*?\n"
 				 + "<Terms of use>\\s*(.+?)\\s*</Terms of use>.*?\n"
 				 + "<Condition>\\s*(.+?)\\s*</Condition>.*?\n"
-				 + "<Voltage>\\s*(.+?)\\s*</Voltage>";
+				 + "<Voltage>\\s*(.+?)\\s*</Voltage>.*?\n?";
 	
 		Pattern idPattern = Pattern.compile(REGEX);
 		Matcher m = idPattern.matcher(applianceForm);
@@ -64,7 +64,7 @@ public static Appliance editFormToAppliance( String applianceEditForm, Appliance
 		String RegexDescription = "<Description>\\s*(.+?)\\s*</Description>.*?\n?";
 		String RegexPrice = "<Price>\\s*(.+?)\\s*</Price>.*?\n?";
 		String RegexTOU = "<Terms of use>\\s*(.+?)\\s*</Terms of use>.*?\n?";
-		String RegexCondition = "<Condition>\\s*(.+?)\\s*</Condition>.*?\n";
+		String RegexCondition = "<Condition>\\s*(.+?)\\s*</Condition>.*?\n?";
 		String RegexVoltage = "<Voltage>\\s*(.+?)\\s*</Voltage>.*?\n?";
 	
 		// variables

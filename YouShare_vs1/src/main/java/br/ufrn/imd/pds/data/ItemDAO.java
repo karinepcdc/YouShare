@@ -3,7 +3,6 @@ package br.ufrn.imd.pds.data;
 import java.util.List;
 
 import br.ufrn.imd.pds.business.Item;
-import br.ufrn.imd.pds.business.Appliance;
 import br.ufrn.imd.pds.exceptions.DataException;
 
 public interface ItemDAO {
