@@ -20,6 +20,7 @@ import br.ufrn.imd.pds.business.FacadeItem;
 import br.ufrn.imd.pds.business.FacadeUser;
 import br.ufrn.imd.pds.business.Item;
 import br.ufrn.imd.pds.business.ItemServices;
+import br.ufrn.imd.pds.business.ShareItemNeighbor;
 import br.ufrn.imd.pds.business.Appliance;
 import br.ufrn.imd.pds.business.ApplianceAvailabilityChanger;
 import br.ufrn.imd.pds.business.ApplianceValidator;
@@ -125,7 +126,9 @@ public class YouShareBotServices implements FacadeYouShareBot {
 
 	    } else { // if it's a new user
 	
-	    	User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), "0", "0", "No reviews yet!" );
+	    	// TODO ???
+	    	//User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName(), "0", "0", "No reviews yet!" );
+	    	User newUser = new User( message.getUserFirstName(), message.getUserLastName(), message.getTelegramUserName());
 			try {
 				userServices.createUser( newUser );
 				
@@ -207,8 +210,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 	    		
 				botAnswer = "This is how YouShare users see you: \n\n"
 							+ "Name: " + user.getFirstName() + " " + user.getLastName() + "\n"
-				    		+ "Grade: " + user.getUserGrade() + "\n"
-				    		+ "Last review: \n" + user.getLastReview();
+				    		+ "Grade: " + ((ShareItemNeighbor) user).getUserGrade() + "\n"
+				    		+ "Last review: \n" + ((ShareItemNeighbor) user).getLastReview();
 			} catch ( BusinessException e ) {
 				botAnswer = "We could not read this profile: ";
 				botAnswer += e.getMessage() ;

@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import br.ufrn.imd.pds.DBHandlers.DBReader;
 import br.ufrn.imd.pds.DBHandlers.DBWriter;
+import br.ufrn.imd.pds.business.ShareItemNeighbor;
 import br.ufrn.imd.pds.business.User;
 import br.ufrn.imd.pds.exceptions.DataException;
 
@@ -69,14 +70,15 @@ public class UserDAOMemory implements UserDAO {
 	@Override
 	public void updateUser( User user ) throws DataException {
 		User aux;
-	
+		
+		// TODO ???
 		aux = userMap.get( user.getTelegramUserName() );
 		aux.setFirstName		( user.getFirstName() );
 		aux.setLastName			( user.getLastName() );
 		aux.setTelegramUserName	( user.getTelegramUserName() );
-		aux.setUserGrade		( user.getUserGrade() );
-		aux.setUserGradeCount	( user.getUserGradeCount() );			
-		aux.setLastReview		( user.getFirstName() );
+		((ShareItemNeighbor) aux).setUserGrade		( ((ShareItemNeighbor) user).getUserGrade() );
+		((ShareItemNeighbor) aux).setUserGradeCount	( ((ShareItemNeighbor) user).getUserGradeCount() );			
+		((ShareItemNeighbor) aux).setLastReview		( ((ShareItemNeighbor) user).getLastReview() );
 			
 		try {
 			DBWriter.userHashMapToCSV( userMap );
