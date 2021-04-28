@@ -57,8 +57,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				
 			// set bot reply
 		    botAnswer = "Welcome back " + message.getUserFirstName() + EmojiParser.parseToUnicode("! :grin:\n\n")
-		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
-		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
+		        			+ "I can help you to find skillful neighbors that are looking for work. "
+		        			+ "Or, in case you are this neighbor, I can help you earn some money and save some gas!"
 		        			+ "Type /help to see the main menu.\n\n"
 		        			+ "Or, if you want to leave our community, type /unregister.";
 		        
@@ -66,8 +66,8 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		} else { // if it's a new user
 				
 		    botAnswer = EmojiParser.parseToUnicode("Welcome to the YouShare community! :grin:\n\n")
-		        			+ "I can help you to share/rent utilities that are just taking dust in your home. "
-		        			+ "It's an opportunity to earn some money or just to help a neighbour!\n\n"
+        					+ "I can help you to find skillful neighbors that are looking for work. "
+        					+ "Or, in case you are this neighbor, I can help you earn some money and save some gas!"
 		        			+ EmojiParser.parseToUnicode("Register into our community to start sharing! :wink:\n\n")
 		        			+ "/register - subscribe in YouShare system";
 		        
@@ -88,7 +88,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		if( isUserRegistered ) {
 	
 			botAnswer = "Select the desired action:\n\n"
-		        		+ "/search - Search an item of interest.\n"
+		        		+ "/search - Search an service of interest.\n"
 		        		+ "/myshare - check your ads.\n"
 		        		+ "/myreservations - check your reservations history and reviews.\n\n"
 		        		+ "/profile - view and edit your user profile.\n"
@@ -304,7 +304,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 
 			} catch (BusinessException e) {
 				// define bot answer			
-				botAnswer = "Problem trying to read items:\n" + e.getMessage();
+				botAnswer = "Problem trying to read service:\n" + e.getMessage();
 				
 				// request APIInterface to send text message to user
 	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -319,11 +319,11 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					botAnswer += it.getName() + " /itemdetails_" + it.getCode() + "\n";
 				}
 				
-				botAnswer += "\nTo include more items type /additem.\n";
+				botAnswer += "\nTo include more service type /additem.\n";
 				
 			 } else {
 				 botAnswer = "You don't have any ad yet!\n";
-				 botAnswer += "To include an item type /additem.\n";
+				 botAnswer += "To include a service type /additem.\n";
 				
 			}
 				
@@ -540,10 +540,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 							
 					botAnswer = "Id " +  message.getParameter() + "is not valid:\n";
 					botAnswer += e.getMessage();
-					botAnswer += "\nThe command /itemdetails require a item id as parameter.\n";
-					botAnswer += "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n";
+					botAnswer += "\nThe command /itemdetails require a service id as parameter.\n";
+					botAnswer += "Type /itemdetails_id, replacing id by the id number of the service you want to see.\n\n";
 					botAnswer += "For instance, /itemdetails_0.\n\n";
-					botAnswer += "To check your items id type /myshare.";
+					botAnswer += "To check your services id type /myshare.";
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -554,7 +554,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					Item item = itemServices.readItem(id);
 					
 					// display item ad
-					botAnswer  = "Item id #" + id + " Ad:\n\n";
+					botAnswer  = "Service id #" + id + " Ad:\n\n";
 					botAnswer += item.getName() + "\n";
 					botAnswer += "Description: " + item.getDescription() + "\n";
 					botAnswer += "Grade: " + item.getItemGrade() + "\n";
@@ -593,10 +593,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 				
 			} else {
 				
-				botAnswer = "\nThe command /itemdetails require a item id as parameter.\n"
-						+ "Type /itemdetails_id, replacing id by the id number of the item you want to see.\n\n"
+				botAnswer = "\nThe command /itemdetails require a service id as parameter.\n"
+						+ "Type /itemdetails_id, replacing id by the id number of the service you want to see.\n\n"
 						+ "For instance, /itemdetails_0.\n\n"
-						+ "To check you items id type /myshare.";
+						+ "To check you service id type /myshare.";
 				
 				// request APIInterface to send text message to user
 	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -634,7 +634,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 					botAnswer = "Id " +  message.getParameter() + "is not valid:\n"
 							+ e.getMessage()
 							+ "\nThe command /changeadstatus require a service id as parameter.\n"
-							+ "Type /changeadstatus_id, replacing id by the id number of the item you want to see.\n\n"
+							+ "Type /changeadstatus_id, replacing id by the id number of the service you want to see.\n\n"
 							+ "For instance, /changeadstatus_0.\n\n"
 							+ "To check your services ids type /myshare.";
 					
@@ -655,12 +655,12 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 		        	
 				} catch (BusinessException e) {
-					botAnswer = "Problem trying to update item availability:\n" + e.getMessage();
+					botAnswer = "Problem trying to update service availability:\n" + e.getMessage();
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
 				} catch (DataException e) {
-					botAnswer = "Problem trying to update item:\n" + e.getMessage();
+					botAnswer = "Problem trying to update service:\n" + e.getMessage();
 					
 					// request APIInterface to send text message to user
 		        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -669,10 +669,10 @@ public class YouShareBotServices implements FacadeYouShareBot {
 
 			} else {
 				
-				botAnswer = "\nThe command /changeadstatus require a item id as parameter.\n"
-						+ "Type /changeadstatus_id, replacing id by the id number of the item you want to see.\n\n"
+				botAnswer = "\nThe command /changeadstatus require a service id as parameter.\n"
+						+ "Type /changeadstatus_id, replacing id by the id number of the service you want to see.\n\n"
 						+ "For instance, /changeadstatus_0.\n\n"
-						+ "To check you items id type /myshare.";
+						+ "To check you services id type /myshare.";
 				
 				// request APIInterface to send text message to user
 	        	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -809,7 +809,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 		boolean isUserRegistered = userServices.isRegistered( message.getTelegramUserName() );
 		if( isUserRegistered ) { 		
 			
-			botAnswer = "What item is you interested in?\n";
+			botAnswer = "What service is you interested in?\n";
 	   	    apiServices.sendTextMsg( message.getChatId(), botAnswer );
 	   	    
 	   	    botAnswer = "You can filtre your search including tags:\n"
@@ -868,7 +868,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			noErrors = false;
 			
 			// define bot answer			
-			botAnswer = "Problem trying to search item:\n\n" + e.getMessage() + "\n";
+			botAnswer = "Problem trying to search service:\n\n" + e.getMessage() + "\n";
 			botAnswer += "Check if you have folowed all instructions and try again: /search.";
 			
 			// request APIInterface to send text message to user
@@ -877,7 +877,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
 			noErrors = false;
 
 			// define bot answer			
-			botAnswer = "Problem in database  when trying to search item:\n\n" + e.getMessage() + "\n";
+			botAnswer = "Problem in database  when trying to search service:\n\n" + e.getMessage() + "\n";
 			
 			// request APIInterface to send text message to user
         	apiServices.sendTextMsg( message.getChatId(), botAnswer );
@@ -932,7 +932,7 @@ public class YouShareBotServices implements FacadeYouShareBot {
    			
    			apiServices.sendTextMsg( message.getChatId(), botAnswer );
    	    }
-		
+
 	}
 	
 	public static void yesUnregister ( MessageData callbackMessage ) {
